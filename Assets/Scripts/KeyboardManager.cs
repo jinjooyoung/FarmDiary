@@ -20,6 +20,11 @@ public class KeyboardManager : MonoBehaviour
     public Text uiText;
     private int keyPressCount = 0;
 
+    void Awake()
+    {
+        Application.runInBackground = true;
+    }
+    
     void Start()
     {
         SetHook();
