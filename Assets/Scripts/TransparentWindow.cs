@@ -41,7 +41,7 @@ public class TransparentWindow : MonoBehaviour
 
         SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TOOLWINDOW);
 
-        SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
+        SetWindowPos(hWnd, IntPtr.Zero, 0, 0, 0, 0, 0);
 #endif
         
         Application.runInBackground = true;
