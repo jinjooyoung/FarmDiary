@@ -51,7 +51,7 @@ public class KeyboardManager : MonoBehaviour
     {
         if (uiText != null)
         {
-            uiText.text = $"키 입렵 횟수: {keyPressCount}";
+            uiText.text = $"키 입력 횟수: {keyPressCount}";
         }
     }
 }
