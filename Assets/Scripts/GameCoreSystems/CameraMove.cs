@@ -50,19 +50,19 @@ public class CameraMove : MonoBehaviour
     {
         mouseCurrentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);  // 현재 마우스 위치를 월드 좌표로 변환
         Vector2 vector = mouseCurrentPos - mouseClickPos;  // 드래그 거리 계산
-        
+    
         // 세로 모드인지 여부에 따라 이동 방향 결정
         if (SaveData.instance.verticalMode)
         {
-            base.transform.position += new Vector3(0f, 0f - vector.y, 0f);  // 카메라의 Y 좌표 이동
-            stickyCanvas.transform.position += new Vector3(0f, 0f - vector.y, 0f);  // 캔버스의 Y 좌표 이동
+            base.transform.position -= new Vector3(0f, vector.y, 0f);  // 카메라의 Y 좌표 이동
+            stickyCanvas.transform.position -= new Vector3(0f, vector.y, 0f);  // 캔버스의 Y 좌표 이동
         }
         else
         {
-            base.transform.position += new Vector3(0f - vector.x, 0f, 0f);  // 카메라의 X 좌표 이동
-            stickyCanvas.transform.position += new Vector3(0f - vector.x, 0f, 0f);  // 캔버스의 X 좌표 이동
+            base.transform.position -= new Vector3(vector.x, 0f, 0f);  // 카메라의 X 좌표 이동
+            stickyCanvas.transform.position -= new Vector3(-vector.x, 0f, 0f);  // 캔버스의 X 좌표 이동
         }
-        
+    
         ClampCamera();  // 카메라의 위치를 제한하는 함수 호출
     }
     
