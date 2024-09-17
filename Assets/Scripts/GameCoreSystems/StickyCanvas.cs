@@ -17,6 +17,5 @@ public class StickyCanvas : MonoBehaviour
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size2);  // 가로 크기 설정
             rectTransform.anchoredPosition = new Vector3(0f, 0.25f, 90f);  // 위치 설정
         }
-
     }
 }

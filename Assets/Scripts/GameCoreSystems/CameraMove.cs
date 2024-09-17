@@ -76,6 +76,5 @@ public class CameraMove : MonoBehaviour
             stickyCanvas.transform.position = new Vector3(Mathf.Clamp(stickyCanvas.transform.position.x, -81f, 81f), 
                 stickyCanvas.transform.position.y, stickyCanvas.transform.position.z);
         }
-
     }
 }
