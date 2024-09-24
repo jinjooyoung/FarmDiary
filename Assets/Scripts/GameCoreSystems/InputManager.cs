@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField]
     private Camera sceneCamera;
-    private Vector3 lastPosition;
+    private Vector3 lastPosition = new Vector3(0, -3, 0);
 
     [SerializeField]
     private LayerMask placementLayermask;
@@ -17,12 +17,9 @@ public class InputManager : MonoBehaviour
         Vector3 worldPos = sceneCamera.ScreenToWorldPoint(mousePos);    // 마우스 위치를 월드 좌표로 변환
         RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero, 100, placementLayermask);
 
-        //Debug.Log("GetSelectedMapPosition 함수 실행");
-
         if (hit.collider != null)       // 레이캐스트에 충돌체가 잡히면
         {
             lastPosition = hit.point;   // 해당 충돌 위치를 저장
-            //Debug.Log("충돌 감지");
         }
 
         return lastPosition;            // 마지막으로 저장된 위치 리턴
