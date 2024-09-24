@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,6 +12,23 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     private LayerMask placementLayermask;
+
+    public event Action OnClicked, OnExit;
+
+    private void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            OnClicked?.Invoke();        // OnClicked가 null이 아닐 경우에만 Invoke() 메서드를 호출
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnExit?.Invoke();       // OnExit가 null이 아닐 때만 Invoke()를 호출
+        }
+    }
+
+    public bool IsPointerOverUI()
+        => EventSystem.current.IsPointerOverGameObject();       // => 화살표 함수는 메서드의 본문이 하나의 표현식으로 구성될 때 사용하기 좋음
 
     public Vector3 GetSelectedMapPosition()
     {
