@@ -19,6 +19,9 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private GameObject gridVisualization;
 
+    /*[SerializeField]
+    private AudioSource source;     // 설치 사운드 소스*/
+
     private void Start()
     {
         StopPlacement();
@@ -36,8 +39,8 @@ public class PlacementSystem : MonoBehaviour
             Debug.LogError($"Can't find index {ID}");
             return;
         }
-        gridVisualization.SetActive(true);
-        cellIndicator.SetActive(true);
+        gridVisualization.SetActive(true);              // 전체 그리드 UI
+        cellIndicator.SetActive(true);                  // 그리드 선택 UI
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -48,6 +51,7 @@ public class PlacementSystem : MonoBehaviour
         {
             return;
         }
+        //source.Play();        // 설치할 때 사운드 재생
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
         GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);

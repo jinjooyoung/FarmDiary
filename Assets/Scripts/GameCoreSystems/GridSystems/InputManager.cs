@@ -11,13 +11,13 @@ public class InputManager : MonoBehaviour
     private Vector3 lastPosition = new Vector3(0, -3, 0);
 
     [SerializeField]
-    private LayerMask placementLayermask;
+    private LayerMask placementLayermask;       // 설치 가능 레이어
 
     public event Action OnClicked, OnExit;
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             OnClicked?.Invoke();        // OnClicked가 null이 아닐 경우에만 Invoke() 메서드를 호출
         }
