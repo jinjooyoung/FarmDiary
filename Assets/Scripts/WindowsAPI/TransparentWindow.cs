@@ -77,6 +77,10 @@ public class TransparentWindow : MonoBehaviour
     // 현재 마우스 포인터가 UI 요소 위에 있는지 확인
     private bool FocusForInput()
     {
+        // 현재 마우스 포인터 위치를 가져옵니다.
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    
+        // PointerEventData를 사용하여 UI 요소 체크
         PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
             position = Input.mousePosition
@@ -85,7 +89,14 @@ public class TransparentWindow : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerData, results);
 
-        return results.Count > 0;
+        // UI 요소가 있는 경우 true 반환
+        if (results.Count > 0)  return true;
+
+        // 2D 콜라이더 체크
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero); // 마우스 위치에서 0 방향으로 레이캐스트
+
+        // 2D 오브젝트에 히트가 있는 경우 true 반환
+        return hit.collider != null;
     }
 
     // UI 위에 포인터가 있는지에 따라 클릭 가능한 상태로 설정
