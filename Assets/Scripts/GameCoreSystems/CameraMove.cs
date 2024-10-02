@@ -13,8 +13,7 @@ public class CameraMove : MonoBehaviour
     
     [SerializeField] private RectTransform optionsPanelRect;  // 패널의 RectTransform 참조
     [SerializeField] private StickyCanvas stickyCanvas;  // 붙어있는 캔버스를 참조할 변수
-    [SerializeField] private GameObject gridObj;
-
+    
     private Vector2 mouseClickPos;  // 마우스 클릭 시의 위치를 저장할 변수
     private Vector2 mouseCurrentPos;  // 현재 마우스 위치를 저장할 변수
     private Vector2 initialPanelSize;  // 패널의 초기 크기 저장
@@ -30,7 +29,6 @@ public class CameraMove : MonoBehaviour
     {
         CursorClick();  // 카메라 이동 함수 호출
         ZoomInOut();  // 줌 인/아웃 처리
-        MoveCameraWithArrowKeys();
     }
     
     // 카메라 이동 및 드래그 기능을 처리하는 함수
@@ -136,42 +134,5 @@ public class CameraMove : MonoBehaviour
         float zoomFactor = zoomLevels[zoomLevels.Length - 1] / cam.orthographicSize;
         float clampedZoomFactor = Mathf.Clamp(zoomFactor, 1f, 2f);  // 패널 크기를 1배에서 2배로 제한
         optionsPanelRect.sizeDelta = initialPanelSize * clampedZoomFactor;
-    }
-
-    // 화살표 키로 카메라를 이동시키는 함수
-    private void MoveCameraWithArrowKeys()
-    {
-        float moveSpeed = 2f;  // 카메라와 패널 이동 속도
-
-        Vector3 moveDirection = Vector3.zero;  // 이동 방향 초기화
-
-        // 화살표 키 입력 체크
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            moveDirection += Vector3.up;  // 위로 이동
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            moveDirection += Vector3.down;  // 아래로 이동
-            //optionsPanelRect.position = moveDirection;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            moveDirection += Vector3.left;  // 왼쪽으로 이동
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            moveDirection += Vector3.right;  // 오른쪽으로 이동
-        }
-
-        // 이동 방향이 있을 경우 패널, gridObj, 카메라 순서로 이동
-        if (moveDirection != Vector3.zero)
-        {
-            moveDirection *= moveSpeed * Time.deltaTime;  // 이동 속도 조정
-            gridObj.transform.position += moveDirection;  // gridObj 이동
-            base.transform.position += moveDirection;  // 카메라 이동
-        }
-
-        ClampCamera();  // 카메라의 위치를 제한하는 함수 호출
     }
 }
