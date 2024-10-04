@@ -100,7 +100,8 @@ public class CameraMove : MonoBehaviour
         }
 
         // 패널의 초기 크기 저장
-        initialPanelSize = optionsPanelRect.sizeDelta;
+        //initialPanelSize = optionsPanelRect.sizeDelta;
+        // 오류 메세지 떠서 잠시 주석처리 해놓을게요!!!
     }
     
     // 줌 인/아웃을 처리하는 함수

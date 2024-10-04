@@ -792,11 +792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd99ae3f57ed774d8595781bd4b5287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionsPanelRect: {fileID: 1578603765}
+  optionsPanelRect: {fileID: 1578603766}
   stickyCanvas: {fileID: 1145058421}
-  gridObj: {fileID: 516995332}
-  canvas: {fileID: 1926464658}
-  moveSpeed: 5
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2979,7 +2976,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fbb67eace8a04114f9784ece3e9829b1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.07058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -3231,6 +3228,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1413057185598142276, guid: d9d9cb1920e7680449581cb327f286de, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140083879255425585, guid: d9d9cb1920e7680449581cb327f286de, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140083879255425585, guid: d9d9cb1920e7680449581cb327f286de, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140083879255425585, guid: d9d9cb1920e7680449581cb327f286de, type: 3}
+      propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
