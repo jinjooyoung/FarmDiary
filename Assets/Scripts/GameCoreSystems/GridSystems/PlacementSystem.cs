@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlacementSystem : MonoBehaviour
 {
     [SerializeField]
-    GameObject mouseIndicator, cellIndicator;
+    GameObject mouseIndicator;
     [SerializeField]
     private InputManager inputManager;
     [SerializeField]
@@ -24,16 +24,18 @@ public class PlacementSystem : MonoBehaviour
 
     private GridData floorData, furnitureData;
 
-    private Renderer previewRenderer;
-
     private List<GameObject> placedGameObjects = new();
+
+    [SerializeField]
+    private PreviewSystem preview;
+
+    private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
     private void Start()
     {
         StopPlacement();
         floorData = new();
         furnitureData = new();
-        previewRenderer = cellIndicator.GetComponentInChildren<Renderer>();
     }
 
     public void StartPlacement(int ID)
@@ -49,7 +51,8 @@ public class PlacementSystem : MonoBehaviour
             return;
         }
         gridVisualization.SetActive(true);              // 전체 그리드 UI
-        cellIndicator.SetActive(true);                  // 그리드 선택 UI
+        preview.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab,
+            database.objectsData[selectedObjectIndex].Size);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -72,10 +75,16 @@ public class PlacementSystem : MonoBehaviour
         //source.Play();        // 설치할 때 사운드 재생
         GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
         newObject.transform.position = grid.CellToWorld(gridPosition);
+
+        SpriteRenderer newObjectRenderer = newObject.GetComponentInChildren<SpriteRenderer>();
+        preview.SetAlpha(newObjectRenderer, 1.0f);
+
         placedGameObjects.Add(newObject);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,
             database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count - 1);
+
+        preview.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), false);
     }
 
     private bool GetPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
@@ -88,9 +97,10 @@ public class PlacementSystem : MonoBehaviour
     {
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
-        cellIndicator.SetActive(false);
+        preview.StopShowingPreview();
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
+        lastDetectedPosition = Vector3Int.zero;
     }
 
     private void Update()
@@ -102,10 +112,13 @@ public class PlacementSystem : MonoBehaviour
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        bool placementValidity = GetPlacementValidity(gridPosition, selectedObjectIndex);
-        previewRenderer.material.color = placementValidity ? Color.white : Color.red;
+        if (lastDetectedPosition != gridPosition)
+        {
+            bool placementValidity = GetPlacementValidity(gridPosition, selectedObjectIndex);
 
-        mouseIndicator.transform.position = mousePosition;
-        cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+            mouseIndicator.transform.position = mousePosition;
+            preview.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), placementValidity);
+            lastDetectedPosition = gridPosition;
+        }
     }
 }
