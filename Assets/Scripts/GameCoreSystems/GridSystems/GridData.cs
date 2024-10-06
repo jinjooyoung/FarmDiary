@@ -44,10 +44,10 @@ public class GridData
         List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
         foreach (var pos in positionToOccupy)
         {
-            Debug.Log($"Checking position: {pos}");
+            //Debug.Log($"Checking position: {pos}");
             if (placedObjects.ContainsKey(pos))
             {
-                Debug.Log($"Cannot place at: {pos}");
+                //Debug.Log($"Cannot place at: {pos}");
                 return false;
             }
         }
