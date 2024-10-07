@@ -22,7 +22,7 @@ public class PlacementSystem : MonoBehaviour
     /*[SerializeField]
     private AudioSource source;     // 설치 사운드 소스*/
 
-    private GridData floorData, furnitureData;
+    private GridData furnitureData;
 
     private List<GameObject> placedGameObjects = new();
 
@@ -34,7 +34,6 @@ public class PlacementSystem : MonoBehaviour
     private void Start()
     {
         StopPlacement();
-        floorData = new();
         furnitureData = new();
     }
 
@@ -59,12 +58,12 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceStructure()
     {
-        if (inputManager.IsPointerOverUI())
+        if (inputManager.IsPointerOverUI())     // UI 클릭중 게임 오브젝트 상호작용 무시 (UI를 클릭할 때 클릭한 위치의 뒤에 무언가 설치가 되지 않도록)
         {
             return;
         }
-        Vector2 mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+        Vector2 mousePosition = inputManager.GetSelectedMapPosition();      // 현재 마우스 위치
+        Vector3Int gridPosition = grid.WorldToCell(mousePosition);          // 현재 그리드 위치
 
         bool placementValidity = GetPlacementValidity(gridPosition, selectedObjectIndex);
         if (placementValidity == false)
@@ -80,7 +79,7 @@ public class PlacementSystem : MonoBehaviour
         preview.SetAlpha(newObjectRenderer, 1.0f);
 
         placedGameObjects.Add(newObject);
-        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
+        GridData selectedData = furnitureData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,
             database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count - 1);
 
@@ -89,8 +88,7 @@ public class PlacementSystem : MonoBehaviour
 
     private bool GetPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
-        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
+        return furnitureData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
     }
 
     private void StopPlacement()

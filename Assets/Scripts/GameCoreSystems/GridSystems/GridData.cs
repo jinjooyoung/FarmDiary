@@ -31,7 +31,7 @@ public class GridData
         List<Vector3Int> returnVal = new();
         for (int x = 0; x < objectSize.x; x++)
         {
-            for (int y = 0; y < objectSize.y; y++)
+            for (int y = 0; y > -objectSize.y; y--)         // 그리드 인디케이터 기준 아래로 설치되는데, 정보값은 위로 저장되어서 설치 가능 범위에 문제가 있었으나 수정 완
             {
                 returnVal.Add(gridPosition + new Vector3Int(x, y, 0));
             }
