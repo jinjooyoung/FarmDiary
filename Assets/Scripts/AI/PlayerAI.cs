@@ -153,6 +153,10 @@ public class PlayerAI : MonoBehaviour
                 currentWaterAmount--;  // 물 사용
                 Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
             }
+            else if (farmField.IsSeedPlanted(new Vector2(0, 0)) && farmField.cropState == FarmField.CropState.Watered)
+            {
+                currentState = State.Idle;
+            }
             else
             {
                 Debug.Log("물을 주기엔 물이 부족합니다.");
