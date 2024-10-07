@@ -2038,7 +2038,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4772038333237485323, guid: 8d9329b90c134e046875910cc46e6a96, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2026951694}
+      addedObject: {fileID: 2026951699}
     - targetCorrespondingSourceObject: {fileID: 4772038333237485323, guid: 8d9329b90c134e046875910cc46e6a96, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2026951696}
@@ -3392,7 +3392,34 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4772038333237485323, guid: 8d9329b90c134e046875910cc46e6a96, type: 3}
   m_PrefabInstance: {fileID: 1329950158}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &2026951694
+--- !u!114 &2026951695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026951690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3238f28fa060e0e44a4ec1ca3a045205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2026951696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026951690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4042be46c51d3af46ac53acc25e6a727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cropState: 0
+  seedPlantedState: 1
+  fieldPosition: {x: -3, y: -4}
+--- !u!61 &2026951699
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3437,33 +3464,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2026951695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026951690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3238f28fa060e0e44a4ec1ca3a045205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2026951696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026951690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4042be46c51d3af46ac53acc25e6a727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cropState: 0
-  seedPlantedState: 1
-  fieldPosition: {x: -3, y: -4}
 --- !u!1 &2042021293
 GameObject:
   m_ObjectHideFlags: 0
