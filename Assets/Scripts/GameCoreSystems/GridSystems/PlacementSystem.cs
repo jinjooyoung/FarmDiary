@@ -22,19 +22,20 @@ public class PlacementSystem : MonoBehaviour
     /*[SerializeField]
     private AudioSource source;     // 설치 사운드 소스*/
 
-    private GridData furnitureData;
-
-    private List<GameObject> placedGameObjects = new();
+    private GridData placedOBJData;
 
     [SerializeField]
     private PreviewSystem preview;
 
     private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
+    [SerializeField]
+    private OBJPlacer objectPlacer;
+
     private void Start()
     {
         StopPlacement();
-        furnitureData = new();
+        placedOBJData = new();
     }
 
     public void StartPlacement(int ID)
@@ -72,23 +73,18 @@ public class PlacementSystem : MonoBehaviour
         }
 
         //source.Play();        // 설치할 때 사운드 재생
-        GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
-        newObject.transform.position = grid.CellToWorld(gridPosition);
-
-        SpriteRenderer newObjectRenderer = newObject.GetComponentInChildren<SpriteRenderer>();
-        preview.SetAlpha(newObjectRenderer, 1.0f);
-
-        placedGameObjects.Add(newObject);
-        GridData selectedData = furnitureData;
+        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
+        
+        GridData selectedData = placedOBJData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,
-            database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count - 1);
+            database.objectsData[selectedObjectIndex].ID, index);
 
         preview.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), false);
     }
 
     private bool GetPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
-        return furnitureData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
+        return placedOBJData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
     }
 
     private void StopPlacement()
