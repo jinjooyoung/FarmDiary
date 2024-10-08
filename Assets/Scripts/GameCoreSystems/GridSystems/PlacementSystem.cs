@@ -6,15 +6,12 @@ using UnityEngine;
 public class PlacementSystem : MonoBehaviour
 {
     [SerializeField]
-    GameObject mouseIndicator;
-    [SerializeField]
     private InputManager inputManager;
     [SerializeField]
     private Grid grid;
 
     [SerializeField]
     private ObjectsDatabaseSO database;
-    private int selectedObjectIndex = -1;       // 아무것도 선택되지 않았을 때 기본 인덱스
 
     [SerializeField]
     private GameObject gridVisualization;
@@ -32,6 +29,8 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private OBJPlacer objectPlacer;
 
+    IBuildingState buildingState;
+
     private void Start()
     {
         StopPlacement();
@@ -41,19 +40,14 @@ public class PlacementSystem : MonoBehaviour
     public void StartPlacement(int ID)
     {
         StopPlacement();
-        // FindIndex 메서드 : 리스트에서 조건을 만족하는 첫 번째 요소의 인덱스를 찾는 메서드
-        selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
-        // 주어진 ID와 동일한 ID를 가진 오브젝트 데이터의 인덱스를 찾아서 변수에 저장
-
-        if (selectedObjectIndex < 0)
-        {
-            Debug.LogError($"Can't find index {ID}");
-            return;
-        }
         gridVisualization.SetActive(true);              // 전체 그리드 UI
-        preview.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab,
-            database.objectsData[selectedObjectIndex].Size);
-        inputManager.OnClicked += PlaceStructure;
+        buildingState = new PlacementState(ID,
+                                           grid,
+                                           preview,
+                                           database,
+                                           placedOBJData,
+                                           objectPlacer);
+        inputManager.OnClicked += PlaceStructure;       // 설치 중일때 항상 입력을 받을 수 있도록 이벤트에 할당
         inputManager.OnExit += StopPlacement;
     }
 
@@ -66,52 +60,42 @@ public class PlacementSystem : MonoBehaviour
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();      // 현재 마우스 위치
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);          // 현재 그리드 위치
 
-        bool placementValidity = GetPlacementValidity(gridPosition, selectedObjectIndex);
-        if (placementValidity == false)
-        {
-            return;
-        }
-
-        //source.Play();        // 설치할 때 사운드 재생
-        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
-        
-        GridData selectedData = placedOBJData;
-        selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,
-            database.objectsData[selectedObjectIndex].ID, index);
-
-        preview.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), false);
+        buildingState.OnAction(gridPosition);       // 해당 그리드 위치에 오브젝트 설치 (실제 구현)
     }
 
-    private bool GetPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
+    // 선택된 (설치할 예정의) 오브젝트의 사이즈를 받아와서 CanPlaceObjectAt로 넘겨, 설치 가능한지 bool값 리턴
+    // PlacementState 스크립트로 이동한 메서드. 하지만 나중에 다시 옮겨올수도 있을 것 같아서 일단 주석으로 둠
+    /*private bool GetPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
         return placedOBJData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-    }
+    }*/
 
     private void StopPlacement()
     {
-        selectedObjectIndex = -1;
-        gridVisualization.SetActive(false);
-        preview.StopShowingPreview();
-        inputManager.OnClicked -= PlaceStructure;
+        if (buildingState == null)      // 이미 설치가 종료 상태이면 리턴
+        {
+            return;
+        }
+        gridVisualization.SetActive(false);         // 그리드 UI 끔
+        buildingState.EndState();                   // 프리뷰 종료
+        inputManager.OnClicked -= PlaceStructure;   // 설치 상태가 종료되었으므로 이벤트 할당 해제
         inputManager.OnExit -= StopPlacement;
         lastDetectedPosition = Vector3Int.zero;
+        buildingState = null;
     }
 
     private void Update()
     {
-        if (selectedObjectIndex < 0)
+        if (buildingState == null)    // 선택된 오브젝트가 없으면 리턴
         {
             return;
         }
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        if (lastDetectedPosition != gridPosition)
+        if (lastDetectedPosition != gridPosition)       // 불필요한 업데이트 방지를 위해 마우스가 움직였을 때만 업데이트
         {
-            bool placementValidity = GetPlacementValidity(gridPosition, selectedObjectIndex);
-
-            mouseIndicator.transform.position = mousePosition;
-            preview.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), placementValidity);
+            buildingState.UpdateState(gridPosition);    // 프리뷰 오브젝트 스테이트 업데이트
             lastDetectedPosition = gridPosition;
         }
     }
