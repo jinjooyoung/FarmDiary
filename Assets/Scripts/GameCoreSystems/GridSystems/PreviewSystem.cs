@@ -34,7 +34,7 @@ public class PreviewSystem : MonoBehaviour
     {
         if (size.x > 0 || size.y > 0)
         {
-            cellIndicator.transform.localScale = new Vector3(size.x, -size.y, 1);
+            cellIndicator.transform.localScale = new Vector3(size.x, size.y, 1);
         }
     }
 
@@ -71,8 +71,7 @@ public class PreviewSystem : MonoBehaviour
 
     private void MoveCursor(Vector3 position)
     {
-        // 그리드 커서 위치 맞추려고 y 좌표 뒤에 0.5는 하드코딩함, 칸 크기 바뀌면 다시 설정해야함
-        cellIndicator.transform.position = new Vector3(position.x, position.y + 0.5f, 1);
+        cellIndicator.transform.position = new Vector3(position.x, position.y, 1);
     }
 
     // 설치 가능 유무(bool 값)에 따라 커서 색깔을 변경하는 함수
