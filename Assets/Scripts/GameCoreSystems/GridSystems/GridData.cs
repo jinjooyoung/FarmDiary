@@ -62,6 +62,25 @@ public class GridData
         }
         return true;        // 설치 가능이면 true 리턴함
     }
+
+    // 선택한 그리드 위치를 통해 그곳에 설치된 오브젝트의 인덱스를 반환하는 메서드
+    // 여기에서 말하는 오브젝트 인덱스는 스크립터블오브젝트의 인덱스가 아닌 GridData에 설치할 때 마다 추가되는 리스트의 인덱스
+    internal int GetRepresentationIndex(Vector3Int gridPosition)
+    {
+        if (placedObjects.ContainsKey(gridPosition) == false)       // 아무것도 설치되어 있지 않은 칸이라면 -1 리턴
+        {
+            return -1;
+        }
+        return placedObjects[gridPosition].PlacedObjectIndex;
+    }
+
+    internal void RemoveObjectAt(Vector3Int gridPosition)
+    {
+        foreach (var pos in placedObjects[gridPosition].occupiedPositions)
+        {
+            placedObjects.Remove(pos);
+        }
+    }
 }
 
 public class PlacementData      // 오브젝트의 정보 클래스

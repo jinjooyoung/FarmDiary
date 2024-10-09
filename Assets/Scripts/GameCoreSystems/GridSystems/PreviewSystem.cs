@@ -48,14 +48,20 @@ public class PreviewSystem : MonoBehaviour
     public void StopShowingPreview()        // 프리뷰 종료
     {
         cellIndicator.SetActive(false);
-        Destroy(previewObject);
+        if (previewObject != null)
+        {
+            Destroy(previewObject);
+        }
     }
 
     public void UpdatePreviewOBJPos(Vector3 position, bool validity)        // 프리뷰 오브젝트의 위치를 업데이트
     {
-        MovePreview(position);      // 프리뷰 오브젝트 이동
+        if (previewObject != null)
+        {
+            MovePreview(position);      // 프리뷰 오브젝트 이동
+        }
         MoveCursor(position);       // 프리뷰 그리드 커서 이동
-        ApplyFeedback(validity);
+        ApplyFeedbackToCursor(validity);
     }
 
     private void MovePreview(Vector3 position)
@@ -70,9 +76,16 @@ public class PreviewSystem : MonoBehaviour
     }
 
     // 설치 가능 유무(bool 값)에 따라 커서 색깔을 변경하는 함수
-    private void ApplyFeedback(bool validity)
+    private void ApplyFeedbackToCursor(bool validity)
     {
         Color c = validity ? Color.white : Color.red;
         cellIndicatorRenderer.color = c;
+    }
+
+    internal void StartShowingRemovePreview()
+    {
+        cellIndicator.SetActive(true);
+        PrepareCursor(Vector2Int.one);
+        ApplyFeedbackToCursor(false);
     }
 }

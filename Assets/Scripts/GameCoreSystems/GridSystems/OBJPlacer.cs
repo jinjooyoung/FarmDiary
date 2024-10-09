@@ -23,4 +23,15 @@ public class OBJPlacer : MonoBehaviour
 
         return placedGameObjects.Count - 1;             // 설치하여 증가한 placedGameObjects 리스트의 마지막 오브젝트의 인덱스를 리턴
     }
+
+    // 실제 삭제 구현
+    internal void RemoveObjectAt(int gameObjectIndex)
+    {
+        if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
+        {
+            return;
+        }
+        Destroy(placedGameObjects[gameObjectIndex]);
+        placedGameObjects[gameObjectIndex] = null;
+    }
 }

@@ -51,6 +51,15 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
+    public void StartRemoving()
+    {
+        StopPlacement();
+        gridVisualization.SetActive(true);
+        buildingState = new RemovingState(grid, preview, placedOBJData, objectPlacer);
+        inputManager.OnClicked += PlaceStructure;       // 삭제 중일때 항상 입력을 받을 수 있도록 이벤트에 할당
+        inputManager.OnExit += StopPlacement;
+    }
+
     private void PlaceStructure()
     {
         if (inputManager.IsPointerOverUI())     // UI 클릭중 게임 오브젝트 상호작용 무시 (UI를 클릭할 때 클릭한 위치의 뒤에 무언가 설치가 되지 않도록)
