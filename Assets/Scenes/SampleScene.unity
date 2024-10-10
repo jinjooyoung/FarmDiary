@@ -3806,6 +3806,8 @@ GameObject:
   - component: {fileID: 2090067811}
   - component: {fileID: 2090067814}
   - component: {fileID: 2090067813}
+  - component: {fileID: 2090067815}
+  - component: {fileID: 2090067816}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3892,13 +3894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dea2ee0afd573a4ebbabc39a3d11c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  farmField: {fileID: 229090029}
-  waterPosition: {fileID: 1629990102}
-  homePosition: {fileID: 1642072206}
-  movementSpeed: 5
-  maxWaterAmount: 5
-  currentWaterAmount: 0
 --- !u!70 &2090067814
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -3934,6 +3929,38 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &2090067815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090067810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21cc5eb7ac214804eb6807f2c34eb31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiStateMachine: {fileID: 0}
+  farmField: {fileID: 229090029}
+  waterPosition: {fileID: 1629990102}
+  homePosition: {fileID: 1642072206}
+  movementSpeed: 1
+  maxWaterAmount: 5
+  currentWaterAmount: 0
+--- !u!114 &2090067816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090067810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f02fa1e2cd4cb40a960348e0c5023b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiStateManager: {fileID: 0}
 --- !u!1 &2099594266
 GameObject:
   m_ObjectHideFlags: 0

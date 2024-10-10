@@ -35,31 +35,19 @@ public class AIStateManager : MonoBehaviour
         return Vector2.Distance(transform.position, target) < 0.1f;
     }
 
+    public void CheckSeed()
+    {
+        farmField.CheckSeedPlanted(new Vector2(0, 0));  // 씨앗을 확인 하는 메서드
+        Debug.Log("씨앗 유무를 확인 합니다");
+    }
+
     public void WaterCrop()
     {
-        // 씨앗이 심어져 있고 물이 필요한 상태일 때만 물을 줌
-        if (farmField.IsSeedPlanted(new Vector2(0, 0)) && farmField.NeedsWater(new Vector2(0, 0)))
-        {
-            if (currentWaterAmount > 0)
-            {
-                farmField.WaterCrop(new Vector2(0, 0));  // 밭의 특정 위치에 물을 줌
-                currentWaterAmount--;  // 물 사용
-                Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
-            }
-            else if (farmField.IsSeedPlanted(new Vector2(0, 0)) && farmField.cropState == FarmField.CropState.Watered)
-            {
-                //currentState = State.Idle;
-            }
-            else
-            {
-                Debug.Log("물을 주기엔 물이 부족합니다.");
-            }
-        }
-        else
-        {
-            Debug.Log("물을 줄 수 없습니다: 씨앗이 심어져 있지 않거나 물이 필요하지 않습니다.");
-        }
+        farmField.WaterCrop(new Vector2(0, 0));  // 밭의 특정 위치에 물을 줌
+        currentWaterAmount--;  // 물 사용
+        Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
     }
+
 
     public void HarvestCrop()
     {
@@ -72,5 +60,10 @@ public class AIStateManager : MonoBehaviour
     {
         currentWaterAmount = maxWaterAmount;  // 물 보충
         Debug.Log("물을 다시 채웠습니다.");
+    }
+
+    public void AddField()
+    {
+        // 땅을 구매 시 그 땅을 몇 초 가량 공사를 하는 상태
     }
 }
