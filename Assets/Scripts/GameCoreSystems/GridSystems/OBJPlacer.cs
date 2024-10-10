@@ -16,6 +16,18 @@ public class OBJPlacer : MonoBehaviour
     {
         GameObject newObject = Instantiate(prefab);     // 오브젝트 생성
         newObject.transform.position = position;        // 설치할 위치로 이동
+
+        for (int i = 0; i < placedGameObjects.Count; i++)
+        {
+            if (placedGameObjects[i] == null)
+            {
+                placedGameObjects[i] = newObject;
+                SpriteRenderer objectRenderer = newObject.GetComponentInChildren<SpriteRenderer>();
+                preview.SetAlpha(objectRenderer, 1.0f);  // 오브젝트의 투명도를 다시 1로 설정
+                return i;  // null 자리의 인덱스를 리턴
+            }
+        }
+
         placedGameObjects.Add(newObject);               // 설치된 오브젝트 리스트에 저장
 
         SpriteRenderer newObjectRenderer = newObject.GetComponentInChildren<SpriteRenderer>();

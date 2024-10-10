@@ -13,15 +13,25 @@ public class ObjectsDatabaseSO : ScriptableObject
 public class ObjectData
 {
     [field: SerializeField]
-
     public string Name { get; private set; }        // 오브젝트 이름
-    [field: SerializeField]
 
+    public enum Category
+    {
+        Field,
+        Facility,
+        Crop,
+        Decoration
+    }
+
+    [field: SerializeField]
+    public Category ObjectCategory { get; private set; } // 카테고리 구분
+
+    [field: SerializeField]
     public int ID { get; private set; }         // 오브젝트 식별자
-    [field: SerializeField]
 
+    [field: SerializeField]
     public Vector2Int Size { get; private set; } = Vector2Int.one;      // 오브젝트 크기 (설치 가능/ 불가능 판별 용)
-    [field: SerializeField]
 
+    [field: SerializeField]
     public GameObject Prefab { get; private set; }      // 리소스 프리팹
 }
