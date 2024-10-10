@@ -15,7 +15,8 @@ public class PlayerAI : MonoBehaviour
     
     public State currentState;
 
-    [SerializeField] private FarmField farmField;  // 2x2 밭 필드
+    public FarmField farmField;  // 2x2 밭 필드
+
     [SerializeField] private Transform waterPosition;  // 물 웅덩이 위치
     [SerializeField] private Transform homePosition;   // 집의 위치 추가
     [SerializeField] private float movementSpeed = 2f;  // AI 이동 속도
@@ -133,7 +134,7 @@ public class PlayerAI : MonoBehaviour
         }
     }
 
-    private bool MoveToPosition(Vector2 target)
+    public bool MoveToPosition(Vector2 target)
     {
         // 목표 위치로 이동
         transform.position = Vector2.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
@@ -142,7 +143,7 @@ public class PlayerAI : MonoBehaviour
         return Vector2.Distance(transform.position, target) < 0.1f;
     }
 
-    private void WaterCrop()
+    public void WaterCrop()
     {
         // 씨앗이 심어져 있고 물이 필요한 상태일 때만 물을 줌
         if (farmField.IsSeedPlanted(new Vector2(0, 0)) && farmField.NeedsWater(new Vector2(0, 0)))
@@ -168,14 +169,14 @@ public class PlayerAI : MonoBehaviour
         }
     }
 
-    private void HarvestCrop()
+    public void HarvestCrop()
     {
         // 작물을 수확하는 코드
         farmField.Harvest(new Vector2(0, 0)); // 수확 메서드 호출
         Debug.Log("작물을 수확했습니다");
     }
 
-    private void RefuelWater()
+    public void RefuelWater()
     {
         currentWaterAmount = maxWaterAmount;  // 물 보충
         Debug.Log("물을 다시 채웠습니다.");
