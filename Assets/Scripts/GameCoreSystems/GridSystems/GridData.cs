@@ -56,10 +56,11 @@ public class GridData
         // 저장된 칸들을 돌면서 그 위치가 이미 다른 오브젝트로 차지되어 있는지 계산
         foreach (var pos in positionToOccupy)
         {
-            if (placedObjects.ContainsKey(pos))     // 한 칸이라도 이미 차지된 위치가 있으면 false를 반환하여 설치 불가능
+            if (placedObjects.ContainsKey(pos) || pos.y > -7)     // 한 칸이라도 이미 차지된 위치가 있으면 false를 반환하여 설치 불가능
             {
                 return false;
             }
+            //Debug.Log(pos);
         }
         return true;        // 설치 가능이면 true 리턴함
     }
