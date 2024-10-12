@@ -15,17 +15,6 @@ public class ObjectData
     [field: SerializeField]
     public string Name { get; private set; }        // 오브젝트 이름
 
-    public enum Category
-    {
-        Field,
-        Facility,
-        Crop,
-        Decoration
-    }
-
-    [field: SerializeField]
-    public Category ObjectCategory { get; private set; } // 카테고리 구분
-
     [field: SerializeField]
     public int ID { get; private set; }         // 오브젝트 식별자
 

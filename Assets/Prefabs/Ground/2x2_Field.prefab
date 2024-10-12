@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 11714925050900377}
   - component: {fileID: 6635476007600565709}
   - component: {fileID: 52000472032190414}
+  - component: {fileID: 8356641336245445474}
+  - component: {fileID: 4263769755586285089}
   m_Layer: 0
   m_Name: 2x2 Field
   m_TagString: Untagged
@@ -162,3 +164,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8356641336245445474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382401420189692387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4042be46c51d3af46ac53acc25e6a727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cropState: 0
+  seedPlantedState: 1
+  fieldPosition: {x: 0, y: 0}
+--- !u!114 &4263769755586285089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382401420189692387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3238f28fa060e0e44a4ec1ca3a045205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

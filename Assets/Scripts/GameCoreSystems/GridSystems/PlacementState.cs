@@ -8,14 +8,13 @@ public class PlacementState : IBuildingState
 {
     private int selectedObjectIndex = -1;
     int ID;
-    PlacementData.Category objectCategory;
     Grid grid;
     PreviewSystem previewSystem;
     ObjectsDatabaseSO database;
     GridData placedOBJData;
     OBJPlacer objectPlacer;
 
-    public PlacementState(int id, PlacementData.Category objectCategory,
+    public PlacementState(int id,
                           Grid grid,
                           PreviewSystem previewSystem,
                           ObjectsDatabaseSO database,
@@ -23,7 +22,6 @@ public class PlacementState : IBuildingState
                           OBJPlacer objectPlacer)
     {
         ID = id;
-        this.objectCategory = objectCategory;
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.database = database;
@@ -62,7 +60,7 @@ public class PlacementState : IBuildingState
 
         GridData selectedData = placedOBJData;      // 선택한 오브젝트의 데이터 받아옴
         // GridData 스크립트에 선언된 placedObjects 딕셔너리에 받아온 데이터 저장
-        selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, objectCategory,
+        selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,
             database.objectsData[selectedObjectIndex].ID, index);
 
         // 프리뷰 업데이트 (위 PlaceObject 메서드 호출과정에서 오브젝트를 설치했으므로 이제 설치 불가능.

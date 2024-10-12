@@ -28,7 +28,6 @@ public class PlacementSystem : MonoBehaviour
 
     [SerializeField]
     private OBJPlacer objectPlacer;
-    PlacementData.Category objectCategory;
 
 
     IBuildingState buildingState;
@@ -43,7 +42,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);              // 전체 그리드 UI
-        buildingState = new PlacementState(ID, objectCategory,
+        buildingState = new PlacementState(ID,
                                            grid,
                                            preview,
                                            database,
