@@ -19,7 +19,7 @@ public class PlacementSystem : MonoBehaviour
     /*[SerializeField]
     private AudioSource source;     // 설치 사운드 소스*/
 
-    private GridData placedOBJData;
+    public GridData placedOBJData;
 
     [SerializeField]
     private PreviewSystem preview;
@@ -32,7 +32,7 @@ public class PlacementSystem : MonoBehaviour
 
     IBuildingState buildingState;
 
-    private void Start()
+    private void Awake()
     {
         StopPlacement();
         placedOBJData = new();
