@@ -6,7 +6,9 @@ public class AIStateManager : MonoBehaviour
 {
     public AIStateMachine aiStateMachine; // AIStateMachine에 대한 참조
 
-    public FarmField farmField;  // 2x2 밭 필드
+    public List<FarmField> farmFields = new List<FarmField>(); // 모든 밭을 저장할 리스트
+    public FarmField currentFarmField; // 현재 작업 중인 밭
+
     public Transform waterPosition;  // 물 웅덩이 위치
     public Transform homePosition;   // 집의 위치 추가
 
@@ -24,6 +26,10 @@ public class AIStateManager : MonoBehaviour
         }
 
         currentWaterAmount = maxWaterAmount;  // 시작 시 최대 보유량으로 초기화
+
+        // 모든 FarmField 오브젝트를 찾아 리스트에 추가
+        FarmField[] fields = FindObjectsOfType<FarmField>();
+        farmFields.AddRange(fields);
     }
 
     public bool MoveToPosition(Transform target)
@@ -38,23 +44,48 @@ public class AIStateManager : MonoBehaviour
 
     public void CheckSeed()
     {
-        farmField.CheckSeedPlanted();  // 씨앗을 확인 하는 메서드
-        Debug.Log("씨앗 유무를 확인 합니다");
+        foreach (FarmField field in farmFields)
+        {
+            if (field.IsSeedPlanted()) // 씨앗이 심어졌는지 확인
+            {
+                Debug.Log($"씨앗이 심어진 밭: {field.name}");
+                MoveToPosition(field.transform); // 해당 밭으로 이동
+                return;
+            }
+        }
+        Debug.Log("심어진 씨앗이 없습니다.");
     }
 
     public void WaterCrop()
     {
-        farmField.WaterCrop();  // 밭의 특정 위치에 물을 줌
-        currentWaterAmount--;  // 물 사용
-        Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
+        if (currentFarmField != null && currentWaterAmount > 0)
+        {
+            currentFarmField.WaterCrop();  // 현재 밭에 물 주기
+            currentWaterAmount--;
+            Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
+        }
+        else if (currentWaterAmount <= 0)
+        {
+            Debug.Log("물이 부족합니다. 물을 채워야 합니다.");
+            RefuelWater();
+        }
+        else
+        {
+            Debug.Log("작물이 없습니다.");
+        }
     }
-
 
     public void HarvestCrop()
     {
-        // 작물을 수확하는 코드
-        farmField.Harvest(); // 수확 메서드 호출
-        Debug.Log("작물을 수확했습니다");
+        if (currentFarmField != null)
+        {
+            currentFarmField.Harvest(); // 현재 밭에서 수확
+            Debug.Log($"작물을 수확했습니다: {currentFarmField.name}");
+        }
+        else
+        {
+            Debug.Log("작물이 없습니다.");
+        }
     }
 
     public void RefuelWater()
@@ -63,8 +94,9 @@ public class AIStateManager : MonoBehaviour
         Debug.Log("물을 다시 채웠습니다.");
     }
 
-    public void AddField()
+    public void AddField(FarmField newField)
     {
-        // 땅을 구매 시 그 땅을 몇 초 가량 공사를 하는 상태
+        farmFields.Add(newField);  // 새 밭 추가
+        Debug.Log($"새로운 밭이 추가되었습니다: {newField.name}");
     }
 }

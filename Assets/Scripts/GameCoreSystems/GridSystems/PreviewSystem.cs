@@ -28,6 +28,18 @@ public class PreviewSystem : MonoBehaviour
         PrepareCursor(size);                        // 커서의 사이즈를 선택한 오브젝트 크기에 맞게 조절
         SetAlpha(renderer, 0.2f);                   // 프리뷰 상태에서 반투명하게 보이도록 알파값 변경
         cellIndicator.SetActive(true);              // 셀인디케이터가 보이도록 true
+
+        FarmFieldClickHandler farmFieldClickHandler = previewObject.GetComponentInChildren<FarmFieldClickHandler>();
+        if (farmFieldClickHandler != null)
+        {
+            farmFieldClickHandler.enabled = false;
+        }
+
+        SpriteRenderer previewRenderer = previewObject.GetComponentInChildren<SpriteRenderer>();
+        if (previewRenderer != null)
+        {
+            previewRenderer.sortingLayerName = "MiddleGround";
+        }
     }
 
     private void PrepareCursor(Vector2Int size)     // 커서 크기 자체는 오브젝트 크기에 맞춰 커지는데 커서의 위치가 어긋남 해결필요

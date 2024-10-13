@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Preview
+  - Farm
   layers:
   - Default
   - TransparentFX
@@ -44,7 +46,7 @@ TagManager:
   - name: BackGround
     uniqueID: 4273807199
     locked: 0
-  - name: MIddleGround
+  - name: MiddleGround
     uniqueID: 3338301983
     locked: 0
   - name: ForgeGround

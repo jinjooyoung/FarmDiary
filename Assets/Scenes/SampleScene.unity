@@ -1192,17 +1192,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1793381980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &946942665 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8356641336245445474, guid: 502c9924be1b55e4887880762919941f, type: 3}
-  m_PrefabInstance: {fileID: 355474135}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4042be46c51d3af46ac53acc25e6a727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &952475538
 GameObject:
   m_ObjectHideFlags: 0
@@ -3850,9 +3839,9 @@ GameObject:
   - component: {fileID: 2090067812}
   - component: {fileID: 2090067811}
   - component: {fileID: 2090067814}
-  - component: {fileID: 2090067813}
-  - component: {fileID: 2090067815}
   - component: {fileID: 2090067816}
+  - component: {fileID: 2090067815}
+  - component: {fileID: 2090067813}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3987,7 +3976,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiStateMachine: {fileID: 0}
-  farmField: {fileID: 946942665}
+  farmFields: []
+  currentFarmField: {fileID: 0}
   waterPosition: {fileID: 1629990102}
   homePosition: {fileID: 1642072206}
   movementSpeed: 1

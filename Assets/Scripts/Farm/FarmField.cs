@@ -24,7 +24,19 @@ public class FarmField : MonoBehaviour
 
     public Vector2 fieldPosition;
 
-    public Grid grid; // 그리드 시스템을 참조하는 변수
+    public Grid grid;
+
+    private AIStateManager aiStateManager;
+
+    private void Awake()
+    {
+        aiStateManager = FindObjectOfType<AIStateManager>();
+
+        if (aiStateManager != null)
+        {
+            aiStateManager.AddField(this);
+        }
+    }
 
     private void Start()
     {
