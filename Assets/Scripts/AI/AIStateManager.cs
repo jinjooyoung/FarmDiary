@@ -26,24 +26,25 @@ public class AIStateManager : MonoBehaviour
         currentWaterAmount = maxWaterAmount;  // 시작 시 최대 보유량으로 초기화
     }
 
-    public bool MoveToPosition(Vector2 target)
+    public bool MoveToPosition(Transform target)
     {
-        // 목표 위치로 이동
-        transform.position = Vector2.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
+        // 목표 위치로 이동 (필드의 정확한 Transform 위치 사용)
+        Vector2 targetPosition = target.position;
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
 
         // 목표 위치에 거의 도착했는지 확인
-        return Vector2.Distance(transform.position, target) < 0.1f;
+        return Vector2.Distance(transform.position, targetPosition) < 0.1f;
     }
 
     public void CheckSeed()
     {
-        farmField.CheckSeedPlanted(new Vector2(0, 0));  // 씨앗을 확인 하는 메서드
+        farmField.CheckSeedPlanted();  // 씨앗을 확인 하는 메서드
         Debug.Log("씨앗 유무를 확인 합니다");
     }
 
     public void WaterCrop()
     {
-        farmField.WaterCrop(new Vector2(0, 0));  // 밭의 특정 위치에 물을 줌
+        farmField.WaterCrop();  // 밭의 특정 위치에 물을 줌
         currentWaterAmount--;  // 물 사용
         Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
     }
@@ -52,7 +53,7 @@ public class AIStateManager : MonoBehaviour
     public void HarvestCrop()
     {
         // 작물을 수확하는 코드
-        farmField.Harvest(new Vector2(0, 0)); // 수확 메서드 호출
+        farmField.Harvest(); // 수확 메서드 호출
         Debug.Log("작물을 수확했습니다");
     }
 

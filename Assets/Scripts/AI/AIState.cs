@@ -21,15 +21,15 @@ public abstract class AIState
     // 상태 전환 조건을 체크하는 메서드
     protected void CheckTransitions()
     {
-        if (!aiStateManager.farmField.IsSeedPlanted(new Vector2(0, 0)))
+        if (!aiStateManager.farmField.IsSeedPlanted())
         {
             aiStateMachine.TransitionToState(new CheckSeedState(aiStateMachine));
         }
-        else if (aiStateManager.farmField.NeedsWater(new Vector2(0, 0)))
+        else if (aiStateManager.farmField.NeedsWater())
         {
             aiStateMachine.TransitionToState(new WateringState(aiStateMachine));
         }
-        else if (aiStateManager.farmField.IsReadyToHarvest(new Vector2(0, 0)))
+        else if (aiStateManager.farmField.IsReadyToHarvest())
         {
             aiStateMachine.TransitionToState(new HarvestingState(aiStateMachine));
         }
@@ -98,7 +98,7 @@ public class GoToWaterState : AIState
     public override void Update()
     {
         // 물 웅덩이에 도착했는지 확인
-        if (aiStateManager.MoveToPosition(aiStateManager.waterPosition.position))
+        if (aiStateManager.MoveToPosition(aiStateManager.waterPosition))
         {
             aiStateManager.RefuelWater();
             CheckTransitions();
@@ -132,10 +132,10 @@ public class WateringState : AIState
         }
 
         // 씨앗이 심어져 있고 물이 필요한지 체크
-        if (aiStateManager.farmField.IsSeedPlanted(new Vector2(0, 0)) && aiStateManager.farmField.NeedsWater(new Vector2(0, 0)))
+        if (aiStateManager.farmField.IsSeedPlanted() && aiStateManager.farmField.NeedsWater())
         {
             // 밭으로 이동 후 물을 줌
-            if (aiStateManager.MoveToPosition(aiStateManager.farmField.fieldPosition))
+            if (aiStateManager.MoveToPosition(aiStateManager.farmField.transform))
             {
                 aiStateManager.WaterCrop(); // 물 주기
                 CheckTransitions(); // 물을 준 후 상태 전환 체크
@@ -167,7 +167,7 @@ public class HarvestingState : AIState
     public override void Update()
     {
         // 밭에 도착했는지 확인
-        if (aiStateManager.MoveToPosition(aiStateManager.farmField.fieldPosition))
+        if (aiStateManager.MoveToPosition(aiStateManager.farmField.transform))
         {
             aiStateManager.HarvestCrop(); // 수확하기
             Debug.Log("작물을 수확했습니다.");
@@ -194,7 +194,7 @@ public class GoingHomeState : AIState
     public override void Update()
     {
         // 집으로 이동
-        if (aiStateManager.MoveToPosition(aiStateManager.homePosition.position))
+        if (aiStateManager.MoveToPosition(aiStateManager.homePosition))
         {
             Debug.Log("집에 도착했습니다.");
             aiStateMachine.TransitionToState(new IdleState(aiStateMachine)); // Idle 상태로 전환

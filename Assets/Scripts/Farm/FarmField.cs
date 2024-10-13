@@ -24,27 +24,53 @@ public class FarmField : MonoBehaviour
 
     public Vector2 fieldPosition;
 
-    public bool IsSeedPlanted(Vector2 position)
+    public Grid grid; // 그리드 시스템을 참조하는 변수
+
+    private void Start()
+    {
+        grid = FindObjectOfType<Grid>();
+
+        if (grid == null)
+        {
+            Debug.LogError("Grid 시스템을 찾을 수 없습니다!");
+            return;
+        }
+
+        // 현재 오브젝트의 월드 좌표에서 그리드 좌표로 변환
+        SetFieldPosition(transform.position);
+    }
+
+    // 그리드 위치 설정 메서드
+    public void SetFieldPosition(Vector3 worldPosition)
+    {
+        Vector3Int gridPosition = grid.WorldToCell(worldPosition);
+
+        // Vector3Int에서 x와 y 값을 추출하여 Vector2로 변환
+        fieldPosition = new Vector2(gridPosition.x, gridPosition.y);
+        Debug.Log($"밭 위치 설정됨: {fieldPosition}");
+    }
+
+    public bool IsSeedPlanted()
     {
         return seedPlantedState == SeedPlantedState.Yes;
     }
-    
-    public bool IsSeedPlantedNo(Vector2 position)
+
+    public bool IsSeedPlantedNo()
     {
-        return seedPlantedState == SeedPlantedState.No;
+        return !IsSeedPlanted();
     }
-    
-    public bool NeedsWater(Vector2 position)
+
+    public bool NeedsWater()
     {
         return cropState == CropState.NeedsWater;
     }
     
-    public bool IsReadyToHarvest(Vector2 position)
+    public bool IsReadyToHarvest()
     {
         return cropState == CropState.ReadyToHarvest;
     }
 
-    public void CheckSeedPlanted(Vector2 position)
+    public void CheckSeedPlanted()
     {
         if (seedPlantedState == SeedPlantedState.Yes)
         {
@@ -54,32 +80,32 @@ public class FarmField : MonoBehaviour
     }
 
     // 물을 주는 메서드 추가
-    public void WaterCrop(Vector2 position)
+    public void WaterCrop()
     {
-        if (IsSeedPlanted(position) && NeedsWater(position))
+        if (IsSeedPlanted() && NeedsWater())
         {
             cropState = CropState.Watered;  // 물을 준 상태로 변경
             Debug.Log("물을 줬습니다");
         }
-        else if (IsSeedPlanted(position) && cropState == CropState.Watered)
+        else if (IsSeedPlanted() && cropState == CropState.Watered)
         {
             Debug.Log("작물에 이미 물이 주어졌습니다.");
         }
-        else if (IsSeedPlantedNo(position) && cropState == CropState.Empty)
+        else if (IsSeedPlantedNo() && cropState == CropState.Empty)
         {
             Debug.Log("물을 줄 수 없습니다: 씨앗이 심어져 있지 않거나 물이 이미 뿌려져 있을 때");
         }
     }
 
     // 씨앗 심기 메서드
-    public void PlantSeed(Vector2 position)
+    public void PlantSeed()
     {
         // cropState가 Empty이고 seedPlantedState가 No일 때만 씨앗을 심을 수 있도록 변경
         if (cropState == CropState.Empty && seedPlantedState == SeedPlantedState.No)
         {
             cropState = CropState.SeedPlanted;
             seedPlantedState = SeedPlantedState.Yes;
-            CheckSeedPlanted(position); // 씨앗 심은 후 물이 필요한 상태로 설정
+            CheckSeedPlanted(); // 씨앗 심은 후 물이 필요한 상태로 설정
             Debug.Log("씨앗을 심었습니다.");
         }
         else
@@ -89,9 +115,9 @@ public class FarmField : MonoBehaviour
     }
     
     // 작물 수확 메서드 추가
-    public void Harvest(Vector2 position)
+    public void Harvest()
     {
-        if (IsReadyToHarvest(position))
+        if (IsReadyToHarvest())
         {
             cropState = CropState.Empty; // 수확 후 상태를 비워줌
             seedPlantedState = SeedPlantedState.No; // 씨앗 상태 초기화

@@ -8,15 +8,20 @@ public class FarmFieldClickHandler : MonoBehaviour
 
     private void Start()
     {
-        farmField = gameObject.GetComponent<FarmField>();
+        // TryGetComponent를 사용하여 안전하게 FarmField 컴포넌트를 가져옴
+        if (!gameObject.TryGetComponent<FarmField>(out farmField))
+        {
+            Debug.LogError("FarmField 컴포넌트를 찾을 수 없습니다!");
+        }
     }
 
     private void Update()
     {
-        ClickMouse();
+        HandleMouseClick();
     }
-    
-    private void ClickMouse()  // 마우스 클릭 이벤트
+
+    // 마우스 클릭 이벤트 처리 메서드
+    private void HandleMouseClick()
     {
         if (Input.GetMouseButtonDown(0))  // 좌클릭 체크
         {
@@ -25,17 +30,31 @@ public class FarmFieldClickHandler : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Debug.Log("클릭한 오브젝트: " + hit.transform.gameObject.name);
-                // 클릭한 오브젝트가 밭인 경우에만 씨앗 심기
-                if (hit.transform.gameObject == gameObject)  // 현재 스크립트가 붙어 있는 오브젝트와 비교
+                GameObject clickedObject = hit.transform.gameObject;
+                Debug.Log($"클릭한 오브젝트: {clickedObject.name}");
+
+                // 클릭한 오브젝트가 현재 스크립트가 붙어 있는 밭(FarmField)인지 확인
+                if (clickedObject == gameObject)
                 {
-                    farmField.PlantSeed(farmField.fieldPosition);  // 현재 밭의 위치에 씨앗을 심음
-                    Debug.Log("씨앗을 심었습니다: " + farmField.fieldPosition);
+                    // FarmField가 유효한지 확인 후 씨앗 심기
+                    if (farmField != null)
+                    {
+                        farmField.PlantSeed();  // 현재 밭의 위치에 씨앗을 심음
+                        Debug.Log($"씨앗을 심었습니다: {farmField.fieldPosition}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("FarmField가 없습니다.");
+                    }
                 }
                 else
                 {
                     Debug.Log("밭을 클릭하지 않았습니다.");
                 }
+            }
+            else
+            {
+                Debug.Log("아무 것도 클릭되지 않았습니다.");
             }
         }
     }
