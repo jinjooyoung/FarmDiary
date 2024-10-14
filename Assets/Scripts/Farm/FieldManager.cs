@@ -44,6 +44,38 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    // ID에 할당된 구역의 모든 그리드 셀 좌표를 담은 딕셔너리를 반환하는 메서드
+    public Dictionary<int, List<Vector3Int>> AreasList(int ID)
+    {
+        // 반환할 딕셔너리
+        Dictionary<int, List<Vector3Int>> result = new Dictionary<int, List<Vector3Int>>();
+
+        // 키가 있는지 확인하고, 존재한다면 그 밸류값을 area에 저장
+        if (fieldAreas.TryGetValue(ID, out (Vector3Int start, Vector3Int end) area))
+        {
+            // 반환할 딕셔너리의 밸류값으로 사용할 리스트 선언
+            List<Vector3Int> areaCoordinates = new List<Vector3Int>();
+
+            // 범위 내의 모든 좌표를 계산
+            for (int x = area.start.x; x <= area.end.x; x++)
+            {
+                for (int y = area.start.y; y <= area.end.y; y++)
+                {
+                    areaCoordinates.Add(new Vector3Int(x, y, 0));
+                }
+            }
+
+            // 결과 딕셔너리에 추가
+            result.Add(ID, areaCoordinates);
+        }
+        else
+        {
+            Debug.Log($"ID : {ID} 가 존재하지 않습니다.");
+        }
+
+        return result;
+    }
+
     // 특정 필드를 해금하는 메서드
     public void StartUnlockField(int fieldID)
     {
