@@ -87,7 +87,7 @@ public class PreviewSystem : MonoBehaviour
     }
 
     // 설치 가능 유무(bool 값)에 따라 커서 색깔을 변경하는 함수
-    private void ApplyFeedbackToCursor(bool validity)
+    public void ApplyFeedbackToCursor(bool validity)
     {
         Color c = validity ? Color.white : Color.red;
         cellIndicatorRenderer.color = c;

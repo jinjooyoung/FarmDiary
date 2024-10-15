@@ -7,6 +7,10 @@ public class PlacementSystem : MonoBehaviour
 {
     [SerializeField]
     private InputManager inputManager;
+
+    [SerializeField]
+    private FieldManager fieldManager;
+
     [SerializeField]
     private Grid grid;
 
@@ -70,7 +74,35 @@ public class PlacementSystem : MonoBehaviour
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();      // 현재 마우스 위치
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);          // 현재 그리드 위치
 
+        int fieldID = GetFieldIDFromPosition(gridPosition);
+
+        // FieldManager를 통해 해당 필드가 해금되었는지 확인
+        if (!fieldManager.IsFieldUnlocked(fieldID))
+        {
+            preview.ApplyFeedbackToCursor(false);
+            return;
+        }
+
         buildingState.OnAction(gridPosition);       // 해당 그리드 위치에 오브젝트 설치 (실제 구현)
+    }
+
+    private int GetFieldIDFromPosition(Vector3Int position)
+    {
+        int x = position.x;
+
+        // 중앙 필드 ID는 0
+        if (x >= -18 && x <= 17)
+            return 0;
+
+        // 왼쪽 필드 ID 계산 (ID : -1은 가로가 9칸, 이후는 10칸씩)
+        if (x < -18)
+            return -((Mathf.Abs(x) - 19) / 10 + 1);
+
+        // 오른쪽 필드 ID 계산 (ID : 1은 가로가 9칸, 이후는 10칸씩)
+        if (x > 17)
+            return (x - 18) / 10 + 1;
+
+        return 0;  // 기본값 (필요한 경우 조정)
     }
 
     // 선택된 (설치할 예정의) 오브젝트의 사이즈를 받아와서 CanPlaceObjectAt로 넘겨, 설치 가능한지 bool값 리턴
@@ -105,6 +137,12 @@ public class PlacementSystem : MonoBehaviour
 
         if (lastDetectedPosition != gridPosition)       // 불필요한 업데이트 방지를 위해 마우스가 움직였을 때만 업데이트
         {
+            int fieldID = GetFieldIDFromPosition(gridPosition);
+
+            if (!fieldManager.IsFieldUnlocked(fieldID))
+            {
+                preview.ApplyFeedbackToCursor(false);
+            }
             buildingState.UpdateState(gridPosition);    // 프리뷰 오브젝트 스테이트 업데이트
             lastDetectedPosition = gridPosition;
         }
