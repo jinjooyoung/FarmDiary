@@ -29,3 +29,15 @@ MonoBehaviour:
     <ID>k__BackingField: 3
     <Size>k__BackingField: {x: 4, y: 4}
     <Prefab>k__BackingField: {fileID: 6738069917117409528, guid: 4c42edbd1f890964ab3416926486d5b6, type: 3}
+  - <Name>k__BackingField: blueberry_0
+    <ID>k__BackingField: 10
+    <Size>k__BackingField: {x: 1, y: 2}
+    <Prefab>k__BackingField: {fileID: 5160405572526979419, guid: c6da80de0cfc1f7478ae864fb612ce44, type: 3}
+  - <Name>k__BackingField: Building_01_3x4
+    <ID>k__BackingField: 11
+    <Size>k__BackingField: {x: 3, y: 4}
+    <Prefab>k__BackingField: {fileID: 5709796660003245508, guid: bdbf5bdd8ad15334d9b2fe2f3433a365, type: 3}
+  - <Name>k__BackingField: blueberry_1
+    <ID>k__BackingField: 12
+    <Size>k__BackingField: {x: 1, y: 2}
+    <Prefab>k__BackingField: {fileID: 7163438730632182222, guid: d55d5219fcb293149a2816c3bc3144d5, type: 3}
