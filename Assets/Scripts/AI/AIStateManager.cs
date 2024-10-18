@@ -13,11 +13,14 @@ public class AIStateManager : MonoBehaviour
     public Transform homePosition;   // 집의 위치 추가
 
     private Animator _animator;
+    public SpriteRenderer _spriteRenderer;
 
     public float movementSpeed = 2f;  // AI 이동 속도
 
     public int maxWaterAmount = 5;    // 물 최대 보유량 추가
     public int currentWaterAmount;    // 현재 물 보유량
+
+    private bool isWatering = false;
 
     private void Awake()
     {
@@ -36,8 +39,13 @@ public class AIStateManager : MonoBehaviour
 
     private void Start()
     {
-        // 자식 오브젝트에서 Animator 컴포넌트를 찾기
         _animator = GetComponentInChildren<Animator>();
+
+        Transform playerChild = transform.Find("Character1");
+        if (playerChild != null)
+        {
+            _spriteRenderer = playerChild.GetComponent<SpriteRenderer>();
+        }
     }
 
     public bool MoveToPosition(Transform target)
@@ -45,19 +53,19 @@ public class AIStateManager : MonoBehaviour
         Vector2 targetPosition = target.position;
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
 
+        _spriteRenderer.flipX = targetPosition.x > transform.position.x;
 
         if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
         {
-            _animator.SetBool("IsMove", false); // 도착했을 때 애니메이션 종료
+            _animator.SetBool("IsMove", false);
             return true;
         }
         else
         {
-            _animator.SetBool("IsMove", true); // 이동 중일 때 애니메이션 작동
+            _animator.SetBool("IsMove", true);
             return false;
         }
     }
-
 
     public void CheckSeed()
     {
@@ -65,6 +73,7 @@ public class AIStateManager : MonoBehaviour
         {
             if (field.IsSeedPlanted()) // 씨앗이 심어졌는지 확인
             {
+                currentFarmField = field;
                 Debug.Log($"씨앗이 심어진 밭: {field.name}");
                 MoveToPosition(field.transform); // 해당 밭으로 이동
                 return;
@@ -75,21 +84,37 @@ public class AIStateManager : MonoBehaviour
 
     public void WaterCrop()
     {
-        if (currentFarmField != null && currentWaterAmount > 0)
+        if (currentFarmField != null && currentWaterAmount > 0 && !isWatering)
         {
-            currentFarmField.WaterCrop();  // 현재 밭에 물 주기
-            currentWaterAmount--;
-            Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
+            StartCoroutine(WaterRoutine());
         }
         else if (currentWaterAmount <= 0)
         {
             Debug.Log("물이 부족합니다. 물을 채워야 합니다.");
             RefuelWater();
         }
+        else if (isWatering)
+        {
+            Debug.Log("이미 물을 주고 있습니다.");
+        }
         else
         {
             Debug.Log("작물이 없습니다.");
         }
+    }
+
+    private IEnumerator WaterRoutine()
+    {
+        isWatering = true;
+        _animator.SetBool("IsWatering", true);
+        yield return new WaitForSeconds(1.5f);
+
+        currentFarmField.WaterCrop();
+        currentWaterAmount--;
+        Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
+
+        _animator.SetBool("IsWatering", false);
+        isWatering = false;
     }
 
     public void HarvestCrop()

@@ -8223,6 +8223,7 @@ MonoBehaviour:
   currentFarmField: {fileID: 0}
   waterPosition: {fileID: 1629990102}
   homePosition: {fileID: 1642072206}
+  _spriteRenderer: {fileID: 0}
   movementSpeed: 1
   maxWaterAmount: 5
   currentWaterAmount: 0

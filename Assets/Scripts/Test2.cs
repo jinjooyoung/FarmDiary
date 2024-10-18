@@ -46,9 +46,7 @@ public class Test2 : MonoBehaviour
     void Update()
     {
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();      // 현재 마우스 위치
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition);          // 현재 그리드 위치
-
-        
+        Vector3Int gridPosition = grid.WorldToCell(mousePosition);          // 현재 그리드 위치        
 
         if (Input.GetKeyDown(KeyCode.E))        // 설치된 오브젝트의 정보를 받아와서 Debug로 출력
         {
