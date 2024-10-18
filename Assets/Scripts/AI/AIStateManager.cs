@@ -12,6 +12,8 @@ public class AIStateManager : MonoBehaviour
     public Transform waterPosition;  // 물 웅덩이 위치
     public Transform homePosition;   // 집의 위치 추가
 
+    private Animator _animator;
+
     public float movementSpeed = 2f;  // AI 이동 속도
 
     public int maxWaterAmount = 5;    // 물 최대 보유량 추가
@@ -32,15 +34,30 @@ public class AIStateManager : MonoBehaviour
         farmFields.AddRange(fields);
     }
 
+    private void Start()
+    {
+        // 자식 오브젝트에서 Animator 컴포넌트를 찾기
+        _animator = GetComponentInChildren<Animator>();
+    }
+
     public bool MoveToPosition(Transform target)
     {
-        // 목표 위치로 이동 (필드의 정확한 Transform 위치 사용)
         Vector2 targetPosition = target.position;
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
 
-        // 목표 위치에 거의 도착했는지 확인
-        return Vector2.Distance(transform.position, targetPosition) < 0.1f;
+
+        if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
+        {
+            _animator.SetBool("IsMove", false); // 도착했을 때 애니메이션 종료
+            return true;
+        }
+        else
+        {
+            _animator.SetBool("IsMove", true); // 이동 중일 때 애니메이션 작동
+            return false;
+        }
     }
+
 
     public void CheckSeed()
     {
