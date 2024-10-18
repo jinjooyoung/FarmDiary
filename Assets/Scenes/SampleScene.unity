@@ -970,6 +970,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -4.5
       objectReference: {fileID: 0}
+    - target: {fileID: 52000472032190414, guid: 502c9924be1b55e4887880762919941f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3735326107010420749, guid: 502c9924be1b55e4887880762919941f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1033,6 +1037,10 @@ PrefabInstance:
     - target: {fileID: 7663952579977179112, guid: 502c9924be1b55e4887880762919941f, type: 3}
       propertyPath: m_Name
       value: 2x2_Field
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663952579977179112, guid: 502c9924be1b55e4887880762919941f, type: 3}
+      propertyPath: m_TagString
+      value: FarmField
       objectReference: {fileID: 0}
     - target: {fileID: 8356641336245445474, guid: 502c9924be1b55e4887880762919941f, type: 3}
       propertyPath: grid
@@ -8178,7 +8186,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2090067810}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -8203,8 +8211,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: 0, y: 0.79}
+  m_Size: {x: 1.45, y: 1.65}
   m_Direction: 0
 --- !u!114 &2090067815
 MonoBehaviour:

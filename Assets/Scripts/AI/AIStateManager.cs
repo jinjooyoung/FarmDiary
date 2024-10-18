@@ -84,9 +84,18 @@ public class AIStateManager : MonoBehaviour
 
     public void WaterCrop()
     {
+        // AI가 현재 밭에 도착했는지 확인하고, 도착하지 않았다면 물을 주지 않음
         if (currentFarmField != null && currentWaterAmount > 0 && !isWatering)
         {
-            StartCoroutine(WaterRoutine());
+            // 밭에 도착했는지 확인
+            if (Vector2.Distance(transform.position, currentFarmField.transform.position) < 0.1f)
+            {
+                StartCoroutine(WaterRoutine());
+            }
+            else
+            {
+                Debug.Log("현재 밭에 도착하지 않았습니다. 이동 중입니다.");
+            }
         }
         else if (currentWaterAmount <= 0)
         {
@@ -102,6 +111,7 @@ public class AIStateManager : MonoBehaviour
             Debug.Log("작물이 없습니다.");
         }
     }
+
 
     private IEnumerator WaterRoutine()
     {
