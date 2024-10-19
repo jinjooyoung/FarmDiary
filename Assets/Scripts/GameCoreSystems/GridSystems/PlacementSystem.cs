@@ -65,6 +65,29 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
+    public void StartCropPlant(int ID)
+    {
+        StopPlacement();
+        gridVisualization.SetActive(true);              // 전체 그리드 UI
+        buildingState = new CropPlacementState(ID,
+                                           grid,
+                                           preview,
+                                           database,
+                                           placedOBJData,
+                                           objectPlacer);
+        inputManager.OnClicked += PlaceStructure;       // 설치 중일때 항상 입력을 받을 수 있도록 이벤트에 할당
+        inputManager.OnExit += StopPlacement;
+    }
+
+    public void StartCropRemoving()
+    {
+        StopPlacement();
+        gridVisualization.SetActive(true);
+        buildingState = new CropRemovingState(grid, preview, placedOBJData, objectPlacer);
+        inputManager.OnClicked += PlaceStructure;       // 삭제 중일때 항상 입력을 받을 수 있도록 이벤트에 할당
+        inputManager.OnExit += StopPlacement;
+    }
+
     private void PlaceStructure()
     {
         if (inputManager.IsPointerOverUI())     // UI 클릭중 게임 오브젝트 상호작용 무시 (UI를 클릭할 때 클릭한 위치의 뒤에 무언가 설치가 되지 않도록)
@@ -74,6 +97,7 @@ public class PlacementSystem : MonoBehaviour
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();      // 현재 마우스 위치
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);          // 현재 그리드 위치
 
+        // 현재 커서가 몇번째 필드에 위치해있는지 확인
         int fieldID = GetFieldIDFromPosition(gridPosition);
 
         // FieldManager를 통해 해당 필드가 해금되었는지 확인

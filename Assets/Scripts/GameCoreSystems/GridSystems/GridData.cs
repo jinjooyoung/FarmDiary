@@ -7,6 +7,7 @@ public class GridData
 {
     // 그리드 셀의 위치(Vector3Int)를 키로 사용하고, 그 위치에 배치된 오브젝트의 정보
     public Dictionary<Vector3Int, PlacementData> placedObjects = new();
+    public Dictionary<Vector3Int, PlacementData> placedCrops = new();
 
     // 설치할 오브젝트의 정보를 저장하고 한 번 더 설치 가능한지 체크하는 메서드
     public void AddObjectAt(Vector3Int gridPosition,
@@ -28,6 +29,30 @@ public class GridData
                 throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
             }
             placedObjects[pos] = data;
+            // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
+        }
+    }
+
+    // 설치할 작물의 정보를 저장하고 한 번 더 설치 가능한지 체크하는 메서드
+    public void AddCropAt(Vector3Int gridPosition,
+                            Vector2Int objectSize,
+                            int ID,
+                            int placedObjectIndex)
+    {
+        // 설치할 위치의 그리드 포지션을 받아와서 리스트에 저장
+        List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+        // 설치할 오브젝트의 정보를 저장
+        PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex);
+
+        // foreach 반복을 돌면서 이미 차지된 칸이 있는지 확인
+        // 어짜피 이 함수를 호출하는 과정에서 설치 가능 유무를 체크하지만 한 번 더 체크함으로서 혹시 모를 버그를 예방
+        foreach (var pos in positionToOccupy)
+        {
+            if (placedCrops.ContainsKey(pos))
+            {
+                throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+            }
+            placedCrops[pos] = data;
             // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
         }
     }
@@ -80,6 +105,14 @@ public class GridData
         foreach (var pos in placedObjects[gridPosition].occupiedPositions)
         {
             placedObjects.Remove(pos);
+        }
+    }
+
+    internal void RemoveCropAt(Vector3Int gridPosition)
+    {
+        foreach (var pos in placedCrops[gridPosition].occupiedPositions)
+        {
+            placedCrops.Remove(pos);
         }
     }
 }
