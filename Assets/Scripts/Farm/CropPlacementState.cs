@@ -53,6 +53,15 @@ public class CropPlacementState : IBuildingState
 
         int index = cropPlacer.PlaceObject(database.objectsData[selectedCropIndex].Prefab, grid.CellToWorld(gridPosition));
 
+        // CropGrowthManager에 등록
+        GameObject placedCrop = cropPlacer.placedGameObjects[index];    // 설치된 오브젝트 가져오기
+        Crop cropScript = placedCrop.GetComponent<Crop>();              // Crop 스크립트 가져오기
+
+        // Initialize 메서드 호출 -> 성장 시간 등 초기화
+        cropScript.Initialize(database.objectsData[selectedCropIndex].GrowthTimes);
+
+        CropGrowthManager.Instance.RegisterCrop(cropScript);  // 성장 매니저에 등록
+
         placedCropData.AddCropAt(gridPosition, database.objectsData[selectedCropIndex].Size,
             database.objectsData[selectedCropIndex].ID, index);
 

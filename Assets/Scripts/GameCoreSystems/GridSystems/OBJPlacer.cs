@@ -9,7 +9,7 @@ public class OBJPlacer : MonoBehaviour
     private PreviewSystem preview;
 
     [SerializeField]
-    private List<GameObject> placedGameObjects = new(); // 설치된 오브젝트들
+    public List<GameObject> placedGameObjects = new(); // 설치된 오브젝트들
 
     // 실제 설치 구현
     public int PlaceObject(GameObject prefab, Vector3 position)     // 설치할 오브젝트 프리팹과 설치할 그리드 위치를 받아옴

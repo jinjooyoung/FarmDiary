@@ -23,4 +23,11 @@ public class ObjectData
 
     [field: SerializeField]
     public GameObject Prefab { get; private set; }      // 리소스 프리팹
+
+    // 작물 전용 속성 (작물이 아닌 경우 비워두거나 기본값으로)
+    [field: SerializeField]
+    public bool IsCrop { get; private set; } = false; // 작물 여부
+
+    [field: SerializeField]
+    public float[] GrowthTimes { get; private set; } = new float[4]; // 작물의 단계별 성장 시간
 }
