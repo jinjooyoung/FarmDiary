@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlacementSystem : MonoBehaviour
 {
@@ -33,6 +35,8 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private OBJPlacer objectPlacer;
 
+    private int ID = -1;
+
 
     IBuildingState buildingState;
 
@@ -46,6 +50,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);              // 전체 그리드 UI
+        this.ID = ID;
         buildingState = new PlacementState(ID,
                                            grid,
                                            preview,
@@ -97,14 +102,26 @@ public class PlacementSystem : MonoBehaviour
         Vector2 mousePosition = inputManager.GetSelectedMapPosition();      // 현재 마우스 위치
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);          // 현재 그리드 위치
 
-        // 현재 커서가 몇번째 필드에 위치해있는지 확인
-        int fieldID = GetFieldIDFromPosition(gridPosition);
+        int selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
 
-        // FieldManager를 통해 해당 필드가 해금되었는지 확인
-        if (!fieldManager.IsFieldUnlocked(fieldID))
+        // 설치할 오브젝트가 차지하는 칸의 필드 ID가 담긴 리스트 (1개에서 2개니까)
+        List<int> IDs = GetFieldIDs(gridPosition, database.objectsData[selectedObjectIndex].Size);
+
+        if (IDs.Count == 1)
         {
-            preview.ApplyFeedbackToCursor(false);
-            return;
+            if (!fieldManager.IsFieldUnlocked(IDs[0]))
+            {
+                preview.ApplyFeedbackToCursor(false);
+                return;
+            }
+        }
+        else
+        {
+            if (!fieldManager.IsFieldUnlocked(IDs[0]) || !fieldManager.IsFieldUnlocked(IDs[1]))
+            {
+                preview.ApplyFeedbackToCursor(false);
+                return;
+            }
         }
 
         buildingState.OnAction(gridPosition);       // 해당 그리드 위치에 오브젝트 설치 (실제 구현)
@@ -129,12 +146,35 @@ public class PlacementSystem : MonoBehaviour
         return 0;  // 기본값 (필요한 경우 조정)
     }
 
-    // 선택된 (설치할 예정의) 오브젝트의 사이즈를 받아와서 CanPlaceObjectAt로 넘겨, 설치 가능한지 bool값 리턴
-    // PlacementState 스크립트로 이동한 메서드. 하지만 나중에 다시 옮겨올수도 있을 것 같아서 일단 주석으로 둠
-    /*private bool GetPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
+    private List<int> GetFieldIDs(Vector3Int mouseGridPosition, Vector2Int objectSize)
     {
-        return placedOBJData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-    }*/
+        // 마우스 위치로부터 좌표 리스트를 계산
+        List<Vector3Int> positions = CalculatePositions(mouseGridPosition, objectSize);
+
+        HashSet<int> uniqueFieldIDs = new HashSet<int>();
+
+        foreach (var position in positions)
+        {
+            int fieldID = GetFieldIDFromPosition(position);
+            uniqueFieldIDs.Add(fieldID); // 중복이 자동으로 제거
+        }
+
+        // HashSet을 List로 변환하여 반환
+        return uniqueFieldIDs.ToList();
+    }
+
+    private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
+    {
+        List<Vector3Int> returnVal = new();
+        for (int x = 0; x < objectSize.x; x++)
+        {
+            for (int y = 0; y < objectSize.y; y++)
+            {
+                returnVal.Add(gridPosition + new Vector3Int(x, y, 0));
+            }
+        }
+        return returnVal;
+    }
 
     private void StopPlacement()
     {
