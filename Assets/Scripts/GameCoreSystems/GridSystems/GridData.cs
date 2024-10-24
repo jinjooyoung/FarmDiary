@@ -6,7 +6,9 @@ using UnityEngine;
 public class GridData
 {
     // 그리드 셀의 위치(Vector3Int)를 키로 사용하고, 그 위치에 배치된 오브젝트의 정보
-    public Dictionary<Vector3Int, PlacementData> placedObjects = new();
+    public Dictionary<Vector3Int, PlacementData> placedFields = new();
+    public Dictionary<Vector3Int, PlacementData> placedDecos = new();
+    public Dictionary<Vector3Int, PlacementData> placedFacilities = new();
     public Dictionary<Vector3Int, PlacementData> placedCrops = new();
 
     // 설치할 오브젝트의 정보를 저장하고 한 번 더 설치 가능한지 체크하는 메서드
@@ -22,14 +24,41 @@ public class GridData
 
         // foreach 반복을 돌면서 이미 차지된 칸이 있는지 확인
         // 어짜피 이 함수를 호출하는 과정에서 설치 가능 유무를 체크하지만 한 번 더 체크함으로서 혹시 모를 버그를 예방
-        foreach (var pos in positionToOccupy)
+        if (ID < 5) // 밭 ID는 밭 딕셔너리에 추가
         {
-            if (placedObjects.ContainsKey(pos))
+            foreach (var pos in positionToOccupy)
             {
-                throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                if (placedFields.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                placedFields[pos] = data;
+                // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
             }
-            placedObjects[pos] = data;
-            // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
+        }
+        else if (ID >= 200 && ID < 500)     // 데코오브젝트 ID는 데코 딕셔너리에 추가
+        {
+            foreach (var pos in positionToOccupy)
+            {
+                if (placedDecos.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                placedDecos[pos] = data;
+                // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
+            }
+        }
+        else  // 그 외의 ID는 장비 오브젝트이므로 장비 딕셔너리에 저장 (작물 ID는 어짜피 밑에서 호출하기때문에)
+        {
+            foreach (var pos in positionToOccupy)
+            {
+                if (placedFacilities.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                placedFacilities[pos] = data;
+                // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
+            }
         }
     }
 
@@ -80,7 +109,7 @@ public class GridData
         // 저장된 칸들을 돌면서 그 위치가 이미 다른 오브젝트로 차지되어 있는지 계산
         foreach (var pos in positionToOccupy)
         {
-            if (placedObjects.ContainsKey(pos) || pos.y > -7)     // 한 칸이라도 이미 차지된 위치가 있으면 false를 반환하여 설치 불가능
+            if (placedFields.ContainsKey(pos) || pos.y > -7)     // 한 칸이라도 이미 차지된 위치가 있으면 false를 반환하여 설치 불가능
             {
                 return false;
             }
@@ -93,18 +122,18 @@ public class GridData
     // 여기에서 말하는 오브젝트 인덱스는 스크립터블오브젝트의 인덱스가 아닌 GridData에 설치할 때 마다 추가되는 리스트의 인덱스
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
-        if (placedObjects.ContainsKey(gridPosition) == false)       // 아무것도 설치되어 있지 않은 칸이라면 -1 리턴
+        if (placedFields.ContainsKey(gridPosition) == false)       // 아무것도 설치되어 있지 않은 칸이라면 -1 리턴
         {
             return -1;
         }
-        return placedObjects[gridPosition].PlacedObjectIndex;
+        return placedFields[gridPosition].PlacedObjectIndex;
     }
 
     internal void RemoveObjectAt(Vector3Int gridPosition)
     {
-        foreach (var pos in placedObjects[gridPosition].occupiedPositions)
+        foreach (var pos in placedFields[gridPosition].occupiedPositions)
         {
-            placedObjects.Remove(pos);
+            placedFields.Remove(pos);
         }
     }
 

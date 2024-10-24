@@ -57,10 +57,13 @@ public class CropPlacementState : IBuildingState
         GameObject placedCrop = cropPlacer.placedGameObjects[index];    // 설치된 오브젝트 가져오기
         Crop cropScript = placedCrop.GetComponent<Crop>();              // Crop 스크립트 가져오기
 
-        // Initialize 메서드 호출 -> 성장 시간 등 초기화
-        cropScript.Initialize(database.objectsData[selectedCropIndex].GrowthTimes);
+        if (cropScript != null)
+        {
+            cropScript.Initialize(database.objectsData[selectedCropIndex].GrowthTimes);
 
-        CropGrowthManager.Instance.RegisterCrop(cropScript);  // 성장 매니저에 등록
+            // CropGrowthManager에 등록
+            CropGrowthManager.Instance.RegisterCrop(cropScript);
+        }
 
         placedCropData.AddCropAt(gridPosition, database.objectsData[selectedCropIndex].Size,
             database.objectsData[selectedCropIndex].ID, index);
@@ -70,7 +73,7 @@ public class CropPlacementState : IBuildingState
 
     private bool IsFieldPlaced(Vector3Int gridPosition) // 해당 위치에 밭이 존재하면 true
     {
-        return placedCropData.placedObjects.ContainsKey(gridPosition);
+        return placedCropData.placedFields.ContainsKey(gridPosition);
     }
 
     private bool IsCropPlaced(Vector3Int gridPosition)  // 해당 위치에 작물이 존재하면 true

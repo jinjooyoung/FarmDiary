@@ -34,7 +34,7 @@ public class Test2 : MonoBehaviour
             return;
         }
 
-        if (placedData.placedObjects == null)
+        if (placedData.placedFields == null)
         {
             Debug.LogError("placedObjects is null!");
             return;
@@ -50,9 +50,9 @@ public class Test2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))        // 설치된 오브젝트의 정보를 받아와서 Debug로 출력
         {
-            if (placedData.placedObjects.ContainsKey(gridPosition))
+            if (placedData.placedFields.ContainsKey(gridPosition))
             {
-                PlacementData placementData = placedData.placedObjects[gridPosition];
+                PlacementData placementData = placedData.placedFields[gridPosition];
 
                 // placementData가 null인지 확인
                 if (placementData == null)
