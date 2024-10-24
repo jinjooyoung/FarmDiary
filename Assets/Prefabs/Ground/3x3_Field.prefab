@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 5439601367276035556}
   - component: {fileID: 2120924947679556775}
   - component: {fileID: 3820292327581074622}
-  - component: {fileID: 1908234111486018425}
   m_Layer: 0
   m_Name: 3x3 Field
   m_TagString: Untagged
@@ -180,15 +179,3 @@ MonoBehaviour:
   seedPlantedState: 1
   fieldPosition: {x: 0, y: 0}
   grid: {fileID: 0}
---- !u!114 &1908234111486018425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5170693385198703945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3238f28fa060e0e44a4ec1ca3a045205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

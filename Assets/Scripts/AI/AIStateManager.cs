@@ -9,6 +9,11 @@ public class AIStateManager : MonoBehaviour
     public List<FarmField> farmFields = new List<FarmField>(); // 모든 밭을 저장할 리스트
     public FarmField currentFarmField; // 현재 작업 중인 밭
 
+    public List<Crop> crop = new List<Crop>();
+    public Crop currentCrop;
+
+    private int currentSeedIndex = 0; // 현재 물을 주고 있는 씨앗의 인덱스
+
     public Transform waterPosition;  // 물 웅덩이 위치
     public Transform homePosition;   // 집의 위치 추가
 
@@ -35,6 +40,9 @@ public class AIStateManager : MonoBehaviour
         // 모든 FarmField 오브젝트를 찾아 리스트에 추가
         FarmField[] fields = FindObjectsOfType<FarmField>();
         farmFields.AddRange(fields);
+
+        Crop[] crops = FindObjectsOfType<Crop>();
+        crop.AddRange(crops);
     }
 
     private void Start()
@@ -82,13 +90,33 @@ public class AIStateManager : MonoBehaviour
         Debug.Log("심어진 씨앗이 없습니다.");
     }
 
-    public void WaterCrop()
+    public void WaterCropsInOrder()
+    {
+        if (currentSeedIndex < crop.Count)
+        {
+            currentCrop = crop[currentSeedIndex]; // 현재 인덱스의 씨앗 가져오기
+            MoveToPosition(currentCrop.transform); // 씨앗 위치로 이동
+
+            if (Vector2.Distance(transform.position, currentCrop.transform.position) < 0.1f)
+            {
+                WaterCrop(); // 물 주기
+                currentSeedIndex++; // 다음 씨앗으로 인덱스 증가
+            }
+        }
+        else
+        {
+            Debug.Log("모든 씨앗에 물을 주었습니다.");
+            currentSeedIndex = 0; // 리셋하여 다시 물 주기 시작
+        }
+    }
+
+    /*public void WaterCrop()
     {
         // AI가 현재 밭에 도착했는지 확인하고, 도착하지 않았다면 물을 주지 않음
-        if (currentFarmField != null && currentWaterAmount > 0 && !isWatering)
+        if (currentCrop != null && currentWaterAmount > 0 && !isWatering)
         {
             // 밭에 도착했는지 확인
-            if (Vector2.Distance(transform.position, currentFarmField.transform.position) < 0.1f)
+            if (Vector2.Distance(transform.position, currentCrop.transform.position) < 0.1f)
             {
                 StartCoroutine(WaterRoutine());
             }
@@ -110,8 +138,29 @@ public class AIStateManager : MonoBehaviour
         {
             Debug.Log("작물이 없습니다.");
         }
-    }
+    }*/
 
+    public void WaterCrop()
+    {
+        // AI가 현재 밭에 도착했는지 확인하고, 도착하지 않았다면 물을 주지 않음
+        if (currentCrop != null && currentWaterAmount > 0 && !isWatering)
+        {
+            StartCoroutine(WaterRoutine());
+        }
+        else if (currentWaterAmount <= 0)
+        {
+            Debug.Log("물이 부족합니다. 물을 채워야 합니다.");
+            RefuelWater();
+        }
+        else if (isWatering)
+        {
+            Debug.Log("이미 물을 주고 있습니다.");
+        }
+        else
+        {
+            Debug.Log("작물이 없습니다.");
+        }
+    }
 
     private IEnumerator WaterRoutine()
     {
@@ -150,5 +199,11 @@ public class AIStateManager : MonoBehaviour
     {
         farmFields.Add(newField);  // 새 밭 추가
         Debug.Log($"새로운 밭이 추가되었습니다: {newField.name}");
+    }
+
+    public void AddSeed(Crop newCrop)
+    {
+        crop.Add(newCrop);
+        Debug.Log($"새로운 씨앗이 추가되었습니다: {newCrop.name}");
     }
 }

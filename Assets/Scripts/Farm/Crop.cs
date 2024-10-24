@@ -10,6 +10,18 @@ public class Crop : MonoBehaviour
     private int currentStage = 0;  // 현재 작물의 성장 단계
     private float growthStartTime; // 성장이 시작된 시간
 
+    private AIStateManager aiStateManager;
+
+    private void Awake()
+    {
+        aiStateManager = FindObjectOfType<AIStateManager>();
+
+        if (aiStateManager != null)
+        {
+            aiStateManager.AddSeed(this);
+        }
+    }
+
     // 성장 시간을 초기화하고, 첫 성장 단계를 설정
     public void Initialize(float[] cropGrowthTimes)
     {

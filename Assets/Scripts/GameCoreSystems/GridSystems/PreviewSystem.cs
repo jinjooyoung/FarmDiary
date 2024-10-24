@@ -29,11 +29,11 @@ public class PreviewSystem : MonoBehaviour
         SetAlpha(renderer, 0.2f);                   // 프리뷰 상태에서 반투명하게 보이도록 알파값 변경
         cellIndicator.SetActive(true);              // 셀인디케이터가 보이도록 true
 
-        FarmFieldClickHandler farmFieldClickHandler = previewObject.GetComponentInChildren<FarmFieldClickHandler>();
+       /* FarmFieldClickHandler farmFieldClickHandler = previewObject.GetComponentInChildren<FarmFieldClickHandler>();
         if (farmFieldClickHandler != null)
         {
             farmFieldClickHandler.enabled = false;
-        }
+        }*/
 
         SpriteRenderer previewRenderer = previewObject.GetComponentInChildren<SpriteRenderer>();
         if (previewRenderer != null)
