@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FarmField : MonoBehaviour
 {
-    public enum SeedPlantedState
+    /*public enum SeedPlantedState
     {
         Yes,
         No
@@ -139,5 +139,5 @@ public class FarmField : MonoBehaviour
         {
             Debug.Log("작물을 수확할 수 없습니다: 수확할 준비가 되어 있지 않습니다.");
         }
-    }
+    }*/
 }

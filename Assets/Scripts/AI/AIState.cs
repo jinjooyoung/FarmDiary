@@ -21,17 +21,17 @@ public abstract class AIState
     // 상태 전환 조건을 체크하는 메서드
     protected void CheckTransitions()
     {
-        foreach (FarmField field in aiStateManager.farmFields)
+        foreach (Crop crops in aiStateManager.crop)
         {
-            if (field.IsSeedPlanted())
+            if (crops.IsSeedPlanted())
             {
-                aiStateManager.currentFarmField = field; // 현재 작업 중인 밭 설정
-                if (field.NeedsWater())
+                aiStateManager.currentCrop = crops; // 현재 작업 중인 밭 설정
+                if (crops.NeedsWater())
                 {
                     aiStateMachine.TransitionToState(new WateringState(aiStateMachine));
                     return;
                 }
-                else if (field.IsReadyToHarvest())
+                else if (crops.IsReadyToHarvest())
                 {
                     aiStateMachine.TransitionToState(new HarvestingState(aiStateMachine));
                     return;
@@ -132,9 +132,9 @@ public class WateringState : AIState
             return;
         }
 
-        if (aiStateManager.currentFarmField != null && aiStateManager.currentFarmField.NeedsWater())
+        if (aiStateManager.currentCrop != null && aiStateManager.currentCrop.NeedsWater())
         {
-            if (aiStateManager.MoveToPosition(aiStateManager.currentFarmField.transform))
+            if (aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
             {
                 aiStateManager.WaterCrop(); // 물 주기
                 CheckTransitions(); // 물을 준 후 상태 전환 체크
@@ -165,7 +165,7 @@ public class HarvestingState : AIState
 
     public override void Update()
     {
-        if (aiStateManager.currentFarmField != null && aiStateManager.MoveToPosition(aiStateManager.currentFarmField.transform))
+        if (aiStateManager.currentCrop != null && aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
         {
             aiStateManager.HarvestCrop(); // 수확하기
             aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine)); // 집으로 가는 상태로 전환

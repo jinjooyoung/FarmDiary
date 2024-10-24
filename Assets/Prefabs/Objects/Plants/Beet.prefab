@@ -217,6 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f591193ad46b33945a425dbf46627d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cropState: 0
+  seedPlantedState: 0
+  seedPosition: {x: 0, y: 0}
+  grid: {fileID: 0}
   growthStages:
   - {fileID: 6669457702461222419}
   - {fileID: 7156772106169904246}
