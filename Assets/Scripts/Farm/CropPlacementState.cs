@@ -61,6 +61,9 @@ public class CropPlacementState : IBuildingState
         {
             cropScript.Initialize(database.objectsData[selectedCropIndex].GrowthTimes);
 
+            // 초기화 이후 씨앗을 심어 상태를 설정
+            cropScript.PlantSeed();
+
             // CropGrowthManager에 등록
             CropGrowthManager.Instance.RegisterCrop(cropScript);
         }

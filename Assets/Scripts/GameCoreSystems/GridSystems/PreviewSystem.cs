@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Crop;
 
 public class PreviewSystem : MonoBehaviour
 {
@@ -25,15 +26,19 @@ public class PreviewSystem : MonoBehaviour
     {
         SpriteRenderer renderer = prefab.GetComponentInChildren<SpriteRenderer>();      // 스프라이트 렌더러를 받아옴
         previewObject = Instantiate(prefab);        // 프리뷰로 사용할 오브젝트를 생성
+                                                    
+        previewObject.tag = "Preview";              // 프리뷰 오브젝트에 "Preview" 태그 설정
+
+        Crop crop = previewObject.GetComponent<Crop>();
+        if (crop != null)
+        {
+            crop.isPreview = true;
+            crop.seedPlantedState = Crop.SeedPlantedState.No;
+        }
+
         PrepareCursor(size);                        // 커서의 사이즈를 선택한 오브젝트 크기에 맞게 조절
         SetAlpha(renderer, 0.2f);                   // 프리뷰 상태에서 반투명하게 보이도록 알파값 변경
         cellIndicator.SetActive(true);              // 셀인디케이터가 보이도록 true
-
-       /* FarmFieldClickHandler farmFieldClickHandler = previewObject.GetComponentInChildren<FarmFieldClickHandler>();
-        if (farmFieldClickHandler != null)
-        {
-            farmFieldClickHandler.enabled = false;
-        }*/
 
         SpriteRenderer previewRenderer = previewObject.GetComponentInChildren<SpriteRenderer>();
         if (previewRenderer != null)

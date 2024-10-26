@@ -13,8 +13,6 @@ public class Crop : MonoBehaviour
 
     public enum CropState
     {
-        Empty,
-        SeedPlanted,
         NeedsWater,
         ReadyToHarvest,
         Watered  // 물을 준 상태 추가
@@ -27,9 +25,11 @@ public class Crop : MonoBehaviour
 
     public Grid grid;
 
+    public bool isPreview;
+
     public GameObject[] growthStages; // 성장 단계별로 할당된 리소스 오브젝트들 (총 5개)
     private float[] growthTimes;  // 각 성장 단계에 필요한 시간
-    private int currentStage = 0;  // 현재 작물의 성장 단계
+    public int currentStage = 0;  // 현재 작물의 성장 단계
     private float growthStartTime; // 성장이 시작된 시간
 
     private AIStateManager aiStateManager;
@@ -73,11 +73,6 @@ public class Crop : MonoBehaviour
         return seedPlantedState == SeedPlantedState.Yes;
     }
 
-    public bool IsSeedPlantedNo()
-    {
-        return !IsSeedPlanted();
-    }
-
     public bool NeedsWater()
     {
         return cropState == CropState.NeedsWater;
@@ -92,58 +87,46 @@ public class Crop : MonoBehaviour
     {
         if (seedPlantedState == SeedPlantedState.Yes)
         {
-            // 씨앗이 심어진 상태일 때 물을 줄 수 있는 상태로 변경
-            if (currentStage == 0)
-            {
-                cropState = CropState.NeedsWater;
-                Debug.Log("물이 필요합니다");
-            }
-            else
-            {
-                cropState = CropState.ReadyToHarvest; // 성장 단계에 따라 상태 변경 (예: 1단계 이상일 경우)
-                Debug.Log("작물이 준비되었습니다.");
-            }
+            cropState = CropState.NeedsWater; // 씨앗이 심어지면 물이 필요한 상태로 설정
+            Debug.Log("씨앗이 심어졌습니다. 물이 필요합니다.");
         }
     }
 
-    // 물을 주는 메서드 추가
+    // 씨앗 심기 메서드
+    public void PlantSeed()
+    {
+        if (!isPreview)
+        {
+            cropState = CropState.NeedsWater; // 심은 후 물이 필요하게 설정
+            seedPlantedState = SeedPlantedState.Yes;
+            currentStage = 0;  // 초기 성장 단계 설정
+            growthStartTime = 0; // 초기화하여 성장이 멈추도록 설정
+
+            Debug.Log("씨앗을 심었습니다. 물이 필요합니다.");
+        }
+        else
+        {
+            Debug.Log("씨앗을 심을 수 없습니다: 이미 심어져 있습니다.");
+        }
+    }
+
+    // 물을 주는 메서드
     public void WaterCrop()
     {
-        // 씨앗이 심어져 있고, 성장 단계가 0일 때 물을 줄 수 있도록 변경
-        if (IsSeedPlanted() && currentStage == 0)
+        // 씨앗이 심어져 있고, 현재 단계가 0이며 `NeedsWater` 상태일 때만 물을 줄 수 있도록 설정
+        if (IsSeedPlanted() && currentStage == 0 && cropState == CropState.NeedsWater)
         {
             cropState = CropState.Watered;  // 물을 준 상태로 변경
-            Debug.Log("물을 줬습니다");
+            growthStartTime = Time.time;     // 물을 준 순간부터 성장을 시작하도록 설정
+            Debug.Log("물을 주었습니다. 성장을 재개합니다.");
         }
         else if (IsSeedPlanted() && cropState == CropState.Watered)
         {
             Debug.Log("작물에 이미 물이 주어졌습니다.");
         }
-        else if (IsSeedPlantedNo() && cropState == CropState.Empty)
-        {
-            Debug.Log("물을 줄 수 없습니다: 씨앗이 심어져 있지 않거나 물이 이미 뿌려져 있을 때");
-        }
         else
         {
-            Debug.Log("현재 물을 줄 수 없습니다: 작물이 성장 단계 0이 아닙니다.");
-        }
-    }
-
-
-    // 씨앗 심기 메서드
-    public void PlantSeed()
-    {
-        // cropState가 Empty이고 seedPlantedState가 No일 때만 씨앗을 심을 수 있도록 변경
-        if (cropState == CropState.Empty && seedPlantedState == SeedPlantedState.No)
-        {
-            cropState = CropState.SeedPlanted;
-            seedPlantedState = SeedPlantedState.Yes;
-            CheckSeedPlanted(); // 씨앗 심은 후 물이 필요한 상태로 설정
-            Debug.Log("씨앗을 심었습니다.");
-        }
-        else
-        {
-            Debug.Log("씨앗을 심을 수 없습니다: 이미 심어져 있습니다.");
+            Debug.Log("현재 물을 줄 수 없습니다: 씨앗이 심어져 있지 않거나 물이 필요하지 않은 상태입니다.");
         }
     }
 
@@ -152,7 +135,6 @@ public class Crop : MonoBehaviour
     {
         if (IsReadyToHarvest())
         {
-            cropState = CropState.Empty; // 수확 후 상태를 비워줌
             seedPlantedState = SeedPlantedState.No; // 씨앗 상태 초기화
             Debug.Log("작물을 수확했습니다.");
         }
@@ -177,13 +159,23 @@ public class Crop : MonoBehaviour
     // CropGrowthManager 스크립트에서 호출됨
     public void CheckGrowth(float currentTime)
     {
-        if (currentStage < 4 && currentTime - growthStartTime >= growthTimes[currentStage])
+        // 성장 단계가 0이고 `Watered` 상태가 아닐 경우 성장을 멈추도록 설정
+        if (currentStage == 0 && cropState != CropState.Watered)
+        {
+            Debug.Log("0단계에서 물이 필요합니다. 물을 줄 때까지 성장을 멈춥니다.");
+            return; // 물을 줄 때까지 성장 멈춤
+        }
+
+        // 물을 준 이후 성장 단계가 1 이상으로 진행되도록 설정
+        if (currentStage < growthStages.Length && currentTime - growthStartTime >= growthTimes[currentStage])
         {
             currentStage++;
             UpdateCropVisual();
             UpdateSortingLayer();
+            Debug.Log($"현재 성장 단계: {currentStage}");
         }
     }
+
 
     // 작물의 상태를 업데이트
     private void UpdateCropVisual()
