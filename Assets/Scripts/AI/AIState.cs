@@ -55,8 +55,6 @@ public class IdleState : AIState
 
     public override void Update()
     {
-        // Idle 상태에서의 행동 (예: 대기)
-        // 상태 전환 조건 체크
         CheckTransitions();
     }
 
@@ -152,7 +150,6 @@ public class WateringState : AIState
     }
 }
 
-
 // HarvestingState : 플레이어가 다 자란 작물을 재배하는 상태
 public class HarvestingState : AIState
 {
@@ -167,7 +164,7 @@ public class HarvestingState : AIState
     {
         if (aiStateManager.currentCrop != null && aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
         {
-            aiStateManager.HarvestCrop(); // 수확하기
+            aiStateManager.HarvestCrop();
             aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine)); // 집으로 가는 상태로 전환
         }
     }
@@ -177,7 +174,6 @@ public class HarvestingState : AIState
         Debug.Log("Harvesting 상태 종료");
     }
 }
-
 
 // GoingHomeState : 플레이어가 집(창고)로 돌아가는 상태
 public class GoingHomeState : AIState

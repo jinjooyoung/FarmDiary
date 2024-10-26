@@ -17,7 +17,7 @@ public class AIStateManager : MonoBehaviour
     public Transform waterPosition;  // 물 웅덩이 위치
     public Transform homePosition;   // 집의 위치 추가
 
-    private Animator _animator;
+    public Animator _animator;
     public SpriteRenderer _spriteRenderer;
 
     public float movementSpeed = 2f;  // AI 이동 속도
@@ -151,8 +151,19 @@ public class AIStateManager : MonoBehaviour
     {
         if (currentCrop != null)
         {
-            currentCrop.Harvest(); // 현재 밭에서 수확
-            Debug.Log($"작물을 수확했습니다: {currentCrop.name}");
+            if (currentCrop.IsReadyToHarvest())
+            {
+                currentCrop.Harvest(); // 현재 밭에서 수확
+                Debug.Log($"작물을 수확했습니다: {currentCrop.name}");
+
+                // 수확한 작물을 리스트에서 제거
+                crop.Remove(currentCrop);
+                currentCrop = null; // 현재 작물 초기화
+            }
+            else
+            {
+                Debug.Log("작물을 수확할 수 없습니다: 수확할 준비가 되어 있지 않습니다.");
+            }
         }
         else
         {
@@ -168,13 +179,7 @@ public class AIStateManager : MonoBehaviour
 
     public void AddSeed(Crop newCrop)
     {
-        if (newCrop.isPreview)
-        {
-            newCrop.isPreview = false;  // 프리뷰 태그 해제
-            Debug.Log($"프리뷰 해제된 씨앗이 추가되었습니다: {newCrop.name}");
-        }
-
-        crop.Add(newCrop);  // 씨앗 리스트에 추가
+        crop.Add(newCrop);
         Debug.Log($"새로운 씨앗이 추가되었습니다: {newCrop.name}");
     }
 }

@@ -135,8 +135,8 @@ public class Crop : MonoBehaviour
     {
         if (IsReadyToHarvest())
         {
-            seedPlantedState = SeedPlantedState.No; // 씨앗 상태 초기화
             Debug.Log("작물을 수확했습니다.");
+            Destroy(gameObject);
         }
         else
         {
@@ -159,6 +159,12 @@ public class Crop : MonoBehaviour
     // CropGrowthManager 스크립트에서 호출됨
     public void CheckGrowth(float currentTime)
     {
+        // 수확된 경우에는 아무 작업도 하지 않음
+        if (cropState == CropState.ReadyToHarvest)
+        {
+            return;
+        }
+
         // 성장 단계가 0이고 `Watered` 상태가 아닐 경우 성장을 멈추도록 설정
         if (currentStage == 0 && cropState != CropState.Watered)
         {
@@ -173,9 +179,15 @@ public class Crop : MonoBehaviour
             UpdateCropVisual();
             UpdateSortingLayer();
             Debug.Log($"현재 성장 단계: {currentStage}");
+
+            // 성장 단계가 마지막 단계인 경우 ReadyToHarvest 상태로 설정
+            if (currentStage == 4)  // 배열 마지막 단계 확인
+            {
+                cropState = CropState.ReadyToHarvest;
+                Debug.Log("작물이 다 자라서 수확할 준비가 되었습니다.");
+            }
         }
     }
-
 
     // 작물의 상태를 업데이트
     private void UpdateCropVisual()
