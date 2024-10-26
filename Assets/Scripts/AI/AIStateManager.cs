@@ -58,7 +58,8 @@ public class AIStateManager : MonoBehaviour
 
     public bool MoveToPosition(Transform target)
     {
-        Vector2 targetPosition = target.position;
+        // 목표 위치를 기존 위치에서 오른쪽으로 0.8만큼 이동
+        Vector2 targetPosition = new Vector2(target.position.x + 0.6f, target.position.y);
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
 
         _spriteRenderer.flipX = targetPosition.x > transform.position.x;
