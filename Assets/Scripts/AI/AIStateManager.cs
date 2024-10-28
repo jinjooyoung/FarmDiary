@@ -6,9 +6,6 @@ public class AIStateManager : MonoBehaviour
 {
     public AIStateMachine aiStateMachine; // AIStateMachine에 대한 참조
 
-    /*public List<FarmField> farmFields = new List<FarmField>(); // 모든 밭을 저장할 리스트
-    public FarmField currentFarmField; // 현재 작업 중인 밭*/
-
     public List<Crop> crop = new List<Crop>();
     public Crop currentCrop;
 
@@ -26,6 +23,7 @@ public class AIStateManager : MonoBehaviour
     public int currentWaterAmount;    // 현재 물 보유량
 
     private bool isWatering = false;
+    private bool isMaking = false;
 
     private void Awake()
     {
@@ -36,10 +34,6 @@ public class AIStateManager : MonoBehaviour
         }
 
         currentWaterAmount = maxWaterAmount;  // 시작 시 최대 보유량으로 초기화
-
-        // 모든 FarmField 오브젝트를 찾아 리스트에 추가
-        /*FarmField[] fields = FindObjectsOfType<FarmField>();
-        farmFields.AddRange(fields);*/
 
         Crop[] crops = FindObjectsOfType<Crop>();
         crop.AddRange(crops);
@@ -92,26 +86,6 @@ public class AIStateManager : MonoBehaviour
         Debug.Log("심어진 씨앗이 없거나 모든 씨앗이 프리뷰 상태입니다.");
     }
 
-    public void WaterCropsInOrder()
-    {
-        if (currentSeedIndex < crop.Count)
-        {
-            currentCrop = crop[currentSeedIndex]; // 현재 인덱스의 씨앗 가져오기
-            bool hasReached = MoveToPosition(currentCrop.transform); // 씨앗 위치로 이동 및 도착 여부 확인
-
-            if (hasReached && currentCrop.currentStage == 0) // 이동이 완료된 경우 및 성장 단계가 0일 때
-            {
-                WaterCrop(); // 물 주기
-                currentSeedIndex++; // 다음 씨앗으로 인덱스 증가
-            }
-        }
-        else
-        {
-            Debug.Log("모든 씨앗에 물을 주었습니다.");
-            currentSeedIndex = 0; // 리셋하여 다시 물 주기 시작
-        }
-    }
-
     public void WaterCrop()
     {
         // 현재 작물이 성장 단계 0, 물 필요 상태이고 물이 충분할 때만 물을 주도록 수정
@@ -150,26 +124,42 @@ public class AIStateManager : MonoBehaviour
 
     public void HarvestCrop()
     {
-        if (currentCrop != null)
+        if (currentCrop != null && currentCrop.IsReadyToHarvest())
         {
-            if (currentCrop.IsReadyToHarvest())
+            if (!isMaking)
             {
-                currentCrop.Harvest(); // 현재 밭에서 수확
-                Debug.Log($"작물을 수확했습니다: {currentCrop.name}");
-
-                // 수확한 작물을 리스트에서 제거
-                crop.Remove(currentCrop);
-                currentCrop = null; // 현재 작물 초기화
-            }
-            else
-            {
-                Debug.Log("작물을 수확할 수 없습니다: 수확할 준비가 되어 있지 않습니다.");
+                StartCoroutine(HarvestRoutine()); // 수확 루틴 시작
             }
         }
         else
         {
-            Debug.Log("작물이 없습니다.");
+            Debug.Log("작물을 수확할 수 없습니다: 수확할 준비가 되어 있지 않습니다.");
         }
+    }
+
+    private IEnumerator HarvestRoutine()
+    {
+        isMaking = true;
+        _animator.SetBool("IsMaking", true); // 수확 애니메이션 시작
+        yield return new WaitForSeconds(5f); // 애니메이션 대기 시간 설정
+
+        if (currentCrop != null)
+        {
+            currentCrop.Harvest();
+            Debug.Log($"작물을 수확했습니다: {currentCrop.name}");
+
+            crop.Remove(currentCrop);  // 수확 후 리스트에서 제거
+        }
+
+        RemoveMissingCrops(); // 리스트에서 Missing 항목 제거
+
+        // 현재 작물 갱신: 남아있는 첫 번째 작물로 업데이트
+        currentCrop = crop.Count > 0 ? crop[0] : null;
+
+        _animator.SetBool("IsMaking", false); // 애니메이션 종료
+        isMaking = false;
+
+        MoveToPosition(homePosition); // 집으로 이동
     }
 
     public void RefuelWater()
@@ -182,5 +172,10 @@ public class AIStateManager : MonoBehaviour
     {
         crop.Add(newCrop);
         Debug.Log($"새로운 씨앗이 추가되었습니다: {newCrop.name}");
+    }
+
+    private void RemoveMissingCrops()
+    {
+        crop.RemoveAll(c => c == null); // Null 또는 Missing된 작물 제거
     }
 }

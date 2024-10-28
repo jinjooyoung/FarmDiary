@@ -25,7 +25,7 @@ public abstract class AIState
         {
             if (crops.IsSeedPlanted())
             {
-                aiStateManager.currentCrop = crops; // 현재 작업 중인 밭 설정
+                aiStateManager.currentCrop = crops; // 현재 작업 중인 씨앗 설정
                 if (crops.NeedsWater())
                 {
                     aiStateMachine.TransitionToState(new WateringState(aiStateMachine));
@@ -162,10 +162,13 @@ public class HarvestingState : AIState
 
     public override void Update()
     {
-        if (aiStateManager.currentCrop != null && aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
+        if (aiStateManager.currentCrop != null && aiStateManager.currentCrop.IsReadyToHarvest())
         {
-            aiStateManager.HarvestCrop();
-            aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine)); // 집으로 가는 상태로 전환
+            if (aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
+            {
+                aiStateManager.HarvestCrop();
+                aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine)); // 집으로 가는 상태로 전환
+            }
         }
     }
 
