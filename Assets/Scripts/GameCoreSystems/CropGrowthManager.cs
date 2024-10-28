@@ -29,6 +29,15 @@ public class CropGrowthManager : MonoBehaviour
     // 리스트에 작물을 추가하는 메서드
     public void RegisterCrop(Crop crop)
     {
+        for (int i = 0; i < crops.Count; i++)
+        {
+            if (crops[i] == null)
+            {
+                crops[i] = crop;
+                return;
+            }
+        }
+
         crops.Add(crop);
     }
 

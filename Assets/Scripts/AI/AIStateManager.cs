@@ -25,6 +25,12 @@ public class AIStateManager : MonoBehaviour
     private bool isWatering = false;
     private bool isMaking = false;
 
+    [SerializeField]
+    private GridData data;
+
+    [SerializeField]
+    private PlacementSystem placementSystem;
+
     private void Awake()
     {
         aiStateMachine = GetComponent<AIStateMachine>(); // AIStateMachine을 참조
@@ -41,6 +47,7 @@ public class AIStateManager : MonoBehaviour
 
     private void Start()
     {
+        data = placementSystem.placedOBJData;
         _animator = GetComponentInChildren<Animator>();
 
         Transform playerChild = transform.Find("Character1");
@@ -128,6 +135,16 @@ public class AIStateManager : MonoBehaviour
         {
             if (!isMaking)
             {
+                Vector3Int pos = ConvertToVector3Int(currentCrop.seedPosition);
+                if (this.data.placedCrops.ContainsKey(pos) == true)
+                {
+                    this.data.placedCrops.Remove(pos);
+                    Debug.Log("작물 정보 삭제가 성공하였습니다.");
+                }
+                else
+                {
+                    Debug.Log("작물 정보 삭제가 실패하였습니다.");
+                }
                 StartCoroutine(HarvestRoutine()); // 수확 루틴 시작
             }
         }
@@ -135,6 +152,11 @@ public class AIStateManager : MonoBehaviour
         {
             Debug.Log("작물을 수확할 수 없습니다: 수확할 준비가 되어 있지 않습니다.");
         }
+    }
+
+    private Vector3Int ConvertToVector3Int(Vector2 position)
+    {
+        return new Vector3Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), 0);
     }
 
     private IEnumerator HarvestRoutine()

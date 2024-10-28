@@ -8597,10 +8597,12 @@ MonoBehaviour:
   currentCrop: {fileID: 0}
   waterPosition: {fileID: 1629990102}
   homePosition: {fileID: 1642072206}
+  _animator: {fileID: 0}
   _spriteRenderer: {fileID: 0}
   movementSpeed: 1
   maxWaterAmount: 5
   currentWaterAmount: 0
+  placementSystem: {fileID: 435543044}
 --- !u!114 &2090067816
 MonoBehaviour:
   m_ObjectHideFlags: 0
