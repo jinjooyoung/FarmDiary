@@ -23,7 +23,7 @@ public class AIStateManager : MonoBehaviour
     public int currentWaterAmount;    // 현재 물 보유량
 
     private bool isWatering = false;
-    private bool isMaking = false;
+    public bool isMaking = false;
 
     [SerializeField]
     private GridData data;
@@ -65,7 +65,7 @@ public class AIStateManager : MonoBehaviour
 
         _spriteRenderer.flipX = targetPosition.x > transform.position.x;
 
-        if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
+        if (Vector2.Distance(transform.position, targetPosition) < 0.2f)
         {
             _animator.SetBool("IsMove", false);
             return true;
@@ -127,6 +127,17 @@ public class AIStateManager : MonoBehaviour
 
         _animator.SetBool("IsWatering", false);
         isWatering = false;
+
+        // 다음 작물로 이동 준비
+        currentCrop = GetNextCrop();
+        if (currentCrop != null)
+        {
+            MoveToPosition(currentCrop.transform);
+        }
+        else
+        {
+            MoveToPosition(homePosition); // 집으로 이동
+        }
     }
 
     public void HarvestCrop()
@@ -159,29 +170,30 @@ public class AIStateManager : MonoBehaviour
         return new Vector3Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), 0);
     }
 
-    private IEnumerator HarvestRoutine()
+    public IEnumerator HarvestRoutine()
     {
         isMaking = true;
         _animator.SetBool("IsMaking", true); // 수확 애니메이션 시작
-        yield return new WaitForSeconds(5f); // 애니메이션 대기 시간 설정
+        yield return new WaitForSeconds(2f); // 애니메이션 대기 시간 설정
 
         if (currentCrop != null)
         {
             currentCrop.Harvest();
-            Debug.Log($"작물을 수확했습니다: {currentCrop.name}");
-
-            crop.Remove(currentCrop);  // 수확 후 리스트에서 제거
+            crop.Remove(currentCrop);  // 수확한 현재 작물만 리스트에서 제거
         }
 
         RemoveMissingCrops(); // 리스트에서 Missing 항목 제거
 
+        aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine));
+
         // 현재 작물 갱신: 남아있는 첫 번째 작물로 업데이트
-        currentCrop = crop.Count > 0 ? crop[0] : null;
+        currentCrop = GetNextCrop();
 
         _animator.SetBool("IsMaking", false); // 애니메이션 종료
         isMaking = false;
 
-        MoveToPosition(homePosition); // 집으로 이동
+        // 다음 상태로 이동하거나 집으로 이동
+        MoveToPosition(currentCrop == null ? homePosition : currentCrop.transform);
     }
 
     public void RefuelWater()
@@ -196,8 +208,14 @@ public class AIStateManager : MonoBehaviour
         Debug.Log($"새로운 씨앗이 추가되었습니다: {newCrop.name}");
     }
 
-    private void RemoveMissingCrops()
+    public void RemoveMissingCrops()
     {
         crop.RemoveAll(c => c == null); // Null 또는 Missing된 작물 제거
+    }
+
+    // 다음 작물 자동 탐색 메서드 추가
+    public Crop GetNextCrop()
+    {
+        return crop.Count > 0 ? crop[0] : null;
     }
 }

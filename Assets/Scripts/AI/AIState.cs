@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AIState
@@ -166,8 +168,8 @@ public class HarvestingState : AIState
         {
             if (aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
             {
+                Debug.Log("작물에 도착했습니다. 수확을 시작합니다.");
                 aiStateManager.HarvestCrop();
-                aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine)); // 집으로 가는 상태로 전환
             }
         }
     }
