@@ -134,6 +134,7 @@ public class GridData
         foreach (var pos in placedFields[gridPosition].occupiedPositions)
         {
             placedFields.Remove(pos);
+            placedCrops.Remove(pos);
         }
     }
 

@@ -51,7 +51,14 @@ public class CropGrowthManager : MonoBehaviour
             float currentTime = Time.time;
             foreach (var crop in crops)
             {
-                crop.CheckGrowth(currentTime); // 己厘 咯何 眉农
+                if (crop == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    crop.CheckGrowth(currentTime); // 己厘 咯何 眉农
+                }
             }
         }
     }
