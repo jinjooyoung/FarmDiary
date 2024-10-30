@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         InitializePlayerPrefs();
-        SetPlayerPrefs();
         if (instance == null)
         {
             instance = this;
@@ -38,13 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        testText.text = "현재 코인: " + DefaultCoin.ToString();
-    }
-
-    private void SetPlayerPrefs()
-    {
-        PlayerPrefs.SetInt(CoinKey, currentCoin);
-        PlayerPrefs.SetInt(GemKey, currentGem);
+        testText.text = "현재 코인: " + currentCoin.ToString();
     }
 
     private void InitializePlayerPrefs()
@@ -64,6 +57,12 @@ public class GameManager : MonoBehaviour
             // 변경사항을 저장
             PlayerPrefs.Save();
         }
+        else
+        {
+            // 기존 저장된 값 불러오기
+            currentCoin = PlayerPrefs.GetInt(CoinKey, DefaultCoin);
+            currentGem = PlayerPrefs.GetInt(GemKey, DefaultGem);
+        }
     }
 
     // 코인 추가 메서드
@@ -72,6 +71,8 @@ public class GameManager : MonoBehaviour
         if (amount < 0)
             return;
         currentCoin += amount;
+        PlayerPrefs.SetInt(CoinKey, currentCoin);
+        PlayerPrefs.Save();
         //Debug.Log("총 코인 : " + coin);
     }
 
@@ -81,6 +82,8 @@ public class GameManager : MonoBehaviour
         if (amount < 0)
             return;
         currentGem += amount;
+        PlayerPrefs.SetInt(GemKey, currentGem);
+        PlayerPrefs.Save();
         //Debug.Log("총 보석 : " + gems);
     }
 
@@ -99,6 +102,8 @@ public class GameManager : MonoBehaviour
         else
         {
             currentCoin -= amount;
+            PlayerPrefs.SetInt(CoinKey, currentCoin);
+            PlayerPrefs.Save();
         }
         //Debug.Log("총 코인 : " + coin);
     }
@@ -116,6 +121,8 @@ public class GameManager : MonoBehaviour
         else
         {
             currentGem -= amount;
+            PlayerPrefs.SetInt(GemKey, currentGem);
+            PlayerPrefs.Save();
         }
         //Debug.Log("총 보석 : " + gems);
     }

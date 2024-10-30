@@ -25,8 +25,8 @@ public class KeyboardHookManager : MonoBehaviour
     private LowLevelKeyboardProc _proc;
     private static IntPtr _hookID = IntPtr.Zero;
 
-    public Text uiText;
-    private int keyPressCount = 0;
+    //public Text uiText;
+    //private int keyPressCount = 0;
 
     private const int WH_KEYBOARD_LL = 13; // 전역 키보드 훅
     private const int WM_KEYDOWN = 0x0100; // 키가 눌린 이벤트
@@ -40,7 +40,7 @@ public class KeyboardHookManager : MonoBehaviour
         Application.runInBackground = true;
 
         // 키 입력 횟수 초기화
-        keyPressCount = 0; // 앱 시작 시 카운트 초기화
+        //keyPressCount = 0; // 앱 시작 시 카운트 초기화
 
         // 훅 설정
         _proc = HookCallback;
@@ -72,9 +72,10 @@ public class KeyboardHookManager : MonoBehaviour
             // 키가 눌렸을 때
             if (wParam == (IntPtr)WM_KEYDOWN && !keyStates[vkCode])
             {
-                keyPressCount++; // 키 입력 횟수 증가
+                //keyPressCount++; // 키 입력 횟수 증가
+                GameManager.AddCoins(1);
                 keyStates[vkCode] = true; // 키 상태를 '눌림'으로 설정
-                UpdateUIText();
+                //UpdateUIText();
             }
             // 키가 떼어졌을 때
             else if (wParam == (IntPtr)WM_KEYUP)
@@ -86,11 +87,11 @@ public class KeyboardHookManager : MonoBehaviour
         return CallNextHookEx(_hookID, nCode, wParam, lParam);
     }
 
-    private void UpdateUIText()
+    /*private void UpdateUIText()
     {
         if (uiText != null)
         {
             uiText.text = $"키 입력 횟수: {keyPressCount}";
         }
-    }
+    }*/
 }
