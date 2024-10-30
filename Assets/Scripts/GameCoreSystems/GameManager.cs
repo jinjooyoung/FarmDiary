@@ -11,13 +11,20 @@ public class GameManager : MonoBehaviour
 
     public Text testText;       // 현재 코인양을 쉽게 확인하기 위해
 
-    // 개발 중에는 테스트를 위해서 임시로 9999999999로 선언해둠. 나중에는 0으로 바꿀 예정
-    public static ulong coin = 9999999999;  // 전체 코인 수
-    public static ulong bio = 9999999999;   // 전체 연료 수
-    public static ulong gem = 9999999999;   // 전체 보석 수
+    private const string FirstLaunchKey = "IsFirstLaunch";
+    private const string CoinKey = "Coin";
+    private const string GemKey = "Gem";
+    private const int DefaultCoin = 100;
+    private const int DefaultGem = 0;
+
+    public static int currentCoin = 0;
+    public static int currentGem = 0;
+    
 
     private void Awake()
     {
+        InitializePlayerPrefs();
+        SetPlayerPrefs();
         if (instance == null)
         {
             instance = this;
@@ -31,7 +38,32 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        testText.text = "현재 코인: " + coin.ToString();
+        testText.text = "현재 코인: " + DefaultCoin.ToString();
+    }
+
+    private void SetPlayerPrefs()
+    {
+        PlayerPrefs.SetInt(CoinKey, currentCoin);
+        PlayerPrefs.SetInt(GemKey, currentGem);
+    }
+
+    private void InitializePlayerPrefs()
+    {
+        // 처음 실행되는지 여부를 확인
+        if (PlayerPrefs.GetInt(FirstLaunchKey, 0) == 0)     // 나중에 여기에서 작물 해금 정도도 초기화해야함
+        {
+            // PlayerPrefs 초기화
+            PlayerPrefs.SetInt(CoinKey, DefaultCoin);
+            PlayerPrefs.SetInt(GemKey, DefaultGem);
+            currentCoin = DefaultCoin;
+            currentGem = DefaultGem;
+
+            // 처음 실행되었음을 표시
+            PlayerPrefs.SetInt(FirstLaunchKey, 1);
+
+            // 변경사항을 저장
+            PlayerPrefs.Save();
+        }
     }
 
     // 코인 추가 메서드
@@ -39,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         if (amount < 0)
             return;
-        coin += (ulong)amount;
+        currentCoin += amount;
         //Debug.Log("총 코인 : " + coin);
     }
 
@@ -68,14 +100,14 @@ public class GameManager : MonoBehaviour
     {
         if (amount < 0)
             return;
-        if (coin - (ulong)amount < 0)
+        if (currentCoin - amount < 0)
         {
             Debug.Log("코인이 충분하지 않습니다.");
             return;
         }
         else
         {
-            coin -= (ulong)amount;
+            currentCoin -= amount;
         }
         //Debug.Log("총 코인 : " + coin);
     }
