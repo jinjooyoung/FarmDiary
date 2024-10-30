@@ -65,6 +65,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void QuitGame()
+    {
+        // 플레이어 프리퍼런스를 저장하고 게임 종료
+        PlayerPrefs.Save();
+
+        #if UNITY_EDITOR
+        // 에디터에서는 플레이 모드를 중지합니다.
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        // 빌드된 애플리케이션에서는 게임을 종료합니다.
+        Application.Quit();
+        #endif
+    }
+
     // 코인 추가 메서드
     public static void AddCoins(int amount)
     {

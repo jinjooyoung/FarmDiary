@@ -32,6 +32,14 @@ public class GridData
                 {
                     throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
                 }
+                else if (placedDecos.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                else if (placedFacilities.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
                 placedFields[pos] = data;
                 // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
             }
@@ -40,7 +48,15 @@ public class GridData
         {
             foreach (var pos in positionToOccupy)
             {
-                if (placedDecos.ContainsKey(pos))
+                if (placedFields.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                else if (placedDecos.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                else if (placedFacilities.ContainsKey(pos))
                 {
                     throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
                 }
@@ -52,7 +68,15 @@ public class GridData
         {
             foreach (var pos in positionToOccupy)
             {
-                if (placedFacilities.ContainsKey(pos))
+                if (placedFields.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                else if (placedDecos.ContainsKey(pos))
+                {
+                    throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
+                }
+                else if (placedFacilities.ContainsKey(pos))
                 {
                     throw new Exception($"Dictionary 에 이미 이 위치가 존재합니다. {pos}");
                 }
@@ -109,7 +133,7 @@ public class GridData
         // 저장된 칸들을 돌면서 그 위치가 이미 다른 오브젝트로 차지되어 있는지 계산
         foreach (var pos in positionToOccupy)
         {
-            if (placedFields.ContainsKey(pos) || pos.y > -7)     // 한 칸이라도 이미 차지된 위치가 있으면 false를 반환하여 설치 불가능
+            if (placedFields.ContainsKey(pos) || pos.y > -7 || placedDecos.ContainsKey(pos) || placedFacilities.ContainsKey(pos))     // 한 칸이라도 이미 차지된 위치가 있으면 false를 반환하여 설치 불가능
             {
                 return false;
             }
