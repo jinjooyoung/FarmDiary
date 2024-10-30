@@ -18,7 +18,7 @@ public class AIStateMachine : MonoBehaviour
 
     void Update()
     {
-        // 현재 상테가 존재한다면 현재 상태의 Update 메서드 호출
+        // 현재 상태가 존재한다면 현재 상태의 Update 메서드 호출
         if (currentState != null)
         {
             currentState.Update();
@@ -27,7 +27,7 @@ public class AIStateMachine : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // 현재 상테가 존재한다면 현재 상태의 FixedUpdate 메서드 호출
+        // 현재 상태가 존재한다면 현재 상태의 FixedUpdate 메서드 호출
         if (currentState != null)
         {
             currentState.FixedUpdate();

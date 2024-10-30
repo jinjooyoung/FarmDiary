@@ -15,6 +15,7 @@ public class Crop : MonoBehaviour
     {
         NeedsWater,
         ReadyToHarvest,
+        Harvested,
         Watered  // 물을 준 상태 추가
     }
 
@@ -88,6 +89,11 @@ public class Crop : MonoBehaviour
         return cropState == CropState.ReadyToHarvest;
     }
 
+    public bool Harvested()
+    {
+        return cropState == CropState.Harvested;
+    }
+
     public void CheckSeedPlanted()
     {
         if (seedPlantedState == SeedPlantedState.Yes)
@@ -141,6 +147,7 @@ public class Crop : MonoBehaviour
         if (IsReadyToHarvest())
         {
             Debug.Log("작물을 수확했습니다.");
+            cropState = CropState.Harvested;
             gameObject.SetActive(false);
             aiStateManager.AddToInventory(this);
         }
@@ -167,6 +174,11 @@ public class Crop : MonoBehaviour
     {
         // 수확된 경우에는 아무 작업도 하지 않음
         if (cropState == CropState.ReadyToHarvest)
+        {
+            return;
+        }
+
+        if (cropState == CropState.Harvested)
         {
             return;
         }

@@ -53,12 +53,13 @@ public class IdleState : AIState
     public override void Enter()
     {
         Debug.Log("Idle 상태로 진입");
-        aiStateManager.isMove = false;
-        aiStateManager._animator.SetFloat("Move", 0);
     }
 
     public override void Update()
     {
+        aiStateManager.IsMove = false;
+        aiStateManager._animator.SetFloat("Move", 0);
+
         CheckTransitions();
     }
 
@@ -128,7 +129,7 @@ public class WateringState : AIState
 
     public override void Update()
     {
-        if (aiStateManager.currentWaterAmount <= 0)
+        if (aiStateManager.currentWaterAmount == 0)
         {
             aiStateMachine.TransitionToState(new GoToWaterState(aiStateMachine));
             return;
@@ -139,22 +140,12 @@ public class WateringState : AIState
             if (aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
             {
                 aiStateManager.WaterCrop(); // 물 주기
-                Debug.Log("작물에 물을 주었습니다.");
-
-                // 수확이 가능한 상태인지 확인
-                if (aiStateManager.currentCrop.IsReadyToHarvest())
-                {
-                    aiStateMachine.TransitionToState(new HarvestingState(aiStateMachine)); // 물 준 후 바로 수확 상태로 전환
-                }
-                else
-                {
-                    CheckTransitions(); // 물을 준 후 상태 전환 체크
-                }
+                Debug.Log("작물에 물을 주었습니다.");  
             }
         }
         else
         {
-            aiStateMachine.TransitionToState(new IdleState(aiStateMachine));
+            CheckTransitions(); // 물을 준 후 상태 전환 체크
         }
     }
 
@@ -176,16 +167,18 @@ public class HarvestingState : AIState
 
     public override void Update()
     {
+        // 현재 수확할 준비가 된 작물이 있는지 확인
         if (aiStateManager.currentCrop != null && aiStateManager.currentCrop.IsReadyToHarvest())
         {
             if (aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
             {
                 Debug.Log("작물에 도착했습니다. 수확을 시작합니다.");
                 aiStateManager.HarvestCrop();
-
-                // 수확 후 상태 전환을 체크
-                CheckTransitions(); // 수확 후 상태 전환 체크
             }
+        }
+        else
+        {
+            CheckTransitions(); // 수확할 준비가 된 작물이 없을 경우 상태 전환 체크
         }
     }
 
@@ -211,7 +204,11 @@ public class GoingHomeState : AIState
         if (aiStateManager.MoveToPosition(aiStateManager.homePosition))
         {
             Debug.Log("집에 도착했습니다.");
-            aiStateMachine.TransitionToState(new IdleState(aiStateMachine)); // Idle 상태로 전환
+            aiStateMachine.TransitionToState(new IdleState(aiStateMachine));
+        }
+        else 
+        { 
+            CheckTransitions();
         }
     }
 

@@ -20,10 +20,13 @@ public class AIStateManager : MonoBehaviour
     public int maxWaterAmount = 5;
     public int currentWaterAmount;
 
-    public bool isMove = false;
-    public bool isWatering = false;
-    public bool isHarvesting = false;
-    public bool isFinishHarvesting = false;
+    public bool IsMove = false;
+    public bool IsWatering = false;
+    public bool IsHarvesting = false;
+    public bool IsFinishHarvesting = false;
+    public bool IsWaterChargeing = false;
+
+    public int totalHarvestedCount = 0;
 
     [SerializeField]
     private GridData data;
@@ -54,7 +57,7 @@ public class AIStateManager : MonoBehaviour
 
     public void Update()
     {
-        _animator.SetFloat("Move", isMove ? 1 : 0); // Move 파라미터 업데이트
+        _animator.SetFloat("Move", IsMove ? 1 : 0); // Move 파라미터 업데이트
     }
 
     public bool MoveToPosition(Transform target)
@@ -68,16 +71,15 @@ public class AIStateManager : MonoBehaviour
         // 이동 거리 계산
         float distance = Vector2.Distance(transform.position, targetPosition);
 
-        // 이동 상태 업데이트
-        if (distance < 0.2f)
+        if (distance < 0.1f)
         {
-            isMove = false; // 이동 중지
+            IsMove = false;
             _animator.SetFloat("Move", 0.9f);
             return true;
         }
         else
         {
-            isMove = true; // 이동 중
+            IsMove = true;
             _animator.SetFloat("Move", 1.1f);
             return false;
         }
@@ -100,7 +102,7 @@ public class AIStateManager : MonoBehaviour
 
     public void WaterCrop()
     {
-        if (currentCrop != null && currentWaterAmount > 0 && !isWatering && currentCrop.NeedsWater())
+        if (currentCrop != null && currentWaterAmount > 0 && !IsWatering && currentCrop.NeedsWater())
         {
             StartCoroutine(WaterRoutine());
         }
@@ -109,7 +111,7 @@ public class AIStateManager : MonoBehaviour
             Debug.Log("물이 부족합니다. 물을 채워야 합니다.");
             RefuelWater();
         }
-        else if (isWatering)
+        else if (IsWatering)
         {
             Debug.Log("이미 물을 주고 있습니다.");
         }
@@ -121,7 +123,7 @@ public class AIStateManager : MonoBehaviour
 
     private IEnumerator WaterRoutine()
     {
-        isWatering = true;
+        IsWatering = true;
         _animator.SetBool("IsWatering", true);
         yield return new WaitForSeconds(1.5f);
 
@@ -130,7 +132,7 @@ public class AIStateManager : MonoBehaviour
         Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
 
         _animator.SetBool("IsWatering", false);
-        isWatering = false;
+        IsWatering = false;
 
         // 다음 작물로 이동 준비
         currentCrop = GetNextCrop();
@@ -148,7 +150,7 @@ public class AIStateManager : MonoBehaviour
     {
         if (currentCrop != null && currentCrop.IsReadyToHarvest())
         {
-            if (!isHarvesting)
+            if (!IsHarvesting)
             {
                 Vector3Int pos = ConvertToVector3Int(currentCrop.seedPosition);
                 if (this.data.placedCrops.ContainsKey(pos))
@@ -160,6 +162,7 @@ public class AIStateManager : MonoBehaviour
                 {
                     Debug.Log("작물 정보 삭제가 실패하였습니다.");
                 }
+                totalHarvestedCount++;
                 StartCoroutine(HarvestRoutine());
             }
         }
@@ -176,45 +179,75 @@ public class AIStateManager : MonoBehaviour
 
     public IEnumerator HarvestRoutine()
     {
-        isHarvesting = true;
+        IsHarvesting = true;
         _animator.SetBool("IsHarvesting", true); // 수확 애니메이션 시작
         yield return new WaitForSeconds(2f); // 애니메이션 대기 시간 설정
 
         if (currentCrop != null)
         {
+            // 작물을 수확한 후에만 리스트에서 제거
             currentCrop.Harvest();
             crop.Remove(currentCrop);
         }
 
-        RemoveMissingCrops();
+        RemoveMissingCrops(); // 누락된 작물 제거
 
-        isFinishHarvesting = true; // 수확 완료 플래그 설정
+        // 수확 완료 후 다음 작물 확인 및 이동
         currentCrop = GetNextCrop();
 
-        _animator.SetBool("IsHarvesting", false); // 수확 애니메이션 종료
-        isHarvesting = false;
+        IsFinishHarvesting = currentCrop == null; // 모든 작물 수확 완료 여부
 
-        if (currentCrop == null)
+        // 애니메이션 종료 및 상태 초기화
+        _animator.SetBool("IsHarvesting", false);
+        IsHarvesting = false;
+
+        // 다음 작물로 이동
+        if (currentCrop != null)
         {
-            MoveToPosition(homePosition); // 집으로 이동
+            MoveToPosition(currentCrop.transform);
         }
         else
         {
-            MoveToPosition(currentCrop.transform); // 다음 작물로 이동
-            isFinishHarvesting = false; // 다음 작물로 이동 시 false로 설정
+            Debug.Log("모든 작물을 수확했습니다.");
+            MoveToPosition(homePosition);
         }
     }
 
     public void RefuelWater()
     {
+        if (!IsWaterChargeing)
+        {
+            StartCoroutine(RefuelWaterRoutine());
+        }
+    }
+
+    private IEnumerator RefuelWaterRoutine()
+    {
+        if (currentWaterAmount == 0)
+        {
+            MoveToPosition(waterPosition);
+            IsWaterChargeing = true;
+            _animator.SetBool("IsWaterChargeing", true);
+        }
+
+        while (!MoveToPosition(waterPosition))
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(2f);
         currentWaterAmount = maxWaterAmount;
         Debug.Log("물을 다시 채웠습니다.");
+
+        _animator.SetBool("IsWaterChargeing", false);
+        IsWaterChargeing = false;
+
+        MoveToPosition(homePosition);
     }
 
     public void AddSeed(Crop newCrop)
     {
         crop.Add(newCrop);
-        Debug.Log($"새로운 씨앗이 추가되었습니다: {newCrop.name}");
     }
 
     public void RemoveMissingCrops()
@@ -229,7 +262,14 @@ public class AIStateManager : MonoBehaviour
 
     public void AddToInventory(Crop harvestedCrop)
     {
-        harvestedCrops.Add(harvestedCrop);
-        Debug.Log($"수확된 작물이 인벤토리에 추가되었습니다: {harvestedCrop.name}");
+        if (harvestedCrop.cropState == Crop.CropState.Harvested)
+        {
+            harvestedCrops.Add(harvestedCrop);
+            Debug.Log($"수확된 작물이 인벤토리에 추가되었습니다: {harvestedCrop.name}");
+        }
+        else
+        {
+            Debug.Log("추가할 수 없습니다: 작물이 수확 상태가 아닙니다.");
+        }
     }
 }
