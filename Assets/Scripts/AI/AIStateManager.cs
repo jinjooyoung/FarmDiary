@@ -22,8 +22,10 @@ public class AIStateManager : MonoBehaviour
     public int maxWaterAmount = 5;    // 물 최대 보유량 추가
     public int currentWaterAmount;    // 현재 물 보유량
 
+    public bool isMove = false;
     private bool isWatering = false;
     public bool isMaking = false;
+    public bool isHarvesting = false;
 
     [SerializeField]
     private GridData data;
@@ -67,11 +69,13 @@ public class AIStateManager : MonoBehaviour
 
         if (Vector2.Distance(transform.position, targetPosition) < 0.2f)
         {
+            isMove = true;
             _animator.SetBool("IsMove", false);
             return true;
         }
         else
         {
+            isMove = false;
             _animator.SetBool("IsMove", true);
             return false;
         }
@@ -173,7 +177,7 @@ public class AIStateManager : MonoBehaviour
     public IEnumerator HarvestRoutine()
     {
         isMaking = true;
-        _animator.SetBool("IsMaking", true); // 수확 애니메이션 시작
+        _animator.SetBool("IsMaking", false); // 수확 애니메이션 시작
         yield return new WaitForSeconds(2f); // 애니메이션 대기 시간 설정
 
         if (currentCrop != null)
@@ -189,7 +193,7 @@ public class AIStateManager : MonoBehaviour
         // 현재 작물 갱신: 남아있는 첫 번째 작물로 업데이트
         currentCrop = GetNextCrop();
 
-        _animator.SetBool("IsMaking", false); // 애니메이션 종료
+        _animator.SetBool("IsMaking", true); // 애니메이션 종료
         isMaking = false;
 
         // 다음 상태로 이동하거나 집으로 이동
