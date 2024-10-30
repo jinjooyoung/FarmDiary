@@ -53,6 +53,7 @@ public class IdleState : AIState
     public override void Enter()
     {
         Debug.Log("Idle 상태로 진입");
+        aiStateManager.isMove = false;
     }
 
     public override void Update()

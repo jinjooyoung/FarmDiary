@@ -69,13 +69,13 @@ public class AIStateManager : MonoBehaviour
 
         if (Vector2.Distance(transform.position, targetPosition) < 0.2f)
         {
-            isMove = true;
+            isMove = false;
             _animator.SetBool("IsMove", false);
             return true;
         }
         else
         {
-            isMove = false;
+            isMove = true;
             _animator.SetBool("IsMove", true);
             return false;
         }
