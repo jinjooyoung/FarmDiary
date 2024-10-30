@@ -4,28 +4,24 @@ using UnityEngine;
 
 public class AIStateManager : MonoBehaviour
 {
-    public AIStateMachine aiStateMachine; // AIStateMachine에 대한 참조
-
+    public AIStateMachine aiStateMachine;
     public List<Crop> crop = new List<Crop>();
     public Crop currentCrop;
 
-    private int currentSeedIndex = 0; // 현재 물을 주고 있는 씨앗의 인덱스
-
-    public Transform waterPosition;  // 물 웅덩이 위치
-    public Transform homePosition;   // 집의 위치 추가
-
+    private int currentSeedIndex = 0;
+    public Transform waterPosition;
+    public Transform homePosition;
     public Animator _animator;
     public SpriteRenderer _spriteRenderer;
 
-    public float movementSpeed = 2f;  // AI 이동 속도
-
-    public int maxWaterAmount = 5;    // 물 최대 보유량 추가
-    public int currentWaterAmount;    // 현재 물 보유량
+    public float movementSpeed = 2f;
+    public int maxWaterAmount = 5;
+    public int currentWaterAmount;
 
     public bool isMove = false;
-    private bool isWatering = false;
-    public bool isMaking = false;
+    public bool isWatering = false;
     public bool isHarvesting = false;
+    public bool isFinishHarvesting = false;
 
     [SerializeField]
     private GridData data;
@@ -35,13 +31,13 @@ public class AIStateManager : MonoBehaviour
 
     private void Awake()
     {
-        aiStateMachine = GetComponent<AIStateMachine>(); // AIStateMachine을 참조
+        aiStateMachine = GetComponent<AIStateMachine>();
         if (aiStateMachine == null)
         {
             Debug.LogError("AIStateMachine 컴포넌트를 찾을 수 없습니다.");
         }
 
-        currentWaterAmount = maxWaterAmount;  // 시작 시 최대 보유량으로 초기화
+        currentWaterAmount = maxWaterAmount;
 
         Crop[] crops = FindObjectsOfType<Crop>();
         crop.AddRange(crops);
@@ -54,24 +50,33 @@ public class AIStateManager : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public void Update()
+    {
+        _animator.SetFloat("Move", isMove ? 1 : 0); // Move 파라미터 업데이트
+    }
+
     public bool MoveToPosition(Transform target)
     {
-        // 목표 위치를 기존 위치에서 오른쪽으로 0.8만큼 이동
-        Vector2 targetPosition = new Vector2(target.position.x + 0.6f, target.position.y);
+        Vector2 targetPosition = new Vector2(target.position.x + 0.6f, target.position.y + 0.3f);
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
 
+        // 스프라이트 방향 조정
         _spriteRenderer.flipX = targetPosition.x > transform.position.x;
 
-        if (Vector2.Distance(transform.position, targetPosition) < 0.2f)
+        // 이동 거리 계산
+        float distance = Vector2.Distance(transform.position, targetPosition);
+
+        // 이동 상태 업데이트
+        if (distance < 0.2f)
         {
-            isMove = false;
-            _animator.SetBool("IsMove", false);
+            isMove = false; // 이동 중지
+            _animator.SetFloat("Move", 0.9f);
             return true;
         }
         else
         {
-            isMove = true;
-            _animator.SetBool("IsMove", true);
+            isMove = true; // 이동 중
+            _animator.SetFloat("Move", 1.1f);
             return false;
         }
     }
@@ -80,13 +85,12 @@ public class AIStateManager : MonoBehaviour
     {
         foreach (Crop crops in crop)
         {
-            // 씨앗이 심어져 있고, 프리뷰 상태가 아닌 경우만 처리
             if (crops.IsSeedPlanted() && !crops.isPreview)
             {
-                currentCrop = crops;  // 현재 씨앗으로 설정
+                currentCrop = crops;
                 Debug.Log($"씨앗이 심어진 밭: {crops.name}");
-                MoveToPosition(crops.transform); // 해당 밭으로 이동
-                return;  // 첫 번째 유효한 씨앗만 처리하고 종료
+                MoveToPosition(crops.transform);
+                return;
             }
         }
         Debug.Log("심어진 씨앗이 없거나 모든 씨앗이 프리뷰 상태입니다.");
@@ -94,7 +98,6 @@ public class AIStateManager : MonoBehaviour
 
     public void WaterCrop()
     {
-        // 현재 작물이 성장 단계 0, 물 필요 상태이고 물이 충분할 때만 물을 주도록 수정
         if (currentCrop != null && currentWaterAmount > 0 && !isWatering && currentCrop.NeedsWater())
         {
             StartCoroutine(WaterRoutine());
@@ -135,7 +138,7 @@ public class AIStateManager : MonoBehaviour
         }
         else
         {
-            MoveToPosition(homePosition); // 집으로 이동
+            MoveToPosition(homePosition);
         }
     }
 
@@ -143,10 +146,10 @@ public class AIStateManager : MonoBehaviour
     {
         if (currentCrop != null && currentCrop.IsReadyToHarvest())
         {
-            if (!isMaking)
+            if (!isHarvesting)
             {
                 Vector3Int pos = ConvertToVector3Int(currentCrop.seedPosition);
-                if (this.data.placedCrops.ContainsKey(pos) == true)
+                if (this.data.placedCrops.ContainsKey(pos))
                 {
                     this.data.placedCrops.Remove(pos);
                     Debug.Log("작물 정보 삭제가 성공하였습니다.");
@@ -155,7 +158,7 @@ public class AIStateManager : MonoBehaviour
                 {
                     Debug.Log("작물 정보 삭제가 실패하였습니다.");
                 }
-                StartCoroutine(HarvestRoutine()); // 수확 루틴 시작
+                StartCoroutine(HarvestRoutine());
             }
         }
         else
@@ -171,33 +174,38 @@ public class AIStateManager : MonoBehaviour
 
     public IEnumerator HarvestRoutine()
     {
-        isMaking = true;
-        _animator.SetBool("IsMaking", false); // 수확 애니메이션 시작
+        isHarvesting = true;
+        _animator.SetBool("IsHarvesting", true); // 수확 애니메이션 시작
         yield return new WaitForSeconds(2f); // 애니메이션 대기 시간 설정
 
         if (currentCrop != null)
         {
             currentCrop.Harvest();
-            crop.Remove(currentCrop);  // 수확한 현재 작물만 리스트에서 제거
+            crop.Remove(currentCrop);
         }
 
-        RemoveMissingCrops(); // 리스트에서 Missing 항목 제거
+        RemoveMissingCrops();
 
-        aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine));
-
-        // 현재 작물 갱신: 남아있는 첫 번째 작물로 업데이트
+        isFinishHarvesting = true; // 수확 완료 플래그 설정
         currentCrop = GetNextCrop();
 
-        _animator.SetBool("IsMaking", true); // 애니메이션 종료
-        isMaking = false;
+        _animator.SetBool("IsHarvesting", false); // 수확 애니메이션 종료
+        isHarvesting = false;
 
-        // 다음 상태로 이동하거나 집으로 이동
-        MoveToPosition(currentCrop == null ? homePosition : currentCrop.transform);
+        if (currentCrop == null)
+        {
+            MoveToPosition(homePosition); // 집으로 이동
+        }
+        else
+        {
+            MoveToPosition(currentCrop.transform); // 다음 작물로 이동
+            isFinishHarvesting = false; // 다음 작물로 이동 시 false로 설정
+        }
     }
 
     public void RefuelWater()
     {
-        currentWaterAmount = maxWaterAmount;  // 물 보충
+        currentWaterAmount = maxWaterAmount;
         Debug.Log("물을 다시 채웠습니다.");
     }
 
@@ -209,10 +217,9 @@ public class AIStateManager : MonoBehaviour
 
     public void RemoveMissingCrops()
     {
-        crop.RemoveAll(c => c == null); // Null 또는 Missing된 작물 제거
+        crop.RemoveAll(c => c == null);
     }
 
-    // 다음 작물 자동 탐색 메서드 추가
     public Crop GetNextCrop()
     {
         return crop.Count > 0 ? crop[0] : null;

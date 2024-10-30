@@ -78,6 +78,11 @@ public class Crop : MonoBehaviour
         return cropState == CropState.NeedsWater;
     }
 
+    public bool IsWatered()
+    {
+        return cropState == CropState.Watered;
+    }
+
     public bool IsReadyToHarvest()
     {
         return cropState == CropState.ReadyToHarvest;
