@@ -75,21 +75,12 @@ public class GameManager : MonoBehaviour
         //Debug.Log("총 코인 : " + coin);
     }
 
-    // 연료 추가 메서드
-    public static void AddFuel(int amount)
-    {
-        if (amount < 0)
-            return;
-        bio += (ulong)amount;
-        //Debug.Log("총 바이오 : " + bio);
-    }
-
     // 보석 추가 메서드
     public static void AddGems(int amount)
     {
         if (amount < 0)
             return;
-        gem += (ulong)amount;
+        currentGem += amount;
         //Debug.Log("총 보석 : " + gems);
     }
 
@@ -112,36 +103,19 @@ public class GameManager : MonoBehaviour
         //Debug.Log("총 코인 : " + coin);
     }
 
-    // 연료 차감 메서드
-    public static void SubtractFuel(int amount)
-    {
-        if (amount < 0)
-            return;
-        if (bio - (ulong)amount < 0)
-        {
-            Debug.Log("바이오가 충분하지 않습니다.");
-            return;
-        }
-        else
-        {
-            bio -= (ulong)amount;
-        }
-        //Debug.Log("총 바이오 : " + bio);
-    }
-
     // 보석 차감 메서드
     public static void SubtractGems(int amount)
     {
         if (amount < 0)
             return;
-        if (gem - (ulong)amount < 0)
+        if (currentGem - amount < 0)
         {
             Debug.Log("보석이 충분하지 않습니다.");
             return;
         }
         else
         {
-            gem -= (ulong)amount;
+            currentGem -= amount;
         }
         //Debug.Log("총 보석 : " + gems);
     }

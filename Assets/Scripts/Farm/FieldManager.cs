@@ -120,7 +120,7 @@ public class FieldManager : MonoBehaviour
         int unlockCost = fieldUnlockCosts[fieldID];  // 필드 ID에 해당하는 해금 비용 가져오기
 
         // 코인이 충분한지 확인
-        if (GameManager.coin >= (ulong)unlockCost)
+        if (GameManager.currentCoin >= unlockCost)
         {
             // 코인을 차감하고 필드를 해금
             GameManager.SubtractCoins(unlockCost);
@@ -131,7 +131,7 @@ public class FieldManager : MonoBehaviour
 
             DisableFieldObject(fieldID);
 
-            Debug.Log($"땅 {fieldID} 해금 완료. 남은 코인: {GameManager.coin}");
+            Debug.Log($"땅 {fieldID} 해금 완료. 남은 코인: {GameManager.currentCoin}");
             // 해당 구역의 상호작용 활성화
         }
         else

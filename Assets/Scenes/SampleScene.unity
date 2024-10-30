@@ -8699,7 +8699,7 @@ MonoBehaviour:
   currentCrop: {fileID: 0}
   waterPosition: {fileID: 1629990102}
   homePosition: {fileID: 1642072206}
-  _animator: {fileID: 0}
+  _animator: {fileID: 2129816450}
   _spriteRenderer: {fileID: 0}
   movementSpeed: 1
   maxWaterAmount: 5
@@ -8721,6 +8721,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiStateManager: {fileID: 0}
+--- !u!95 &2129816450 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1160356261127867848, guid: 82888e514c889bd4b98eb8e1fd9f9bd2, type: 3}
+  m_PrefabInstance: {fileID: 1062492771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2144209173
 PrefabInstance:
   m_ObjectHideFlags: 0
