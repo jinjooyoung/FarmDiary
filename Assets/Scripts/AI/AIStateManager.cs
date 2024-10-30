@@ -50,13 +50,8 @@ public class AIStateManager : MonoBehaviour
     private void Start()
     {
         data = placementSystem.placedOBJData;
-        _animator = GetComponentInChildren<Animator>();
-
-        Transform playerChild = transform.Find("Character1");
-        if (playerChild != null)
-        {
-            _spriteRenderer = playerChild.GetComponent<SpriteRenderer>();
-        }
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public bool MoveToPosition(Transform target)
