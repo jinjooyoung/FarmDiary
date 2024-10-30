@@ -46,7 +46,7 @@ public class CropPlacementState : IBuildingState
 
     public void OnAction(Vector3Int gridPosition)
     {
-        if (!IsFieldPlaced(gridPosition) || IsCropPlaced(gridPosition))    // 해당 위치에 밭이 없거나 작물이 있으면
+        if (!IsFieldPlaced(gridPosition) || IsCropPlaced(gridPosition) || GameManager.currentCoin < database.objectsData[selectedCropIndex].BuyPrice)    // 해당 위치에 밭이 없거나 작물이 있으면
         {
             return;
         }
@@ -64,6 +64,8 @@ public class CropPlacementState : IBuildingState
 
         // CropGrowthManager에 등록
         GameObject placedCrop = cropPlacer.placedGameObjects[index];    // 설치된 오브젝트 가져오기
+        // 해당하는 가격 차감
+        GameManager.SubtractCoins(database.objectsData[selectedCropIndex].BuyPrice);
 
         if (placedCrop != null)
         {

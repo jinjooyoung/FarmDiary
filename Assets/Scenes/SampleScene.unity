@@ -7202,7 +7202,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -956665313
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 51
   m_Sprite: {fileID: 2545362037770756279, guid: b535c0bbbd695dd47a972ea29b85a9ba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7264,6 +7264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiStateMachine: {fileID: 0}
   crop: []
+  harvestedCrops: []
   currentCrop: {fileID: 0}
   waterPosition: {fileID: 1629990102}
   homePosition: {fileID: 1642072206}

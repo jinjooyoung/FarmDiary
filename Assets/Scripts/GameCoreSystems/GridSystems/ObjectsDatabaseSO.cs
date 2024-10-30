@@ -19,6 +19,12 @@ public class ObjectData
     public int ID { get; private set; }         // 오브젝트 식별자
 
     [field: SerializeField]
+    public int BuyPrice { get; private set; }      // 구매 가격
+
+    [field: SerializeField]
+    public int SellPrice { get; private set; }      // 구매 가격
+
+    [field: SerializeField]
     public Vector2Int Size { get; private set; } = Vector2Int.one;      // 오브젝트 크기 (설치 가능/ 불가능 판별 용)
 
     [field: SerializeField]

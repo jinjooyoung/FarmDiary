@@ -51,7 +51,7 @@ public class PlacementState : IBuildingState
     public void OnAction(Vector3Int gridPosition)
     {
         bool placementValidity = GetPlacementValidity(gridPosition, selectedObjectIndex);   // 설치 가능/불가능 bool값 받아옴
-        if (placementValidity == false)     // 설치가 불가능할 때
+        if (placementValidity == false || GameManager.currentCoin < database.objectsData[selectedObjectIndex].BuyPrice)     // 설치가 불가능할 때
         {
             return;
         }
@@ -62,6 +62,8 @@ public class PlacementState : IBuildingState
         // GridData 스크립트에 선언된 placedObjects 딕셔너리에 받아온 데이터 저장
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,
             database.objectsData[selectedObjectIndex].ID, index);
+
+        GameManager.SubtractCoins(database.objectsData[selectedObjectIndex].BuyPrice);
 
         // 프리뷰 업데이트 (위 PlaceObject 메서드 호출과정에서 오브젝트를 설치했으므로 이제 설치 불가능.
         // 따라서 false로 커서 UI를 빨간색으로 업데이트)
