@@ -114,6 +114,13 @@ public class Crop : MonoBehaviour
             growthStartTime = 0; // 초기화하여 성장이 멈추도록 설정
 
             Debug.Log("씨앗을 심었습니다. 물이 필요합니다.");
+
+            // AI에게 새로운 씨앗을 확인하도록 알림
+            AIStateManager aiManager = FindObjectOfType<AIStateManager>();
+            if (aiManager != null)
+            {
+                aiManager.CheckSeed(); // AI에게 새로운 씨앗을 확인하도록 요청
+            }
         }
         else
         {

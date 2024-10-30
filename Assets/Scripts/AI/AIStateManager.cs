@@ -23,7 +23,6 @@ public class AIStateManager : MonoBehaviour
     public bool IsMove = false;
     public bool IsWatering = false;
     public bool IsHarvesting = false;
-    public bool IsFinishHarvesting = false;
     public bool IsWaterChargeing = false;
 
     public int totalHarvestedCount = 0;
@@ -87,17 +86,19 @@ public class AIStateManager : MonoBehaviour
 
     public void CheckSeed()
     {
-        foreach (Crop crops in crop)
+        // 작물 목록에서 다음 심어진 씨앗을 찾습니다.
+        Crop nextCrop = crop.Find(crops => crops.IsSeedPlanted() && !crops.isPreview);
+
+        if (nextCrop != null)
         {
-            if (crops.IsSeedPlanted() && !crops.isPreview)
-            {
-                currentCrop = crops;
-                Debug.Log($"씨앗이 심어진 밭: {crops.name}");
-                MoveToPosition(crops.transform);
-                return;
-            }
+            currentCrop = nextCrop;
+            Debug.Log($"씨앗이 심어진 밭: {currentCrop.name}");
+            MoveToPosition(currentCrop.transform);
         }
-        Debug.Log("심어진 씨앗이 없거나 모든 씨앗이 프리뷰 상태입니다.");
+        else
+        {
+            Debug.Log("심어진 씨앗이 없거나 모든 씨앗이 프리뷰 상태입니다.");
+        }
     }
 
     public void WaterCrop()
@@ -139,10 +140,6 @@ public class AIStateManager : MonoBehaviour
         if (currentCrop != null)
         {
             MoveToPosition(currentCrop.transform);
-        }
-        else
-        {
-            MoveToPosition(homePosition);
         }
     }
 
@@ -195,8 +192,6 @@ public class AIStateManager : MonoBehaviour
         // 수확 완료 후 다음 작물 확인 및 이동
         currentCrop = GetNextCrop();
 
-        IsFinishHarvesting = currentCrop == null; // 모든 작물 수확 완료 여부
-
         // 애니메이션 종료 및 상태 초기화
         _animator.SetBool("IsHarvesting", false);
         IsHarvesting = false;
@@ -206,10 +201,10 @@ public class AIStateManager : MonoBehaviour
         {
             MoveToPosition(currentCrop.transform);
         }
-        else
+        else 
         {
             Debug.Log("모든 작물을 수확했습니다.");
-            MoveToPosition(homePosition);
+            CheckSeed();
         }
     }
 

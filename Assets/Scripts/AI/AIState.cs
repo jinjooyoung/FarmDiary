@@ -57,9 +57,6 @@ public class IdleState : AIState
 
     public override void Update()
     {
-        aiStateManager.IsMove = false;
-        aiStateManager._animator.SetFloat("Move", 0);
-
         CheckTransitions();
     }
 
@@ -140,12 +137,18 @@ public class WateringState : AIState
             if (aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
             {
                 aiStateManager.WaterCrop(); // 물 주기
-                Debug.Log("작물에 물을 주었습니다.");  
+                Debug.Log("작물에 물을 주었습니다.");
+
+                // 물을 다 준 후에 상태 전환 확인
+                if (!aiStateManager.currentCrop.NeedsWater())
+                {
+                    CheckTransitions();
+                }
             }
         }
         else
         {
-            CheckTransitions(); // 물을 준 후 상태 전환 체크
+            aiStateMachine.TransitionToState(new IdleState(aiStateMachine));
         }
     }
 
@@ -174,11 +177,11 @@ public class HarvestingState : AIState
             {
                 Debug.Log("작물에 도착했습니다. 수확을 시작합니다.");
                 aiStateManager.HarvestCrop();
-            }
+            } 
         }
         else
         {
-            CheckTransitions(); // 수확할 준비가 된 작물이 없을 경우 상태 전환 체크
+            aiStateMachine.TransitionToState(new GoingHomeState(aiStateMachine));
         }
     }
 
@@ -204,10 +207,6 @@ public class GoingHomeState : AIState
         if (aiStateManager.MoveToPosition(aiStateManager.homePosition))
         {
             Debug.Log("집에 도착했습니다.");
-            aiStateMachine.TransitionToState(new IdleState(aiStateMachine));
-        }
-        else 
-        { 
             CheckTransitions();
         }
     }

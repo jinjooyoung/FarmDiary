@@ -21,7 +21,7 @@ public class AIStateMachine : MonoBehaviour
         // 현재 상태가 존재한다면 현재 상태의 Update 메서드 호출
         if (currentState != null)
         {
-            currentState.Update();
+            currentState?.Update();
         }
     }
 
