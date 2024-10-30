@@ -177,6 +177,7 @@ public class HarvestingState : AIState
             {
                 Debug.Log("작물에 도착했습니다. 수확을 시작합니다.");
                 aiStateManager.HarvestCrop();
+                CheckTransitions();
             } 
         }
         else
