@@ -15,6 +15,7 @@ public class FieldManager : MonoBehaviour
     private List<Vector3Int> unlockedAreas; // 해금된 지역 목록
 
     [SerializeField] private GameObject[] fieldObjects;     // 잠금된 필드를 보여주는 오브젝트
+    [SerializeField] private GameObject[] buttons;
 
     private void Start()
     {
@@ -87,9 +88,10 @@ public class FieldManager : MonoBehaviour
         // 필드 ID에 맞는 인덱스를 계산
         int index = fieldID < 0 ? fieldID + 11 : fieldID + 10; // 음수일 때는 11을 더하고, 양수일 때는 10을 더합니다.
 
-        if (fieldObjects[index] != null)
+        if (fieldObjects[index] != null && buttons[index] != null)
         {
             fieldObjects[index].SetActive(false); // 해당 오브젝트 비활성화
+            buttons[index].SetActive(false);
             Debug.Log($"땅 {fieldID} 해금 완료. 오브젝트 비활성화됨.");
         }
     }
