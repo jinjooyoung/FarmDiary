@@ -176,7 +176,7 @@ public class PlacementSystem : MonoBehaviour
         return returnVal;
     }
 
-    private void StopPlacement()
+    public void StopPlacement()
     {
         if (buildingState == null)      // 이미 설치가 종료 상태이면 리턴
         {

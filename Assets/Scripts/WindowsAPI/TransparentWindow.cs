@@ -19,8 +19,8 @@ public class TransparentWindow : MonoBehaviour
     private Margins windowMargins;
 
     // UI Text 컴포넌트를 참조하는 퍼블릭 변수
-    public Text pointerStatusText;   // 포인터 상태를 표시할 Text
-    public Text isTopmostText;       // 창의 Topmost 상태를 표시할 Text
+    //public Text pointerStatusText;   // 포인터 상태를 표시할 Text
+    //public Text isTopmostText;       // 창의 Topmost 상태를 표시할 Text
 
     // 창이 최상위 상태인지 여부를 저장하는 변수
     public bool isTopmost = false;
@@ -59,7 +59,7 @@ public class TransparentWindow : MonoBehaviour
     static readonly IntPtr HWND_TOPMOST = new IntPtr(-1); // 최상위 창
     static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2); // 일반 창
 
-    private bool wasPointerOverUILastFrame = false;
+    //private bool wasPointerOverUILastFrame = false;
 
     void Start()
     {
@@ -71,7 +71,7 @@ public class TransparentWindow : MonoBehaviour
     void Update()
     {
         SetClickThrough(); // 클릭을 통해서만 창이 투명하게 보이도록 설정
-        UpdatePointerStatusText(); // UI 텍스트 업데이트
+        //UpdatePointerStatusText(); // UI 텍스트 업데이트
     }
 
     // 현재 마우스 포인터가 UI 요소 위에 있는지 확인
@@ -163,7 +163,7 @@ public class TransparentWindow : MonoBehaviour
     [DllImport("user32.dll", SetLastError = true)]
     static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-    // 포인터 상태와 Topmost 상태를 UI에 업데이트
+    /*// 포인터 상태와 Topmost 상태를 UI에 업데이트
     private void UpdatePointerStatusText()
     {
         bool isPointerOverUI = FocusForInput();
@@ -174,5 +174,5 @@ public class TransparentWindow : MonoBehaviour
             pointerStatusText.text = $"Pointer Over UI: {isPointerOverUI}";
             isTopmostText.text = $"Is Topmost: {isTopmost}"; // 수정된 부분
         }
-    }
+    }*/
 }
