@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Crop;
 
 public class PreviewSystem : MonoBehaviour
 {
     [SerializeField]
     private GameObject cellIndicator;               // 그리드 커서
     private GameObject previewObject;               // 미리보기 오브젝트
+
+    private AIStateManager aiStateManager;
 
     //[SerializeField]
     //private SpriteRenderer previewPrefab;
@@ -20,6 +21,8 @@ public class PreviewSystem : MonoBehaviour
     {
         cellIndicator.SetActive(false);
         cellIndicatorRenderer = cellIndicator.GetComponentInChildren<SpriteRenderer>();
+
+        aiStateManager = FindAnyObjectByType<AIStateManager>();
     }
 
     public void StartShowingPlacementPreview(GameObject prefab, Vector2Int size)        // 프리뷰 시작
@@ -34,6 +37,7 @@ public class PreviewSystem : MonoBehaviour
         {
             crop.isPreview = true;
             crop.seedPlantedState = Crop.SeedPlantedState.No;
+            aiStateManager.crop.Remove(crop);
         }
 
         PrepareCursor(size);                        // 커서의 사이즈를 선택한 오브젝트 크기에 맞게 조절
