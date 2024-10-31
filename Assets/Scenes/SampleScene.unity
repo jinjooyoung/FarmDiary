@@ -28001,11 +28001,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d18269173d89a2498316c9ca205fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StoragePanel: {fileID: 1547410752}
   seedPanel: {fileID: 1037426736}
   DecoPanel: {fileID: 627085637}
   AchievementsPanel: {fileID: 281881910}
   CollectionPanel: {fileID: 931545580}
   settingPanel: {fileID: 1480627039}
+  StorageButton: {fileID: 1793319522}
   seedButton: {fileID: 151482969}
   DecoButton: {fileID: 860070284}
   AchievementsButton: {fileID: 1235826887}
