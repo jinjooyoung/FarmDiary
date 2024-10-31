@@ -81,10 +81,10 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 6075264736326796366, guid: a7cda64f01afb77429a661a20778b0d2, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
     - 2
     - 3
     - 4
+    - 5
   - <Name>k__BackingField: Blueberry
     <ID>k__BackingField: 10
     <BuyPrice>k__BackingField: 20

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 // 작물의 정보가 들어있는 클래스
@@ -137,6 +138,7 @@ public class Crop : MonoBehaviour
         if (IsSeedPlanted() && currentStage == 0 && cropState == CropState.NeedsWater)
         {
             cropState = CropState.Watered;  // 물을 준 상태로 변경
+            growthStages[5].SetActive(true);
             growthStartTime = Time.time;     // 물을 준 순간부터 성장을 시작하도록 설정
             Debug.Log("물을 주었습니다. 성장을 재개합니다.");
         }
@@ -175,6 +177,7 @@ public class Crop : MonoBehaviour
 
         UpdateCropVisual();            // 초기 상태 업데이트
         UpdateSortingLayer();          // 초기 소팅 레이어 업데이트
+        growthStages[5].SetActive(false);   // 물 텍스쳐 처음에는 꺼짐
     }
 
     // 각 단계별로 성장을 체크하고 성장 상태를 업데이트
@@ -220,7 +223,7 @@ public class Crop : MonoBehaviour
     private void UpdateCropVisual()
     {
         // 모든 성장 단계를 일단 비활성화
-        for (int i = 0; i < growthStages.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
             growthStages[i].SetActive(false);
         }
@@ -235,7 +238,7 @@ public class Crop : MonoBehaviour
     // 소팅 레이어 업데이트
     private void UpdateSortingLayer()
     {
-        foreach (var stage in growthStages)
+        /*foreach (var stage in growthStages)
         {
             if (stage.activeSelf) // 현재 활성화된 성장 단계만 소팅 레이어 변경
             {
@@ -245,6 +248,15 @@ public class Crop : MonoBehaviour
                     renderer.sortingLayerName = "MiddleGround"; // 원하는 소팅 레이어 이름으로 변경
                     renderer.sortingOrder = CalculateSortingOrder(); // 계산된 소팅 오더로 설정
                 }
+            }
+        }*/
+        for (int i = 0; i < 5; i++)
+        {
+            SpriteRenderer renderer = growthStages[i].GetComponent<SpriteRenderer>();
+            if (renderer != null)
+            {
+                renderer.sortingLayerName = "MiddleGround"; // 원하는 소팅 레이어 이름으로 변경
+                renderer.sortingOrder = CalculateSortingOrder(); // 계산된 소팅 오더로 설정
             }
         }
     }
