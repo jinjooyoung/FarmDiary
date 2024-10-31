@@ -44,7 +44,7 @@ public class GridData
                 // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
             }
         }
-        else if (ID >= 200 && ID < 500)     // 데코오브젝트 ID는 데코 딕셔너리에 추가
+        else if (ID >= 200 && ID < 300)     // 데코오브젝트 ID는 데코 딕셔너리에 추가
         {
             foreach (var pos in positionToOccupy)
             {
