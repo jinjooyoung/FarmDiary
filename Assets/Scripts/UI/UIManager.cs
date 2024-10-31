@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public GameObject StoragePanel;
     public GameObject seedPanel;
     public GameObject DecoPanel;
     public GameObject AchievementsPanel;
     public GameObject CollectionPanel;
     public GameObject settingPanel;
 
+    public Button StorageButton;
     public Button seedButton;
     public Button DecoButton;
     public Button AchievementsButton;
@@ -20,6 +22,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         // 버튼에 클릭 이벤트 추가
+        StorageButton.onClick.AddListener(() => TogglePanel(StoragePanel));
         seedButton.onClick.AddListener(() => TogglePanel(seedPanel));
         DecoButton.onClick.AddListener(() => TogglePanel(DecoPanel));
         AchievementsButton.onClick.AddListener(() => TogglePanel(AchievementsPanel));
@@ -40,6 +43,7 @@ public class UIManager : MonoBehaviour
     // 모든 패널을 닫는 메서드
     public void CloseAllPanels()
     {
+        StoragePanel.SetActive(false);
         seedPanel.SetActive(false);
         DecoPanel.SetActive(false);
         AchievementsPanel.SetActive(false);
