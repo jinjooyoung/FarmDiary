@@ -21,6 +21,8 @@ public class Crop : MonoBehaviour
 
     public int ID = -1;
 
+    public int sellPrice = 0;
+
     public CropState cropState;
     public SeedPlantedState seedPlantedState;
 
@@ -159,6 +161,7 @@ public class Crop : MonoBehaviour
             Debug.Log("작물을 수확했습니다.");
             cropState = CropState.Harvested;
             gameObject.SetActive(false);
+            GameManager.AddCoins(sellPrice);
             aiStateManager.AddToInventory(this);
         }
         else
