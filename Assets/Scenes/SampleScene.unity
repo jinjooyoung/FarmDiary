@@ -4061,7 +4061,7 @@ GameObject:
   - component: {fileID: 281881913}
   - component: {fileID: 281881912}
   m_Layer: 5
-  m_Name: ShopPanel
+  m_Name: AchievementsButtonPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7976,7 +7976,7 @@ GameObject:
   - component: {fileID: 627085640}
   - component: {fileID: 627085639}
   m_Layer: 5
-  m_Name: StoragePanel
+  m_Name: DecoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11080,7 +11080,7 @@ GameObject:
   - component: {fileID: 860070285}
   - component: {fileID: 860070284}
   m_Layer: 0
-  m_Name: StorageButton
+  m_Name: DecoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12086,7 +12086,7 @@ GameObject:
   - component: {fileID: 931545583}
   - component: {fileID: 931545582}
   m_Layer: 5
-  m_Name: QuestPanel
+  m_Name: CollectionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16361,7 +16361,7 @@ GameObject:
   - component: {fileID: 1235826888}
   - component: {fileID: 1235826887}
   m_Layer: 0
-  m_Name: ShopButton
+  m_Name: AchievementsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22178,7 +22178,7 @@ GameObject:
   - component: {fileID: 1698618262}
   - component: {fileID: 1698618261}
   m_Layer: 0
-  m_Name: QuestButton
+  m_Name: CollectionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24730,14 +24730,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seedPanel: {fileID: 1037426736}
-  storagePanel: {fileID: 627085637}
-  ShopPanel: {fileID: 281881910}
-  questPanel: {fileID: 931545580}
+  DecoPanel: {fileID: 627085637}
+  AchievementsPanel: {fileID: 281881910}
+  CollectionPanel: {fileID: 931545580}
   settingPanel: {fileID: 1480627039}
   seedButton: {fileID: 151482969}
-  storageButton: {fileID: 860070284}
-  ShopButton: {fileID: 1235826887}
-  questButton: {fileID: 1698618261}
+  DecoButton: {fileID: 860070284}
+  AchievementsButton: {fileID: 1235826887}
+  CollectionButton: {fileID: 1698618261}
   settingButton: {fileID: 279625932}
 --- !u!1 &1931729087
 GameObject:

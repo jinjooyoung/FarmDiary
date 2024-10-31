@@ -6,24 +6,24 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameObject seedPanel;
-    public GameObject storagePanel;
-    public GameObject ShopPanel;
-    public GameObject questPanel;
+    public GameObject DecoPanel;
+    public GameObject AchievementsPanel;
+    public GameObject CollectionPanel;
     public GameObject settingPanel;
 
     public Button seedButton;
-    public Button storageButton;
-    public Button ShopButton;
-    public Button questButton;
+    public Button DecoButton;
+    public Button AchievementsButton;
+    public Button CollectionButton;
     public Button settingButton;
 
     void Start()
     {
         // 버튼에 클릭 이벤트 추가
         seedButton.onClick.AddListener(() => TogglePanel(seedPanel));
-        storageButton.onClick.AddListener(() => TogglePanel(storagePanel));
-        ShopButton.onClick.AddListener(() => TogglePanel(ShopPanel));
-        questButton.onClick.AddListener(() => TogglePanel(questPanel));
+        DecoButton.onClick.AddListener(() => TogglePanel(DecoPanel));
+        AchievementsButton.onClick.AddListener(() => TogglePanel(AchievementsPanel));
+        CollectionButton.onClick.AddListener(() => TogglePanel(CollectionPanel));
         settingButton.onClick.AddListener(() => TogglePanel(settingPanel));
     }
 
@@ -41,9 +41,9 @@ public class UIManager : MonoBehaviour
     public void CloseAllPanels()
     {
         seedPanel.SetActive(false);
-        storagePanel.SetActive(false);
-        ShopPanel.SetActive(false);
-        questPanel.SetActive(false);
+        DecoPanel.SetActive(false);
+        AchievementsPanel.SetActive(false);
+        CollectionPanel.SetActive(false);
         settingPanel.SetActive(false);
     }
 }
