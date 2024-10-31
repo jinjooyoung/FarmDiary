@@ -157,7 +157,7 @@ public class Crop : MonoBehaviour
         {
             Debug.Log("작물을 수확했습니다.");
             cropState = CropState.Harvested;
-            gameObject.SetActive(false);
+            Destroy(gameObject);
             aiStateManager.AddToInventory(this);
         }
         else
