@@ -19,6 +19,8 @@ public class Crop : MonoBehaviour
         Watered  // 물을 준 상태 추가
     }
 
+    public int ID = -1;
+
     public CropState cropState;
     public SeedPlantedState seedPlantedState;
 
@@ -34,8 +36,6 @@ public class Crop : MonoBehaviour
     private float growthStartTime; // 성장이 시작된 시간
 
     private AIStateManager aiStateManager;
-
-    public PlacementData placementData;
 
     private void Awake()
     {

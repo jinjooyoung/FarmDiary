@@ -231,7 +231,7 @@ public class AIStateManager : MonoBehaviour
         {
             MoveToPosition(currentCrop.transform);
         }
-        else 
+        else
         {
             Debug.Log("모든 작물을 수확했습니다.");
             CheckSeed();

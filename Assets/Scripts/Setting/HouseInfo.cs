@@ -34,13 +34,6 @@ public class HouseInfo : MonoBehaviour
     private void AddCropToHouse(Crop crop)
     {
         storedCrops.Add(crop); // 작물을 집 리스트에 추가
-        if (crop.placementData != null)
-        {
-            Debug.Log($"작물이 집에 저장되었습니다: {crop.name}, ID: {crop.placementData.ID}");
-        }
-        else
-        {
-            Debug.Log($"작물이 집에 저장되었습니다: {crop.name}, PlacementData가 없습니다.");
-        }
+        Debug.Log(crop.ID);
     }
 }
