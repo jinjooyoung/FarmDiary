@@ -23,6 +23,14 @@ public abstract class AIState
     // 상태 전환 조건을 체크하는 메서드
     protected void CheckTransitions()
     {
+        // 유효하지 않은 currentCrop이 있다면 null로 설정하고 다음 상태로 이동
+        if (aiStateManager.currentCrop == null || !aiStateManager.crop.Contains(aiStateManager.currentCrop))
+        {
+            aiStateManager.currentCrop = null;  // 현재 작물 초기화
+            aiStateMachine.TransitionToState(new IdleState(aiStateMachine));
+            return;
+        }
+
         foreach (Crop crops in aiStateManager.crop)
         {
             if (crops.IsSeedPlanted())

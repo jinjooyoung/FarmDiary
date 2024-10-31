@@ -56,7 +56,27 @@ public class AIStateManager : MonoBehaviour
 
     public void Update()
     {
+        RemoveMissingCrops();
+
         _animator.SetFloat("Move", IsMove ? 1 : 0); // Move 파라미터 업데이트
+
+        // currentCrop이 삭제되었는지 확인하여 다음 작물로 이동
+        if (currentCrop == null || !crop.Contains(currentCrop))
+        {
+            // 현재 작물이 유효하지 않다면 다음 작물을 선택하거나 행동을 멈춤
+            currentCrop = GetNextCrop();
+
+            if (currentCrop != null)
+            {
+                MoveToPosition(currentCrop.transform);
+            }
+            else
+            {
+                Debug.Log("모든 작물이 수확되었거나 삭제되었습니다.");
+                IsMove = false;  // 더 이상 이동할 작물이 없음
+                return;
+            }
+        }
     }
 
     public bool MoveToPosition(Transform target)
@@ -124,13 +144,24 @@ public class AIStateManager : MonoBehaviour
 
     private IEnumerator WaterRoutine()
     {
+        // Check if currentCrop is null before proceeding
+        if (currentCrop == null)
+        {
+            Debug.LogWarning("현재 작물이 null입니다. 물 주기 루틴을 종료합니다.");
+            IsWatering = false; // 상태 초기화
+            yield break; // 코루틴 종료
+        }
+
         IsWatering = true;
         _animator.SetBool("IsWatering", true);
         yield return new WaitForSeconds(1.5f);
 
-        currentCrop.WaterCrop();
-        currentWaterAmount--;
-        Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
+        if (currentCrop != null)
+        {
+            currentCrop.WaterCrop();
+            currentWaterAmount--;
+            Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
+        }
 
         _animator.SetBool("IsWatering", false);
         IsWatering = false;
@@ -252,7 +283,19 @@ public class AIStateManager : MonoBehaviour
 
     public Crop GetNextCrop()
     {
-        return crop.Count > 0 ? crop[0] : null;
+        // 작물 목록을 순회하여 다음 작물 찾기
+        for (int i = currentSeedIndex; i < crop.Count; i++)
+        {
+            if (crop[i] != null && crop[i].IsSeedPlanted())
+            {
+                currentSeedIndex = i + 1; // 다음 인덱스 설정
+                return crop[i]; // 심어진 씨앗 반환
+            }
+        }
+
+        // 모든 작물을 처리한 경우 인덱스 리셋
+        currentSeedIndex = 0;
+        return null;
     }
 
     public void AddToInventory(Crop harvestedCrop)
