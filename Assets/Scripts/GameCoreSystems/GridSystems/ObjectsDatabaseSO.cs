@@ -22,9 +22,6 @@ public class ObjectData
     public int BuyPrice { get; private set; }      // 구매 가격
 
     [field: SerializeField]
-    public int SellPrice { get; private set; }      // 구매 가격
-
-    [field: SerializeField]
     public Vector2Int Size { get; private set; } = Vector2Int.one;      // 오브젝트 크기 (설치 가능/ 불가능 판별 용)
 
     [field: SerializeField]
