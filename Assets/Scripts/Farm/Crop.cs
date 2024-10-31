@@ -35,6 +35,8 @@ public class Crop : MonoBehaviour
 
     private AIStateManager aiStateManager;
 
+    public PlacementData placementData;
+
     private void Awake()
     {
         aiStateManager = FindObjectOfType<AIStateManager>();

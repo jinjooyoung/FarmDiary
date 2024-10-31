@@ -38,9 +38,7 @@ public class Test2 : MonoBehaviour
         {
             Debug.LogError("placedObjects is null!");
             return;
-        }
-
-        
+        }   
     }
 
     void Update()

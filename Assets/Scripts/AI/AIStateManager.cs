@@ -112,7 +112,6 @@ public class AIStateManager : MonoBehaviour
         if (nextCrop != null)
         {
             currentCrop = nextCrop;
-            Debug.Log($"¾¾¾ÑÀÌ ½É¾îÁø ¹ç: {currentCrop.name}");
             MoveToPosition(currentCrop.transform);
         }
         else
