@@ -11,9 +11,6 @@ public class CameraMove : MonoBehaviour
     private float[] zoomLevels = { 3f, 4f, 5f };  // 카메라 줌 단계
     private int currentZoomLevel;  // 현재 줌 단계 인덱스
     
-    [SerializeField] private RectTransform optionsPanelRect;  // 패널의 RectTransform 참조
-    [SerializeField] private StickyCanvas stickyCanvas;  // 붙어있는 캔버스를 참조할 변수
-    
     private Vector2 mouseClickPos;  // 마우스 클릭 시의 위치를 저장할 변수
     private Vector2 mouseCurrentPos;  // 현재 마우스 위치를 저장할 변수
     private Vector2 initialPanelSize;  // 패널의 초기 크기 저장
@@ -22,7 +19,6 @@ public class CameraMove : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         OrthographicSize();
-        UpdatePanelSize(); // 게임 시작 시 패널 크기 업데이트
     }
 
     void Update()
@@ -63,12 +59,10 @@ public class CameraMove : MonoBehaviour
         if (SaveData.instance.verticalMode)
         {
             base.transform.position -= new Vector3(0f, vector.y, 0f);  // 카메라의 Y 좌표 이동
-            stickyCanvas.transform.position -= new Vector3(0f, vector.y, 0f);  // 캔버스의 Y 좌표 이동
         }
         else
         {
             base.transform.position -= new Vector3(vector.x, 0f, 0f);  // 카메라의 X 좌표 이동
-            stickyCanvas.transform.position -= new Vector3(-vector.x, 0f, 0f);  // 캔버스의 X 좌표 이동
         }
     
         ClampCamera();  // 카메라의 위치를 제한하는 함수 호출
@@ -81,8 +75,6 @@ public class CameraMove : MonoBehaviour
         {
             // 카메라 위치를 X축 기준으로 제한
             base.transform.position = new Vector3(Mathf.Clamp(base.transform.position.x, -81f, 81f), base.transform.position.y, base.transform.position.z);
-            stickyCanvas.transform.position = new Vector3(Mathf.Clamp(stickyCanvas.transform.position.x, -81f, 81f), 
-                stickyCanvas.transform.position.y, stickyCanvas.transform.position.z);
         }
     }
 
@@ -98,10 +90,6 @@ public class CameraMove : MonoBehaviour
                 break;
             }
         }
-
-        // 패널의 초기 크기 저장
-        //initialPanelSize = optionsPanelRect.sizeDelta;
-        // 오류 메세지 떠서 잠시 주석처리 해놓을게요!!!
     }
     
     // 줌 인/아웃을 처리하는 함수
@@ -112,7 +100,6 @@ public class CameraMove : MonoBehaviour
         {
             currentZoomLevel = Mathf.Min(currentZoomLevel + 1, zoomLevels.Length - 1);  // 다음 줌 단계로 이동
             cam.orthographicSize = zoomLevels[currentZoomLevel];  // 해당 줌 레벨 값으로 카메라 크기 설정
-            UpdatePanelSize();  // 패널 크기 업데이트
         }
 
         // M 키를 눌러 줌 아웃 (이전 줌 단계로 감소)
@@ -120,20 +107,10 @@ public class CameraMove : MonoBehaviour
         {
             currentZoomLevel = Mathf.Max(currentZoomLevel - 1, 0);  // 이전 줌 단계로 이동
             cam.orthographicSize = zoomLevels[currentZoomLevel];  // 해당 줌 레벨 값으로 카메라 크기 설정
-            UpdatePanelSize();  // 패널 크기 업데이트
         }
 
         // 카메라의 Y 좌표를 고정하여 바닥 위치 유지
         float bottomFixedY = cam.orthographicSize - 5f;  // 바닥 위치를 고정할 Y 값
         base.transform.position = new Vector3(base.transform.position.x, bottomFixedY, base.transform.position.z);
-        stickyCanvas.transform.position = new Vector3(stickyCanvas.transform.position.x, bottomFixedY, stickyCanvas.transform.position.z);
-    }
-
-    // 패널 크기를 카메라 줌에 맞춰 조정하는 함수
-    private void UpdatePanelSize()
-    {
-        float zoomFactor = zoomLevels[zoomLevels.Length - 1] / cam.orthographicSize;
-        float clampedZoomFactor = Mathf.Clamp(zoomFactor, 1f, 2f);  // 패널 크기를 1배에서 2배로 제한
-        optionsPanelRect.sizeDelta = initialPanelSize * clampedZoomFactor;
     }
 }
