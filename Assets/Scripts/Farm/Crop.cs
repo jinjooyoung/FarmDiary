@@ -33,8 +33,12 @@ public class Crop : MonoBehaviour
     public bool isPreview;
 
     public GameObject[] growthStages; // 성장 단계별로 할당된 리소스 오브젝트들 (총 5개)
+    public bool isTree = false;         // 나무인가?
+    public GameObject[] fruitStages;    // 나무일때 필요한 성목 -> 열매 리소스 오브젝트들
     private float[] growthTimes;  // 각 성장 단계에 필요한 시간
+    private float[] fruitTimes;   // 열매가 열리기까지 필요한 시간
     public int currentStage = 0;  // 현재 작물의 성장 단계
+    private int currentFruitStage = 0;  // 현재 작물의 열매 성장 단계
     private float growthStartTime; // 성장이 시작된 시간
 
     private AIStateManager aiStateManager;
@@ -160,9 +164,12 @@ public class Crop : MonoBehaviour
         {
             Debug.Log("작물을 수확했습니다.");
             cropState = CropState.Harvested;
-            gameObject.SetActive(false);
             GameManager.AddCoins(sellPrice);
             aiStateManager.AddToInventory(this);
+            if (ID < 100)   // 나무가 아니라면
+            {
+                gameObject.SetActive(false);
+            }
         }
         else
         {
@@ -182,10 +189,25 @@ public class Crop : MonoBehaviour
         growthStages[5].SetActive(false);   // 물 텍스쳐 처음에는 꺼짐
     }
 
+    // 위 메서드의 나무 버전
+    public void InitializeFruit(float[] cropfruitTimes)
+    {
+        fruitTimes = cropfruitTimes;
+        growthStartTime = Time.time;  // 성장이 시작된 시간을 저장
+        currentFruitStage = 0;             // 초기 성장 단계 설정
+
+        UpdateTreeVisual();            // 초기 상태 업데이트
+        UpdateSortingLayer();          // 초기 소팅 레이어 업데이트
+    }
+
     // 각 단계별로 성장을 체크하고 성장 상태를 업데이트
     // CropGrowthManager 스크립트에서 호출됨
     public void CheckGrowth(float currentTime)
     {
+        if (ID > 100)   // 나무라면
+        {
+            
+        }
         // 수확된 경우에는 아무 작업도 하지 않음
         if (cropState == CropState.ReadyToHarvest)
         {
@@ -237,21 +259,25 @@ public class Crop : MonoBehaviour
         }
     }
 
+    // 위 메서드의 나무 버전
+    private void UpdateTreeVisual()
+    {
+        // 모든 성장 단계를 일단 비활성화
+        for (int i = 0; i < 3; i++)
+        {
+            fruitStages[i].SetActive(false);
+        }
+
+        // 현재 단계에 해당하는 오브젝트만 활성화
+        if (currentFruitStage >= 0 && currentFruitStage < 3)
+        {
+            fruitStages[currentFruitStage].SetActive(true);
+        }
+    }
+
     // 소팅 레이어 업데이트
     private void UpdateSortingLayer()
     {
-        /*foreach (var stage in growthStages)
-        {
-            if (stage.activeSelf) // 현재 활성화된 성장 단계만 소팅 레이어 변경
-            {
-                SpriteRenderer renderer = stage.GetComponent<SpriteRenderer>();
-                if (renderer != null)
-                {
-                    renderer.sortingLayerName = "MiddleGround"; // 원하는 소팅 레이어 이름으로 변경
-                    renderer.sortingOrder = CalculateSortingOrder(); // 계산된 소팅 오더로 설정
-                }
-            }
-        }*/
         for (int i = 0; i < 5; i++)
         {
             SpriteRenderer renderer = growthStages[i].GetComponent<SpriteRenderer>();

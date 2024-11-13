@@ -9076,8 +9076,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd99ae3f57ed774d8595781bd4b5287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionsPanelRect: {fileID: 1578603766}
-  stickyCanvas: {fileID: 1145058421}
 --- !u!1 &525715784
 GameObject:
   m_ObjectHideFlags: 0
@@ -17171,7 +17169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1080814405
 MonoBehaviour:
   m_ObjectHideFlags: 0
