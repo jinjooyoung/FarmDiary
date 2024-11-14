@@ -143,7 +143,6 @@ public class AIStateManager : MonoBehaviour
 
     private IEnumerator WaterRoutine()
     {
-        // Check if currentCrop is null before proceeding
         if (currentCrop == null)
         {
             Debug.LogWarning("현재 작물이 null입니다. 물 주기 루틴을 종료합니다.");
@@ -266,8 +265,6 @@ public class AIStateManager : MonoBehaviour
 
         _animator.SetBool("IsWaterChargeing", false);
         IsWaterChargeing = false;
-
-        MoveToPosition(homePosition);
     }
 
     public void AddSeed(Crop newCrop)

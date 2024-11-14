@@ -568,4 +568,9 @@ MonoBehaviour:
   - {fileID: 1203647898354023521}
   - {fileID: 8587749558382419870}
   - {fileID: 1143194861974310492}
+  fruitStages: []
+  fruitTimes:
+  - 0
+  - 0
+  - 0
   currentStage: 0
