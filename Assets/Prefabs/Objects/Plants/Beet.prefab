@@ -232,11 +232,6 @@ MonoBehaviour:
   - {fileID: 940501015324739569}
   - {fileID: 8038666475032962427}
   - {fileID: 8689801902479536398}
-  fruitStages: []
-  fruitTimes:
-  - 0
-  - 0
-  - 0
   currentStage: 0
 --- !u!1 &6669457702461222419
 GameObject:

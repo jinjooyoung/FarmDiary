@@ -14,6 +14,7 @@ public class Storage : MonoBehaviour
     public List<CropStorage> storedCropsByID = new List<CropStorage>(); // 인스펙터에서 보이는 ID별 저장소
 
     public AIStateManager aiStateManager; // AIStateManager 참조
+    public UIManager UIManager;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,5 +45,7 @@ public class Storage : MonoBehaviour
 
         storage.crops.Add(crop); // 작물 추가
         Debug.Log($"ID {crop.ID}인 작물이 추가되었습니다.");
+
+        UIManager.CheckAndUnlockCrops();
     }
 }

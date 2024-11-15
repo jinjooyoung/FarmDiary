@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         // 처음 실행되는지 여부를 확인
         if (PlayerPrefs.GetInt(FirstLaunchKey, 0) == 0)     // 나중에 여기에서 작물 해금 정도도 초기화해야함
         {
+            ResetCropKeys();
             // PlayerPrefs 초기화
             PlayerPrefs.SetInt(CoinKey, DefaultCoin);
             PlayerPrefs.SetInt(GemKey, DefaultGem);
@@ -63,6 +64,21 @@ public class GameManager : MonoBehaviour
             currentCoin = PlayerPrefs.GetInt(CoinKey, DefaultCoin);
             currentGem = PlayerPrefs.GetInt(GemKey, DefaultGem);
         }
+    }
+
+    public void ResetCropKeys()
+    {
+        int totalCrops = 50; // 작물의 마지막 ID(임시로 해둠 나중에 수정해야함)
+
+        for (int i = 9; i <= totalCrops; i++)
+        {
+            string cropKey = "CropUnlocked_" + i; // 각 작물의 해금 상태 키
+            PlayerPrefs.DeleteKey(cropKey); // 해당 키 삭제하여 초기화
+        }
+
+        // 전체 해금 인덱스도 초기화 (Optional)
+        PlayerPrefs.SetInt("UnlockPlant", 0); // UnlockPlant도 초기화
+        PlayerPrefs.Save(); // 변경사항 저장
     }
 
     public void QuitGame()
