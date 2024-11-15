@@ -33,12 +33,8 @@ public class Crop : MonoBehaviour
     public bool isPreview;
 
     public GameObject[] growthStages; // 성장 단계별로 할당된 리소스 오브젝트들 (총 5개)
-    private bool isTree = false;         // 나무인가?
-    public GameObject[] fruitStages;    // 나무일때 필요한 성목 -> 열매 리소스 오브젝트들
     private float[] growthTimes;  // 각 성장 단계에 필요한 시간
-    public float[] fruitTimes = new float[3];   // 열매가 열리기까지 필요한 시간
     public int currentStage = 0;  // 현재 작물의 성장 단계
-    private int currentFruitStage = 0;  // 현재 작물의 열매 성장 단계
     private float growthStartTime; // 성장이 시작된 시간
 
     private AIStateManager aiStateManager;
@@ -164,19 +160,9 @@ public class Crop : MonoBehaviour
         {
             Debug.Log("작물을 수확했습니다.");
             cropState = CropState.Harvested;
+            gameObject.SetActive(false);
             GameManager.AddCoins(sellPrice);
             aiStateManager.AddToInventory(this);
-            if (ID >= 100)   // 나무라면 1차 수확 이후 열매 루틴이 돌아야함
-            {
-                isTree = true;
-                cropState = CropState.Watered;
-                InitializeFruit();  // 나무 열매 루틴 초기 설정
-            }
-            else    // 그냥 작물이라면
-            {
-                gameObject.SetActive(false);        // 오브젝트를 비활성화
-                // 근데 여기 비활성화 해둔건 수확할때 저장하는 리스트에서 삭제돼서 Missing이 떠서 비활성화로 해둔거임 이 문제 수정하고 Destroy로 변경해야함
-            }
         }
         else
         {
@@ -194,16 +180,6 @@ public class Crop : MonoBehaviour
         UpdateSortingLayer();          // 초기 소팅 레이어 업데이트
         UpdateCropVisual();            // 초기 상태 업데이트
         growthStages[5].SetActive(false);   // 물 텍스쳐 처음에는 꺼짐
-    }
-
-    // 위 메서드의 나무 버전
-    public void InitializeFruit()
-    {
-        growthStartTime = Time.time;  // 성장이 시작된 시간을 저장
-        currentFruitStage = 0;             // 초기 성장 단계 설정
-
-        UpdateSortingLayerTree();          // 초기 소팅 레이어 업데이트
-        UpdateTreeVisual();            // 초기 상태 업데이트
     }
 
     // 각 단계별로 성장을 체크하고 성장 상태를 업데이트
@@ -226,24 +202,6 @@ public class Crop : MonoBehaviour
         {
             Debug.Log("0단계에서 물이 필요합니다. 물을 줄 때까지 성장을 멈춥니다.");
             return; // 물을 줄 때까지 성장 멈춤
-        }
-
-        if (isTree)     // 나무 열매 수확 1번 이상 했을 경우
-        {
-            // 물을 준 이후 성장 단계가 1 이상으로 진행되도록 설정
-            if (currentFruitStage < fruitStages.Length && currentTime - growthStartTime >= fruitTimes[currentFruitStage])
-            {
-                currentFruitStage++;
-                UpdateTreeVisual();
-                Debug.Log($"현재 성장 단계: {currentFruitStage}");
-
-                // 성장 단계가 마지막 단계인 경우 ReadyToHarvest 상태로 설정
-                if (currentFruitStage == 2)  // 배열 마지막 단계 확인
-                {
-                    cropState = CropState.ReadyToHarvest;
-                    Debug.Log("작물이 다 자라서 수확할 준비가 되었습니다.");
-                }
-            }
         }
 
         // 물을 준 이후 성장 단계가 1 이상으로 진행되도록 설정
@@ -278,41 +236,12 @@ public class Crop : MonoBehaviour
         }
     }
 
-    // 위 메서드의 나무 버전
-    private void UpdateTreeVisual()
-    {
-        // 모든 성장 단계를 일단 비활성화
-        for (int i = 0; i < 3; i++)
-        {
-            fruitStages[i].SetActive(false);
-        }
-
-        // 현재 단계에 해당하는 오브젝트만 활성화
-        if (currentFruitStage >= 0 && currentFruitStage < 3)
-        {
-            fruitStages[currentFruitStage].SetActive(true);
-        }
-    }
-
     // 소팅 레이어 업데이트
     private void UpdateSortingLayer()
     {
         for (int i = 0; i < 5; i++)
         {
             SpriteRenderer renderer = growthStages[i].GetComponent<SpriteRenderer>();
-            if (renderer != null)
-            {
-                renderer.sortingLayerName = "MiddleGround"; // 원하는 소팅 레이어 이름으로 변경
-                renderer.sortingOrder = CalculateSortingOrder(); // 계산된 소팅 오더로 설정
-            }
-        }
-    }
-
-    private void UpdateSortingLayerTree()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            SpriteRenderer renderer = fruitStages[i].GetComponent<SpriteRenderer>();
             if (renderer != null)
             {
                 renderer.sortingLayerName = "MiddleGround"; // 원하는 소팅 레이어 이름으로 변경
