@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public Camera mainCam;
-
-    public Text testText;       // 현재 코인양을 쉽게 확인하기 위해
+    public Text testText;
 
     private const string FirstLaunchKey = "IsFirstLaunch";
     private const string CoinKey = "Coin";
@@ -19,11 +19,11 @@ public class GameManager : MonoBehaviour
 
     public static int currentCoin = 0;
     public static int currentGem = 0;
-    
+
+    [SerializeField] private Transform playerTransform;
 
     private void Awake()
     {
-        InitializePlayerPrefs();
         if (instance == null)
         {
             instance = this;
@@ -33,36 +33,40 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        SaveSystem.Init();
+        InitializePlayerPrefs();
     }
 
     private void Update()
     {
-        testText.text = "현재 코인: " + currentCoin.ToString();
+        testText.text = "현재 코인: " + currentCoin;
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SaveGameData();
+            Debug.Log("게임 데이터 저장 완료!");
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadGameData();
+            Debug.Log("게임 데이터 로드 완료!");
+        }
     }
 
     private void InitializePlayerPrefs()
     {
-        // 처음 실행되는지 여부를 확인
-        if (PlayerPrefs.GetInt(FirstLaunchKey, 0) == 0)     // 나중에 여기에서 작물 해금 정도도 초기화해야함
+        string saveString = SaveSystem.Load("GameData.json");
+        if (string.IsNullOrEmpty(saveString))
         {
-            ResetCropKeys();
-            // PlayerPrefs 초기화
-            PlayerPrefs.SetInt(CoinKey, DefaultCoin);
-            PlayerPrefs.SetInt(GemKey, DefaultGem);
             currentCoin = DefaultCoin;
             currentGem = DefaultGem;
-
-            // 처음 실행되었음을 표시
-            PlayerPrefs.SetInt(FirstLaunchKey, 1);
-
-            // 변경사항을 저장
-            PlayerPrefs.Save();
+            SaveGameData();
         }
         else
         {
-            // 기존 저장된 값 불러오기
-            currentCoin = PlayerPrefs.GetInt(CoinKey, DefaultCoin);
-            currentGem = PlayerPrefs.GetInt(GemKey, DefaultGem);
+            LoadGameData();
         }
     }
 
@@ -156,4 +160,47 @@ public class GameManager : MonoBehaviour
         }
         //Debug.Log("총 보석 : " + gems);
     }
+
+
+    public void SaveGameData()
+    {
+        Vector3 playerPosition = playerTransform.position;
+
+        AllSaveData saveData = new AllSaveData
+        {
+            coin = currentCoin,
+            gem = currentGem,
+            playerPosition = playerPosition
+        };
+
+        string json = JsonUtility.ToJson(saveData);
+
+        // SaveSystem.Save 호출 시 파일 이름 추가
+        SaveSystem.Save(json, "GameData.json");
+    }
+
+    public void LoadGameData()
+    {
+        string saveString = SaveSystem.Load("GameData.json"); // 파일 이름 추가
+        if (!string.IsNullOrEmpty(saveString))
+        {
+            AllSaveData saveData = JsonUtility.FromJson<AllSaveData>(saveString);
+            currentCoin = saveData.coin;
+            currentGem = saveData.gem;
+
+            playerTransform.position = saveData.playerPosition;
+        }
+        else
+        {
+            Debug.Log("저장된 데이터가 없습니다.");
+        }
+    }
+}
+
+[System.Serializable]
+public class AllSaveData
+{
+    public int coin;
+    public int gem;
+    public Vector3 playerPosition;
 }
