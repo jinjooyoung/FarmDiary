@@ -57,245 +57,432 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-  - <Name>k__BackingField: Building_01_3x4
-    <ID>k__BackingField: 201
-    <BuyPrice>k__BackingField: 5
-    <Size>k__BackingField: {x: 3, y: 4}
-    <Prefab>k__BackingField: {fileID: 5709796660003245508, guid: bdbf5bdd8ad15334d9b2fe2f3433a365, type: 3}
-    <IsCrop>k__BackingField: 0
-    <GrowthTimes>k__BackingField:
-    - 0
-    - 0
-    - 0
-    - 0
-  - <Name>k__BackingField: Beet
+  - <Name>k__BackingField: Amaranth
     <ID>k__BackingField: 9
     <BuyPrice>k__BackingField: 10
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 6075264736326796366, guid: a7cda64f01afb77429a661a20778b0d2, type: 3}
+    <Prefab>k__BackingField: {fileID: 8079772286492726215, guid: fdffee076140e6847b38380dc0378a8e, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 2
-    - 3
-    - 4
-    - 5
-  - <Name>k__BackingField: Blueberry
+    - 8
+    - 16
+    - 24
+    - 32
+  - <Name>k__BackingField: Asparagus
     <ID>k__BackingField: 10
-    <BuyPrice>k__BackingField: 20
+    <BuyPrice>k__BackingField: 50
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 9033646436385579880, guid: e948e0ef039d7d54bbe4c812aabb29c6, type: 3}
+    <Prefab>k__BackingField: {fileID: 476576493316736336, guid: 3959011b7e6b76740ad45acf9020d43d, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 2
-    - 3
-    - 4
-    - 5
-  - <Name>k__BackingField: Carrot
-    <ID>k__BackingField: 11
-    <BuyPrice>k__BackingField: 30
-    <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 4020432011570743401, guid: eb17310f2e24f3e4bac4eb59ddf4682e, type: 3}
-    <IsCrop>k__BackingField: 1
-    <GrowthTimes>k__BackingField:
-    - 5
-    - 10
     - 15
-    - 20
-  - <Name>k__BackingField: Corn
+    - 30
+    - 45
+    - 60
+  - <Name>k__BackingField: BalloonFlower
+    <ID>k__BackingField: 11
+    <BuyPrice>k__BackingField: 100
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4289110117530462444, guid: e7f704a141c077c40bb5fc6212a22490, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 23
+    - 46
+    - 69
+    - 92
+  - <Name>k__BackingField: Beet
     <ID>k__BackingField: 12
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 200
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 7562037351251134843, guid: 5f1c7746b93556b40917cd49ad517cf3, type: 3}
+    <Prefab>k__BackingField: {fileID: 6075264736326796366, guid: 6eb009ae25a85804eaf897604afeeaa8, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Cucumber
+    - 30
+    - 60
+    - 90
+    - 120
+  - <Name>k__BackingField: Blueberry
     <ID>k__BackingField: 13
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 500
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 6267281702009535124, guid: b260bae6bbeda094c85ee32791f94293, type: 3}
+    <Prefab>k__BackingField: {fileID: 9033646436385579880, guid: 9ec6ca06c320d6b49a5cb905605f4615, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Eggplant
+    - 45
+    - 90
+    - 135
+    - 180
+  - <Name>k__BackingField: BokChoy
     <ID>k__BackingField: 14
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 700
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 8645143940694214504, guid: db33ec73b400efa4092664fddd26a37f, type: 3}
+    <Prefab>k__BackingField: {fileID: 2440594563059712712, guid: 9ac181fc85c0ebf429c5cbf630534bae, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Garlic
+    - 53
+    - 106
+    - 159
+    - 212
+  - <Name>k__BackingField: Bracken
     <ID>k__BackingField: 15
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 1000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 4771133099102457364, guid: c69dcf6049df6bb459b244de02cd39db, type: 3}
+    <Prefab>k__BackingField: {fileID: 8557531182397932196, guid: 4cf0019f62b86ff4780953bd5767edd8, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Greenonion
+    - 75
+    - 150
+    - 225
+    - 300
+  - <Name>k__BackingField: Broccoli
     <ID>k__BackingField: 16
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 1500
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 1580821142280021276, guid: 8a5a92a719792e3448ec9919c0a0f513, type: 3}
+    <Prefab>k__BackingField: {fileID: 6388457770010106952, guid: 88b9186eb9b707d4288161b6507d1eec, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Melon
+    - 98
+    - 196
+    - 294
+    - 392
+  - <Name>k__BackingField: Cabbage
     <ID>k__BackingField: 17
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 2000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 1780747022528796861, guid: f6f46e24a7170764f87f44a1a8beafaf, type: 3}
+    <Prefab>k__BackingField: {fileID: 7659143045898057891, guid: 53da7d118ce950b42ac3546e0f1bc386, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Onion
+    - 120
+    - 240
+    - 360
+    - 480
+  - <Name>k__BackingField: Carrot
     <ID>k__BackingField: 18
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 3000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 1133590766239154662, guid: ea55e913918939b4381d44f378995e35, type: 3}
+    <Prefab>k__BackingField: {fileID: 4020432011570743401, guid: 51931bc203f85e54d9ac3264c588dc4b, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Pea
+    - 150
+    - 300
+    - 450
+    - 600
+  - <Name>k__BackingField: Chili
     <ID>k__BackingField: 19
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 4000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 9108206680484982509, guid: 39fce51bdddd2f94ab119fd1742689fa, type: 3}
+    <Prefab>k__BackingField: {fileID: 2028169863024369663, guid: 68e2cf892036eb747b351ee042a745e5, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Pepper
+    - 180
+    - 360
+    - 540
+    - 720
+  - <Name>k__BackingField: Corn
     <ID>k__BackingField: 20
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 5000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 2038902176085819229, guid: a6066a4043fabc143a2d6bd4536ddc6f, type: 3}
+    <Prefab>k__BackingField: {fileID: 7562037351251134843, guid: 403e8af02d7bdc34293d98b90b5b9bd6, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Pimento
+    - 210
+    - 420
+    - 630
+    - 840
+  - <Name>k__BackingField: Cotton
     <ID>k__BackingField: 21
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 7000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 8607727933911302966, guid: a457fec802495724e8c037e74292d325, type: 3}
+    <Prefab>k__BackingField: {fileID: 752043501291362569, guid: eef4ec8c91eac554e8649bcd21762d5d, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Pineapple
+    - 255
+    - 510
+    - 765
+    - 1020
+  - <Name>k__BackingField: Cucumber
     <ID>k__BackingField: 22
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 9000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 1102003248599358412, guid: 268902c88619906489cc2b8a91a2e9ea, type: 3}
+    <Prefab>k__BackingField: {fileID: 6267281702009535124, guid: e1bed9c70b3c06242b791be8b42ac14e, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Potato
+    - 300
+    - 600
+    - 900
+    - 1200
+  - <Name>k__BackingField: Deodeok
     <ID>k__BackingField: 23
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 12000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 1331655923938651504, guid: e13073995a601ab4dafe74642f9cf83d, type: 3}
+    <Prefab>k__BackingField: {fileID: 7037441252879204442, guid: e22710c0e45a42146ac8fbd8c41f8df8, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Pumpkin
+    - 345
+    - 690
+    - 1035
+    - 1380
+  - <Name>k__BackingField: Eggplant
     <ID>k__BackingField: 24
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 15000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 3272293412743501682, guid: ec97df98d953573458ed2f9f3c8bd9b9, type: 3}
+    <Prefab>k__BackingField: {fileID: 8645143940694214504, guid: 3e270416dc68fef4abe1035c5002bd4a, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Radish
+    - 390
+    - 780
+    - 1170
+    - 1560
+  - <Name>k__BackingField: Garlic
     <ID>k__BackingField: 25
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 18000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 4292562537349656102, guid: 709b5d1e76e8bb04db9f16b92fdb0eb2, type: 3}
+    <Prefab>k__BackingField: {fileID: 4771133099102457364, guid: 33e9d6bff4cafa945832617001ccad20, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Rice
+    - 450
+    - 900
+    - 1350
+    - 1800
+  - <Name>k__BackingField: Ginger
     <ID>k__BackingField: 26
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 20000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 2023245137365527937, guid: cf015bcd9631775439b564da7951b1b3, type: 3}
+    <Prefab>k__BackingField: {fileID: 5742671520993366955, guid: 9af91c588906d4248b873ec8bb494e0d, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Strawberry
+    - 510
+    - 1020
+    - 1530
+    - 2040
+  - <Name>k__BackingField: GreenOnion
     <ID>k__BackingField: 27
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 22000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 3996793472523494301, guid: 21243021c1c47de4e90d95cd64644034, type: 3}
+    <Prefab>k__BackingField: {fileID: 1580821142280021276, guid: de117f17ebbe0824da990b66382dba94, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Tomato
+    - 570
+    - 1140
+    - 1710
+    - 2280
+  - <Name>k__BackingField: Lettuce
     <ID>k__BackingField: 28
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 25000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 6495977354697834484, guid: 4ba40f8c052974a4f9b1c741b3a97dcc, type: 3}
+    <Prefab>k__BackingField: {fileID: 1238493808507432470, guid: 305e74dd8035bd542abf6334525f35d5, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
-  - <Name>k__BackingField: Watermelon
+    - 630
+    - 1260
+    - 1890
+    - 2520
+  - <Name>k__BackingField: Melon
     <ID>k__BackingField: 29
-    <BuyPrice>k__BackingField: 40
+    <BuyPrice>k__BackingField: 28000
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: 7458c2c0504e7f74cbb978b86c70b111, type: 3}
+    <Prefab>k__BackingField: {fileID: 1780747022528796861, guid: 679360da58dae174a8691002f361a7d2, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 1
-    - 2
-    - 3
-    - 4
+    - 690
+    - 1380
+    - 2070
+    - 2760
+  - <Name>k__BackingField: Mugwort
+    <ID>k__BackingField: 30
+    <BuyPrice>k__BackingField: 31000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5001363028608752968, guid: e9e3ed86b31637e4b825d3e4cc62f5fb, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 750
+    - 1500
+    - 2250
+    - 3000
+  - <Name>k__BackingField: NapaCabbage
+    <ID>k__BackingField: 31
+    <BuyPrice>k__BackingField: 35000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 977499885129126364, guid: d5146e74d4cd0174f8659105fac6a609, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 810
+    - 1620
+    - 2430
+    - 3240
+  - <Name>k__BackingField: Onion
+    <ID>k__BackingField: 32
+    <BuyPrice>k__BackingField: 39000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1133590766239154662, guid: c81707af38634e04a9e773160335440b, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 870
+    - 1740
+    - 2610
+    - 3480
+  - <Name>k__BackingField: Pea
+    <ID>k__BackingField: 33
+    <BuyPrice>k__BackingField: 43000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 9108206680484982509, guid: 5ce212dccb0a2754e8ba707ad2e2a671, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 930
+    - 1860
+    - 2790
+    - 3720
+  - <Name>k__BackingField: Peanut
+    <ID>k__BackingField: 34
+    <BuyPrice>k__BackingField: 46000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2368702657799499705, guid: 9f9b8ada535b532428301477b9437e6a, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 990
+    - 1980
+    - 2970
+    - 3960
+  - <Name>k__BackingField: Pimento
+    <ID>k__BackingField: 35
+    <BuyPrice>k__BackingField: 50000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 8607727933911302966, guid: b820c742aa59926489b7076af8119e2a, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1050
+    - 2100
+    - 3150
+    - 4200
+  - <Name>k__BackingField: Pineapple
+    <ID>k__BackingField: 36
+    <BuyPrice>k__BackingField: 55000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1102003248599358412, guid: 4ebf9fbf4045f01419a46672104fad1f, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1125
+    - 2250
+    - 3375
+    - 4500
+  - <Name>k__BackingField: Potato
+    <ID>k__BackingField: 37
+    <BuyPrice>k__BackingField: 60000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1331655923938651504, guid: abafeb9773add5d429f7b7b72bfec5e9, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1200
+    - 2400
+    - 3600
+    - 4800
+  - <Name>k__BackingField: Pumkin
+    <ID>k__BackingField: 38
+    <BuyPrice>k__BackingField: 65000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3272293412743501682, guid: 8b6430c0f9c5d8944a574ce8bd3afe0b, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1275
+    - 2550
+    - 3825
+    - 5100
+  - <Name>k__BackingField: Radish
+    <ID>k__BackingField: 39
+    <BuyPrice>k__BackingField: 70000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4292562537349656102, guid: 5e2cd72d14344dc4b928c37729322980, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1350
+    - 2700
+    - 4050
+    - 5400
+  - <Name>k__BackingField: Rice
+    <ID>k__BackingField: 40
+    <BuyPrice>k__BackingField: 75000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2023245137365527937, guid: 550f584c105429f4c8939ec5821f89d8, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1425
+    - 2850
+    - 4275
+    - 5700
+  - <Name>k__BackingField: SesameLeaf
+    <ID>k__BackingField: 41
+    <BuyPrice>k__BackingField: 80000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7859997451322481049, guid: 2b03b43e1b9b47a4ca581fbd999bb4cc, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1500
+    - 3000
+    - 4500
+    - 6000
+  - <Name>k__BackingField: Strawberry
+    <ID>k__BackingField: 42
+    <BuyPrice>k__BackingField: 90000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3996793472523494301, guid: f0f61aecaaadb8a40ae445c760934139, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1575
+    - 3150
+    - 4725
+    - 6300
+  - <Name>k__BackingField: SugarCarrot
+    <ID>k__BackingField: 43
+    <BuyPrice>k__BackingField: 100000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2146018050106450963, guid: de08895a9f6938946ac4a0987bcc6af8, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1650
+    - 3300
+    - 4950
+    - 6600
+  - <Name>k__BackingField: SweetPotato
+    <ID>k__BackingField: 44
+    <BuyPrice>k__BackingField: 110000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1571514726352365095, guid: 4485ff0a498bc3d46aa7a70ac267ef0f, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1725
+    - 3450
+    - 5175
+    - 6900
+  - <Name>k__BackingField: SwissChard
+    <ID>k__BackingField: 45
+    <BuyPrice>k__BackingField: 120000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6376066344255906683, guid: 75c75095826facf4d9ef7bd9104e8aca, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1800
+    - 3600
+    - 5400
+    - 7200
+  - <Name>k__BackingField: Tomato
+    <ID>k__BackingField: 46
+    <BuyPrice>k__BackingField: 130000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6495977354697834484, guid: af64cf50ff630be4f828466650f72a12, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1950
+    - 3900
+    - 5850
+    - 7800
+  - <Name>k__BackingField: Watermelon
+    <ID>k__BackingField: 47
+    <BuyPrice>k__BackingField: 150000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: fddc1c0948c01a3468dfb0cd59e4b675, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 2100
+    - 4200
+    - 6300
+    - 8400
