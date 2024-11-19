@@ -88,6 +88,31 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // 모든 씨앗 버튼의 이미지를 설정하는 메서드
+    private void ButtonSetting()
+    {
+        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 0);       // 기본값은 0 (첫 번째 작물만 해금)
+
+        for (int i = 0; i < SeedButtons.Length; i++)
+        {
+            Transform childTransform = SeedButtons[i].transform.GetChild(0);
+
+            if (childTransform != null)
+            {
+                Image iconImage = childTransform.GetComponent<Image>();     // 해당 버튼 작물의 이미지 오브젝트의 이미지 컴포넌트
+
+                if (unlockedIndex >= i)     // 해금되었을 때
+                {
+                    iconImage.color = new Color(255, 255, 255, 255);
+                }
+                else                        // 해금되지 않았을 때
+                {
+                    iconImage.color = new Color(0, 0, 0, 0.5f);
+                }
+            }
+        }
+    }
+
     // 모든 씨앗 버튼의 상태를 업데이트하는 메서드
     private void UpdateButtons()
     {
@@ -97,6 +122,8 @@ public class UIManager : MonoBehaviour
         {
             SeedButtons[i].interactable = (i <= unlockedIndex);         // 해금된 인덱스 이하의 버튼만 활성화
         }
+
+        ButtonSetting();
     }
 
     // 작물이 수확되거나 갯수가 변경될 때 호출되는 메서드
