@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public GridData gridData;
+
     public Camera mainCam;
     public Text testText;
 
@@ -22,6 +24,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Transform playerTransform;
 
+    [SerializeField] private PlacementSystem placementSystem;
+
+    [SerializeField] private List<Crop> crop = new List<Crop>();
+    [SerializeField] private List<FarmField> field = new List<FarmField>();
+
     private void Awake()
     {
         if (instance == null)
@@ -34,12 +41,35 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (gridData == null)
+        {
+            gridData = new GridData(); // 필요한 경우 ScriptableObject나 새 인스턴스 생성
+        }
+
         SaveSystem.Init();
         InitializePlayerPrefs();
     }
 
-    private void Update()
+    void Start()
     {
+        gridData = placementSystem.placedOBJData;
+
+        Crop[] crops = FindObjectsOfType<Crop>();
+        FarmField[] fields = FindObjectsOfType<FarmField>();
+
+        crop.AddRange(crops);
+        field.AddRange(fields);
+    }
+
+    public void RemoveMissingCrops()
+    {
+        crop.RemoveAll(c => c == null);
+    }
+
+    void Update()
+    {
+        RemoveMissingCrops();
+
         testText.text = "현재 코인: " + currentCoin;
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -90,13 +120,13 @@ public class GameManager : MonoBehaviour
         // 플레이어 프리퍼런스를 저장하고 게임 종료
         PlayerPrefs.Save();
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         // 에디터에서는 플레이 모드를 중지합니다.
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         // 빌드된 애플리케이션에서는 게임을 종료합니다.
         Application.Quit();
-        #endif
+#endif
     }
 
     // 코인 추가 메서드
@@ -161,39 +191,61 @@ public class GameManager : MonoBehaviour
         //Debug.Log("총 보석 : " + gems);
     }
 
-
     public void SaveGameData()
     {
         Vector3 playerPosition = playerTransform.position;
 
+        // AllSaveData 객체 생성
         AllSaveData saveData = new AllSaveData
         {
             coin = currentCoin,
             gem = currentGem,
-            playerPosition = playerPosition
+            playerPosition = playerPosition,
+            gridDataJson = gridData.SaveFieldsAndCrops(), // 그리드 데이터 저장
+            crops = crop, 
+            fields = field
         };
 
+        // 객체를 JSON으로 직렬화
         string json = JsonUtility.ToJson(saveData);
 
-        // SaveSystem.Save 호출 시 파일 이름 추가
+        // 파일로 저장
         SaveSystem.Save(json, "GameData.json");
     }
 
     public void LoadGameData()
     {
-        string saveString = SaveSystem.Load("GameData.json"); // 파일 이름 추가
+        string saveString = SaveSystem.Load("GameData.json");
+
         if (!string.IsNullOrEmpty(saveString))
         {
+            // JSON을 객체로 역직렬화
             AllSaveData saveData = JsonUtility.FromJson<AllSaveData>(saveString);
+
+            // 로드된 데이터 적용
             currentCoin = saveData.coin;
             currentGem = saveData.gem;
-
             playerTransform.position = saveData.playerPosition;
+            gridData.LoadFieldsAndCrops(saveData.gridDataJson);
+
+            // crops와 fields 리스트 로드
+            crop = saveData.crops;
+            field = saveData.fields;
         }
         else
         {
             Debug.Log("저장된 데이터가 없습니다.");
         }
+    }
+
+    public void AddSeed(Crop newCrop)
+    {
+        crop.Add(newCrop);
+    }
+
+    public void Addfield(FarmField newFarmField)
+    {
+        field.Add(newFarmField);
     }
 }
 
@@ -203,4 +255,7 @@ public class AllSaveData
     public int coin;
     public int gem;
     public Vector3 playerPosition;
+    public string gridDataJson;
+    public List<Crop> crops;
+    public List<FarmField> fields;
 }

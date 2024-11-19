@@ -39,6 +39,8 @@ public class Crop : MonoBehaviour
 
     private AIStateManager aiStateManager;
 
+    private GameManager gameManager;
+
     private void Awake()
     {
         aiStateManager = FindObjectOfType<AIStateManager>();
@@ -46,6 +48,13 @@ public class Crop : MonoBehaviour
         if (aiStateManager != null)
         {
             aiStateManager.AddSeed(this);
+        }
+
+        gameManager = FindObjectOfType<GameManager>();
+
+        if (gameManager != null)
+        {
+            gameManager.AddSeed(this);
         }
     }
 

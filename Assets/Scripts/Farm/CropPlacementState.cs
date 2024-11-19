@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Crop;
 
 public class CropPlacementState : IBuildingState
 {
@@ -86,7 +87,7 @@ public class CropPlacementState : IBuildingState
         }
 
         placedCropData.AddCropAt(gridPosition, database.objectsData[selectedCropIndex].Size,
-            database.objectsData[selectedCropIndex].ID, index);
+            database.objectsData[selectedCropIndex].ID, index, CropState.NeedsWater, SeedPlantedState.Yes);
 
         previewSystem.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), false);
     }

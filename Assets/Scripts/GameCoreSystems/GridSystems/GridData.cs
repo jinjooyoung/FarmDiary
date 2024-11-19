@@ -1,8 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using static Crop;
 
+[System.Serializable]
 public class GridData
 {
     // 그리드 셀의 위치(Vector3Int)를 키로 사용하고, 그 위치에 배치된 오브젝트의 정보
@@ -90,7 +91,9 @@ public class GridData
     public void AddCropAt(Vector3Int gridPosition,
                             Vector2Int objectSize,
                             int ID,
-                            int placedObjectIndex)
+                            int placedObjectIndex, 
+                            CropState cropState, 
+                            SeedPlantedState seedPlantedState)
     {
         // 설치할 위치의 그리드 포지션을 받아와서 리스트에 저장
         List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
@@ -169,19 +172,109 @@ public class GridData
             placedCrops.Remove(pos);
         }
     }
+
+    public string SaveFieldsAndCrops()
+    {
+        GridDataSave saveData = new GridDataSave();
+
+        // 작물 저장
+        foreach (var crop in placedCrops)
+        {
+            saveData.crops.Add(new GridCropSave
+            {
+                position = crop.Key,
+                placementData = crop.Value,
+                id = crop.Value.ID
+            });
+        }
+
+        // 밭 저장
+        foreach (var field in placedFields)
+        {
+            saveData.fields.Add(new GridFieldSave
+            {
+                position = field.Key,
+                placementData = field.Value,
+                id = field.Value.ID
+            });
+        }
+
+        return JsonUtility.ToJson(saveData);
+    }
+
+    public void LoadFieldsAndCrops(string json)
+    {
+        if (string.IsNullOrEmpty(json)) return;
+
+        GridDataSave saveData = JsonUtility.FromJson<GridDataSave>(json);
+
+        placedCrops.Clear();
+        placedFields.Clear();
+
+        // 작물 복원
+        foreach (var cropSave in saveData.crops)
+        {
+            placedCrops[cropSave.position] = cropSave.placementData;
+            Debug.Log($"Loading crop data at position: {cropSave.position}, ID: {cropSave.id}");
+        }
+
+        // 밭 복원
+        foreach (var fieldSave in saveData.fields)
+        {
+            placedFields[fieldSave.position] = fieldSave.placementData;
+            Debug.Log($"Loading field data at position: {fieldSave.position}, ID: {fieldSave.id}");
+        }
+
+        Debug.Log($"Loaded Field Positions: {string.Join(", ", placedFields.Keys)}");
+        Debug.Log($"Loaded Crop Positions: {string.Join(", ", placedCrops.Keys)}");
+    }
 }
 
+[System.Serializable]
 public class PlacementData      // 오브젝트의 정보 클래스
 {
     // 오브젝트가 차지하는 그리드 셀들의 좌표 (오브젝트 크기가 커서 여러 칸을 차지할 수 있어서 리스트로)
     public List<Vector3Int> occupiedPositions;
-    public int ID { get; private set; }                 // ObjectsDataBase Scriptable Object 에서 사용되는 오브젝트의 고유 ID
+    public int ID { get; set; }                 // ObjectsDataBase Scriptable Object 에서 사용되는 오브젝트의 고유 ID
     public int PlacedObjectIndex { get; private set; }  // ObjectsDataBase Scriptable Object 에서 오브젝트의 인덱스
 
-    public PlacementData(List<Vector3Int> occupiedPositions, int iD, int placedObjectIndex)
+    // 작물 상태 추가
+    public CropState cropState;
+    public SeedPlantedState seedPlantedState;
+
+    public PlacementData(List<Vector3Int> occupiedPositions, int iD, int placedObjectIndex, 
+                        CropState cropState = CropState.NeedsWater, SeedPlantedState seedPlantedState = SeedPlantedState.No)
     {
         this.occupiedPositions = occupiedPositions;
         ID = iD;
         PlacedObjectIndex = placedObjectIndex;
+        this.cropState = cropState;
+        this.seedPlantedState = seedPlantedState;
     }
+
+    // JSON 저장을 위해 기본 생성자 추가
+    public PlacementData() { }
+}
+
+[System.Serializable]
+public class GridDataSave
+{
+    public List<GridCropSave> crops = new();
+    public List<GridFieldSave> fields = new(); // 밭 데이터 추가
+}
+
+[System.Serializable]
+public class GridFieldSave
+{
+    public Vector3Int position;       // 밭 위치
+    public PlacementData placementData; // PlacementData 정보
+    public int id;
+}
+
+[System.Serializable]
+public class GridCropSave
+{
+    public Vector3Int position;       // 작물 위치
+    public PlacementData placementData; // PlacementData 정보
+    public int id;
 }
