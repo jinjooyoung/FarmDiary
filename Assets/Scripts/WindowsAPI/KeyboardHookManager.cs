@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class KeyboardHookManager : MonoBehaviour
@@ -26,7 +27,10 @@ public class KeyboardHookManager : MonoBehaviour
     private static IntPtr _hookID = IntPtr.Zero;
 
     //public Text uiText;
-    //private int keyPressCount = 0;
+    public int keyPressCount = 0;               // 업적 진행도를 파악하기 위한 키 입력 횟수 저장
+    public bool achievementAllClear = false;    // 업적이 모두 완료되면 더이상 카운트 하지 않기 위해 bool값
+
+
 
     private const int WH_KEYBOARD_LL = 13; // 전역 키보드 훅
     private const int WM_KEYDOWN = 0x0100; // 키가 눌린 이벤트
@@ -41,6 +45,7 @@ public class KeyboardHookManager : MonoBehaviour
 
         // 키 입력 횟수 초기화
         //keyPressCount = 0; // 앱 시작 시 카운트 초기화
+        
 
         // 훅 설정
         _proc = HookCallback;
@@ -72,7 +77,33 @@ public class KeyboardHookManager : MonoBehaviour
             // 키가 눌렸을 때
             if (wParam == (IntPtr)WM_KEYDOWN && !keyStates[vkCode])
             {
-                //keyPressCount++; // 키 입력 횟수 증가
+                if (PlayerPrefs.GetInt("KetboardAllClear", 0) == 0)
+                {
+                    keyPressCount++; // 키 입력 횟수 증가
+
+                    // 키보드 관련 업적 1씩 증가 & 클리어
+                    AchievementsDatabase.AddProgressToAchievement(3, 1);
+                    AchievementsDatabase.AddProgressToAchievement(6, 1);
+                    AchievementsDatabase.AddProgressToAchievement(7, 1);
+                    AchievementsDatabase.AddProgressToAchievement(8, 1);
+
+                    // 키보드 업적 해금
+                    if (keyPressCount >= 1 && keyPressCount < 100)
+                    {
+                        AchievementsDatabase.UnlockAchievement(6);
+                    }
+                    else if (keyPressCount >= 100000 || keyPressCount < 100100)
+                    {
+                        AchievementsDatabase.UnlockAchievement(7);
+                    }
+                    else if (keyPressCount >= 1000000)
+                    {
+                        AchievementsDatabase.UnlockAchievement(8);
+                        PlayerPrefs.SetInt("KetboardAllClear", 1);      // 키보드 관련 업적을 다 클리어 해서 1로 변경.
+                        // 더이상 카운트를 세지 않음
+                    }
+                }
+                
                 GameManager.AddCoins(1);
                 keyStates[vkCode] = true; // 키 상태를 '눌림'으로 설정
                 //UpdateUIText();

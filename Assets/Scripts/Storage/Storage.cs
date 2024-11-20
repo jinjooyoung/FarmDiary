@@ -47,5 +47,6 @@ public class Storage : MonoBehaviour
         Debug.Log($"ID {crop.ID}인 작물이 추가되었습니다.");
 
         UIManager.CheckAndUnlockCrops();
+        AchievementsDatabase.AddProgressToAchievement(crop.ID, 1);
     }
 }

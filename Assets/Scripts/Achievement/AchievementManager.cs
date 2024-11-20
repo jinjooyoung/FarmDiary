@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class AchievementManager : MonoBehaviour
 {
     public static AchievementManager instance;          // 싱글톤 화
-    public List<Achievement> achievements;              // Achievement 클래스를 List로 관리
+    [SerializeField] private AchievementsDatabaseSO achievementsDatabase; // SO를 에디터에서 할당
+    [SerializeField] private Storage storage;                             // 작물 수확량 체크를 위해서
 
-    public Text[] AchievementTexts = new Text[4];
+    // UI 요소들을 담을 게임 오브젝트 배열
+    public GameObject[] achievementUI;
 
     private void Awake()
     {
@@ -23,44 +26,34 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
-    public void UpdateAchievementUI()
+    private void Start()
     {
-        AchievementTexts[0].text = achievements[0].name;
-        AchievementTexts[1].text = achievements[0].description;
-        AchievementTexts[2].text = $"{achievements[0].currentProgress}/{achievements[0].goal}";
-        AchievementTexts[3].text = achievements[0].isUnlocked ? "달성" : "미달성";
+        // AchievementsDatabase 초기화
+        AchievementsDatabase.Initialize(achievementsDatabase);
     }
 
-    // Update is called once per frame
-    void Update()
+    // 게임에서 단 한 번 특수한 상황에서 진행되는 업적 (튜토리얼 완료)
+    public void CompleteTutorial()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        int achievementID = 1;  // 튜토리얼 완료 업적 ID
+
+        // 업적을 달성하려면 이 메서드가 한 번만 호출되도록 관리
+        AchievementsDatabase.AddProgressToAchievement(achievementID, 1); // 목표에 맞는 진척도 추가
+    }
+
+    /*// 수확된 작물에 따른 업적 진행
+    public void OnCropHarvested(int harvestedAmount)
+    {
+        harvestedCropCount += harvestedAmount;
+
+        int achievementID = 3;  // 작물 수확 업적 ID
+        int goal = 1000;  // 목표 수확량 (예: 1000개)
+
+        // 목표 수확량을 달성하면 진행도 추가
+        if (harvestedCropCount >= goal)
         {
-            AddProgressinList("도약", 1);
-            UpdateAchievementUI();
+            AddProgressToAchievement(achievementID, harvestedCropCount);
+            UnlockAchievement(achievementID);
         }
-    }
-
-    public void AddProgressinList(string achievementName, int amount) // 업적 진행 상황 갱신 함수
-    {
-        Achievement achievement = achievements.Find(a => a.name == achievementName);        // 인수에서 받아온 이름으로 업적 리스트에서 찾아서 반환
-        if (achievement != null)                                                            // 반환된 업적이 있을 경우 (동일한 이름의 업적이 존재할 경우)
-        {
-            achievement.AddProgress(amount);                                                // 진행 척도를 증가 시킨다. (amount만큼 Progress가 증가)
-        }
-    }
-
-    // 새로운 업적 추가 함수
-
-    public void AddAchievement(Achievement achievement)
-    {
-        // Achievement temp = new Achievement("이름", "설명", 5);
-        achievements.Add(achievement);                                  // List에 업적 추가
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        UpdateAchievementUI();
-    }
+    }*/
 }
