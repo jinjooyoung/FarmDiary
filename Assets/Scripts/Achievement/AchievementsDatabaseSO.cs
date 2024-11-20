@@ -68,10 +68,11 @@ public static class AchievementsDatabase
     {
         database = db;
 
-        for (int i = 1; i <= 6; i++)    // 초기에 진행할 수 있는 (잠금해제(클리어와 다름)되어있는) 업적
+        for (int i = 1; i <= 5; i++)    // 초기에 진행할 수 있는 (잠금해제(클리어와 다름)되어있는) 업적
         {
             UnlockAchievement(i);
         }
+        UnlockAchievement(9);
     }
 
     // ID로 업적 가져오기
