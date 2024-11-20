@@ -20,6 +20,8 @@ public class Crop : MonoBehaviour
     }
 
     public int ID = -1;
+    public int PlacedObjectIndex; // 오브젝트의 인덱스
+    public List<Vector3Int> occupiedPositions; // 이 작물이 차지하는 그리드 좌표
 
     public int sellPrice = 0;
 
@@ -60,6 +62,8 @@ public class Crop : MonoBehaviour
 
     private void Start()
     {
+        occupiedPositions = new List<Vector3Int>(); // 빈 리스트로 초기화
+
         grid = FindObjectOfType<Grid>();
 
         if (grid == null)
@@ -263,5 +267,15 @@ public class Crop : MonoBehaviour
     private int CalculateSortingOrder()
     {
         return (int)(transform.position.y * -10); // Y값을 음수로 변환하여 정렬
+    }
+
+    public void LoadPlacementData(PlacementData placementData)
+    {
+        Debug.Log($"로드된 ID: {placementData.ID}, 위치: {placementData.occupiedPositions}");
+        this.ID = placementData.ID;
+        this.PlacedObjectIndex = placementData.PlacedObjectIndex;
+        this.cropState = placementData.cropState;
+        this.seedPlantedState = placementData.seedPlantedState;
+        this.occupiedPositions = placementData.occupiedPositions;
     }
 }

@@ -11227,7 +11227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &627085638
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36185,12 +36185,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2ef9acffecd6148b2d78ce46cab244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seedPrefabs: []
+  fieldPrefabs:
+  - id: 0
+    prefab: {fileID: 8593517314844702569, guid: 4c48ad1b319d3714f84b821f8e1deedf, type: 3}
+  - id: 1
+    prefab: {fileID: 7663952579977179112, guid: 502c9924be1b55e4887880762919941f, type: 3}
+  - id: 2
+    prefab: {fileID: 3530917910359889361, guid: ec2bcfd29ce34be43a760e6331917cb6, type: 3}
+  - id: 3
+    prefab: {fileID: 6738069917117409528, guid: 4c42edbd1f890964ab3416926486d5b6, type: 3}
   mainCam: {fileID: 519420031}
   testText: {fileID: 1256271318}
   playerTransform: {fileID: 1726576883}
   placementSystem: {fileID: 435543044}
-  crops: []
-  fields: []
+  crop: []
+  field: []
 --- !u!4 &1903297168
 Transform:
   m_ObjectHideFlags: 0
