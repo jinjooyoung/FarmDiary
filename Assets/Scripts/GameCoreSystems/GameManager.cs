@@ -164,7 +164,7 @@
 
         public void ResetCropKeys()
         {
-            int totalCrops = 50; // 작물의 마지막 ID(임시로 해둠 나중에 수정해야함)
+            int totalCrops = 61; // 작물의 마지막 ID
 
             for (int i = 9; i <= totalCrops; i++)
             {

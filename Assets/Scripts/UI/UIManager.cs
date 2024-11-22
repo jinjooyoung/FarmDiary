@@ -133,22 +133,23 @@ public class UIManager : MonoBehaviour
 
         foreach (var cropStorage in storage.storedCropsByID)
         {
-            int cropCount = cropStorage.crops.Count;                    // 해당 ID의 작물 수확 수
-
-            // 현재 해금된 인덱스의 작물이 10개 수확되었는지 확인
-            if (cropCount >= 3 && unlockedIndex < SeedButtons.Length - 1)
+            int id = cropStorage.cropID;
+            // 해당 작물의 업적 Goal 을 충족 시켰는가 = 클리어했는가
+            if (AchievementsDatabase.GetCleared(id))
             {
+                Debug.LogWarning("==========해당 작물 업적 클리어==========");
                 // 해당 cropID에 대한 해금 여부 확인
-                Debug.Log("==========3개 이상 수확됨==========");
-                string cropKey = "CropUnlocked_" + cropStorage.cropID;
+                string cropKey = "CropUnlocked_" + id;
                 if (PlayerPrefs.GetInt(cropKey, 0) == 0) // 해금되지 않은 경우
                 {
-                    Debug.Log("==========해금처리 진행됨==========");
+                    Debug.LogWarning("==========해금처리 진행됨==========");
                     // 해금 처리
                     PlayerPrefs.SetInt(cropKey, 1); // 해당 작물 해금 상태 저장
                     unlockedIndex++; // 해금된 작물 인덱스 증가
                     PlayerPrefs.SetInt("UnlockPlant", unlockedIndex); // 전체 해금 인덱스 저장
+                    AchievementsDatabase.UnlockAchievement(id + 1);
                     SeedButtons[unlockedIndex].interactable = true; // 해당 버튼 활성화
+                    // 나중에 위의 문장 삭제하고 새 씨앗 버튼 해금 버튼으로 수정한 다음 그거 누르면 UpdateButtons 호출되도록.
                 }
             }
         }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 [CreateAssetMenu(menuName = "Scriptable/AchievementsDatabaseSO", fileName = "AchievementsDatabase")]
 public class AchievementsDatabaseSO : ScriptableObject
@@ -35,7 +36,12 @@ public class AchievementData
     // 업적 진행도 증가
     public void AddProgress(int amount)
     {
-        if (Clear == false)
+        if (Clear)
+        {
+            Debug.LogWarning("이미 업적 클리어 되어 리턴됨");
+            return;
+        }
+        else
         {
             if (IsUnlocked)  // 잠금 해제된 경우에만 진행도 추가
             {
@@ -79,6 +85,20 @@ public static class AchievementsDatabase
     public static AchievementData GetAchievementByID(int id)
     {
         return database.achievementsData.Find(achievement => achievement.ID == id);
+    }
+
+    // 업적 해금 bool (업적을 진행할 수 있는가 없는가)
+    public static bool GetUnlocked(int id)
+    {
+        AchievementData achievement = GetAchievementByID(id);
+        return achievement.IsUnlocked;
+    }
+
+    // 업적 클리어 bool (업적을 클리어 하였는가 아닌가)
+    public static bool GetCleared(int id)
+    {
+        AchievementData achievement = GetAchievementByID(id);
+        return achievement.Clear;
     }
 
     // 업적 진행도 추가
