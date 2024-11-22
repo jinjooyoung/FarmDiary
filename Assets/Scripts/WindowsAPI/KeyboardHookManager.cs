@@ -40,6 +40,7 @@ public class KeyboardHookManager : MonoBehaviour
 
     void Awake()
     {
+        keyPressCount = 0;
         // 백그라운드에서 실행되도록 설정
         Application.runInBackground = true;
 
@@ -88,19 +89,15 @@ public class KeyboardHookManager : MonoBehaviour
                     AchievementsDatabase.AddProgressToAchievement(8, 1);
 
                     // 키보드 업적 해금
-                    if (keyPressCount >= 1 && keyPressCount < 100)
+                    if (AchievementsDatabase.GetCleared(3))
                     {
                         AchievementsDatabase.UnlockAchievement(6);
-                    }
-                    else if (keyPressCount >= 100000 || keyPressCount < 100100)
-                    {
                         AchievementsDatabase.UnlockAchievement(7);
-                    }
-                    else if (keyPressCount >= 1000000)
-                    {
                         AchievementsDatabase.UnlockAchievement(8);
+                    }
+                    else if (AchievementsDatabase.GetCleared(8))
+                    {
                         PlayerPrefs.SetInt("KetboardAllClear", 1);      // 키보드 관련 업적을 다 클리어 해서 1로 변경.
-                        // 더이상 카운트를 세지 않음
                     }
                 }
                 
