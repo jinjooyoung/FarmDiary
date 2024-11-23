@@ -92,7 +92,7 @@ MonoBehaviour:
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 100,000\uC6D0
       \uC774\uC0C1 \uBC8C\uC5B4\uBCF4\uC138\uC694."
     <Goal>k__BackingField: 100000
-    <Progress>k__BackingField: 433
+    <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
   - <ID>k__BackingField: 7
@@ -100,16 +100,16 @@ MonoBehaviour:
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 1,000,000\uC6D0
       \uC774\uC0C1 \uBC8C\uC5B4\uBCF4\uC138\uC694."
     <Goal>k__BackingField: 1000000
-    <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <Progress>k__BackingField: 1
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
   - <ID>k__BackingField: 8
     <Name>k__BackingField: "\uB4DC"
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 100,000,000\uC6D0
       \uC774\uC0C1 \uBC8C\uC5B4\uBCF4\uC138\uC694."
     <Goal>k__BackingField: 100000000
-    <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <Progress>k__BackingField: 1
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
   - <ID>k__BackingField: 9
     <Name>k__BackingField: "\uC0C8\uB85C\uC6B4 \uC791\uBB3C!"
@@ -117,7 +117,7 @@ MonoBehaviour:
       \uC218\uD655\uD558\uC138\uC694."
     <Goal>k__BackingField: 10
     <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 1
+    <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
   - <ID>k__BackingField: 10
     <Name>k__BackingField: "\uB545\uC758 \uC120\uBB3C"

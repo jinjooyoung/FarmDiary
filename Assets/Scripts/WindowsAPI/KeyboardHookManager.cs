@@ -78,30 +78,32 @@ public class KeyboardHookManager : MonoBehaviour
             // 키가 눌렸을 때
             if (wParam == (IntPtr)WM_KEYDOWN && !keyStates[vkCode])
             {
-                if (PlayerPrefs.GetInt("KetboardAllClear", 0) == 0)
+                if (PlayerPrefs.GetInt("TutorialKeyboard", 0) == 1)     // 튜토리얼이 끝났으면
                 {
-                    keyPressCount++; // 키 입력 횟수 증가
-
-                    // 키보드 관련 업적 1씩 증가 & 클리어
-                    AchievementsDatabase.AddProgressToAchievement(3, 1);
-                    AchievementsDatabase.AddProgressToAchievement(6, 1);
-                    AchievementsDatabase.AddProgressToAchievement(7, 1);
-                    AchievementsDatabase.AddProgressToAchievement(8, 1);
-
-                    // 키보드 업적 해금
-                    if (AchievementsDatabase.GetCleared(3))
+                    if (PlayerPrefs.GetInt("KetboardAllClear", 0) == 0)
                     {
-                        AchievementsDatabase.UnlockAchievement(6);
-                        AchievementsDatabase.UnlockAchievement(7);
-                        AchievementsDatabase.UnlockAchievement(8);
+                        keyPressCount++; // 키 입력 횟수 증가
+
+                        // 키보드 관련 업적 1씩 증가 & 클리어
+                        AchievementsDatabase.AddProgressToAchievement(3, 1);
+                        AchievementsDatabase.AddProgressToAchievement(6, 1);
+                        AchievementsDatabase.AddProgressToAchievement(7, 1);
+                        AchievementsDatabase.AddProgressToAchievement(8, 1);
+
+                        // 키보드 업적 해금
+                        if (AchievementsDatabase.GetCleared(3))
+                        {
+                            AchievementsDatabase.UnlockAchievement(6);
+                            AchievementsDatabase.UnlockAchievement(7);
+                            AchievementsDatabase.UnlockAchievement(8);
+                        }
+                        else if (AchievementsDatabase.GetCleared(8))
+                        {
+                            PlayerPrefs.SetInt("KetboardAllClear", 1);      // 키보드 관련 업적을 다 클리어 해서 1로 변경.
+                        }
                     }
-                    else if (AchievementsDatabase.GetCleared(8))
-                    {
-                        PlayerPrefs.SetInt("KetboardAllClear", 1);      // 키보드 관련 업적을 다 클리어 해서 1로 변경.
-                    }
+                    GameManager.AddCoins(1);
                 }
-                
-                GameManager.AddCoins(1);
                 keyStates[vkCode] = true; // 키 상태를 '눌림'으로 설정
                 //UpdateUIText();
             }
