@@ -135,3 +135,5 @@ MonoBehaviour:
   cropState: 0
   seedPlantedState: 0
   occupiedPositions: []
+  grid: {fileID: 0}
+  fieldPos: {x: 0, y: 0}

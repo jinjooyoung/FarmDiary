@@ -1,1 +1,0 @@
-{"coin":116,"gem":0,"playerPosition":{"x":1.628000020980835,"y":-4.245999813079834,"z":0.0},"gridDataJson":"{\"crops\":[],\"fields\":[]}","crops":[],"fields":[]}
