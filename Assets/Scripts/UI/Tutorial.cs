@@ -13,6 +13,7 @@ public class TutorialUI : MonoBehaviour
     private GameObject effectOBJ;
     private GameObject effectsobj;
     private GameObject effectOBJs;
+    private GameObject panelOBJ;
 
     [SerializeField] private PlacementSystem placementSystem;
     [SerializeField] private OBJPlacer OBJPlacer;
@@ -44,6 +45,8 @@ public class TutorialUI : MonoBehaviour
             Debug.Log("튜토리얼 시작 호출됨");
             // 튜토리얼을 보지 않았다면 아래 코드 실행
             TutorialStart();
+            effectOBJ = tutorialCanvas.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
+            effectsobj = tutorialCanvas.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject;
         }
     }
 
@@ -53,6 +56,15 @@ public class TutorialUI : MonoBehaviour
         {
             if (values.Contains(index)) // 엔터를 눌러야하는 화면일때
             {
+                if (index == 16)
+                {
+                    effectOBJs.transform.position = new Vector3(2.4f, -3.5f, 90);
+                }
+                else
+                {
+                    effectsobj.transform.position = new Vector3(2.4f, -3.5f, 90);
+                }
+                
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))  // 엔터 키를 누르면
                 {
                     if (index == 6 || index == 11)
@@ -109,16 +121,14 @@ public class TutorialUI : MonoBehaviour
             }
             else if (index == 12)
             {
-                if (Mathf.Abs(mainCamera.transform.position.x) > 5.5f)
+                if (mainCamera != null)
                 {
-                    NextPanel();
+                    if (Mathf.Abs(mainCamera.transform.position.x) > 5.5f)
+                    {
+                        NextPanel();
+                        mainCamera.transform.position = new Vector3(0, 0, -10);
+                    }
                 }
-            }
-            else if (index == 13)
-            {
-                Vector3 cameraPosition = mainCamera.transform.position; // 현재 카메라 위치를 가져옴
-                cameraPosition.x = 0; // x 값을 0으로 설정
-                mainCamera.transform.position = cameraPosition; // 수정된 위치를 다시 설정
             }
             else if (index == 15)
             {
@@ -159,9 +169,13 @@ public class TutorialUI : MonoBehaviour
             effectOBJ = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(1).gameObject;
             effectsobj = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(2).gameObject;
 
-            if (index == 12)        // 카메라 이동 패널
+            if (index == 12 || index == 16)
             {
                 effectOBJs = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(3).gameObject;
+            }
+            else if (index == 17)
+            {
+                GameManager.AddCoins(2500);
             }
 
             StartCoroutine(FloatingTextEffect(effectOBJ, 0));
@@ -170,6 +184,10 @@ public class TutorialUI : MonoBehaviour
         {
             index = -1;
             PlayerPrefs.SetInt("TutorialDone", 1);
+            AchievementsDatabase.AddProgressToAchievement(1, 1);
+            AchievementsDatabase.AddProgressToAchievement(2, 1);
+            AchievementsDatabase.AddProgressToAchievement(3, 1);
+            AchievementsDatabase.AddProgressToAchievement(4, 1);
             tutorialCanvas.SetActive(false);    // 마지막 패널이면 튜토리얼 캔버스를 끔
         }
 
@@ -178,26 +196,36 @@ public class TutorialUI : MonoBehaviour
             // 오른쪽부터 좌우
             StartCoroutine(FloatingTextEffect(effectsobj, 2));
         }
-        else if (index == 5 || index == 10 || index == 14 || index == 16)
+        else if (index == 5 || index == 10 || index == 14)
         {
             // 왼쪽부터 좌우
             StartCoroutine(FloatingTextEffect(effectsobj, 1));
+        }
+        else if (index == 16)
+        {
+            StartCoroutine(FloatingTextEffect(effectsobj, 1));
+            StartCoroutine(FloatingTextEffect(effectOBJs, 3));
         }
         else if (index == 12)   // 카메라 이동 패널
         {
             StartCoroutine(FloatingTextEffect(effectsobj, 1));
             StartCoroutine(FloatingTextEffect(effectOBJs, 2));
         }
-        else
+        else if (index != 20)
         {
-            StartCoroutine(FloatingTextEffect(effectsobj, 3));
+            if (tutorialCanvas.activeSelf)
+            {
+                StartCoroutine(FloatingTextEffect(effectsobj, 3));
+            }
         }
     }
 
     // 오브젝트가 움직이는 효과 (type 0 : 위아래, 1 : 왼쪽부터 좌우, 2 : 오른쪽부터 좌우, 3 : 오브젝트가 깜빡임)
     private IEnumerator FloatingTextEffect(GameObject textOBJ, int type, float amplitude = 0.05f, float frequency = 0.7f)
     {
+        Vector3 textBoxPos = new Vector3(1.7f, -2.7f, 90.00f);
         Vector3 startPos = textOBJ.transform.position; // 초기 위치 저장
+        Vector3 offsetFromCamera = textOBJ.transform.position - mainCamera.transform.position; // 카메라 기준 위치 오프셋 저장
         float timer = 0f;
 
         // UI 이미지 컴포넌트 가져오기
@@ -206,21 +234,22 @@ public class TutorialUI : MonoBehaviour
         while (textOBJ.activeSelf) // 오브젝트 SetActive(true)인 경우 무한 반복
         {
             timer += Time.deltaTime;
+            Vector3 cameraBasedPosition = mainCamera.transform.position + offsetFromCamera;
 
             if (type == 0) // 위아래로 움직이는 효과
             {
                 float yOffset = Mathf.Sin(timer * frequency * Mathf.PI * 2) * amplitude;
-                textOBJ.transform.position = startPos + new Vector3(0, yOffset, 0);
+                textOBJ.transform.position = textBoxPos + new Vector3(0, yOffset, 0);
             }
             else if (type == 1) // 왼쪽부터 오른쪽으로 움직이는 효과
             {
                 float xOffset = Mathf.Sin(timer * frequency * Mathf.PI * 2) * amplitude;
-                textOBJ.transform.position = startPos + new Vector3(xOffset, 0, 0);
+                textOBJ.transform.position = cameraBasedPosition + new Vector3(xOffset, 0, 0);
             }
             else if (type == 2) // 오른쪽부터 왼쪽으로 움직이는 효과
             {
                 float xOffset = Mathf.Sin((timer + 0.5f) * frequency * Mathf.PI * 2) * amplitude; // 0.5f로 위상 반전
-                textOBJ.transform.position = startPos + new Vector3(xOffset, 0, 0);
+                textOBJ.transform.position = cameraBasedPosition + new Vector3(xOffset, 0, 0);
             }
             else if (type == 3) // 깜박거리는 효과
             {

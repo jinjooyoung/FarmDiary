@@ -116,6 +116,11 @@
         {
             gridData = placementSystem.placedOBJData;
 
+            if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
+            {
+                currentCoin = 210;
+            }
+
             Crop[] crops = FindObjectsOfType<Crop>();
             FarmField[] fields = FindObjectsOfType<FarmField>();
 

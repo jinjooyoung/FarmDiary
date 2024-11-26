@@ -15,7 +15,7 @@ MonoBehaviour:
   objectsData:
   - <Name>k__BackingField: 1x1_Field
     <ID>k__BackingField: 0
-    <BuyPrice>k__BackingField: 1
+    <BuyPrice>k__BackingField: 200
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 8593517314844702569, guid: 4c48ad1b319d3714f84b821f8e1deedf, type: 3}
     <IsCrop>k__BackingField: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
     - 0
   - <Name>k__BackingField: 2x2_Field
     <ID>k__BackingField: 1
-    <BuyPrice>k__BackingField: 2
+    <BuyPrice>k__BackingField: 600
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 7663952579977179112, guid: 502c9924be1b55e4887880762919941f, type: 3}
     <IsCrop>k__BackingField: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
     - 0
   - <Name>k__BackingField: 3x3_Field
     <ID>k__BackingField: 2
-    <BuyPrice>k__BackingField: 3
+    <BuyPrice>k__BackingField: 1000
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 3530917910359889361, guid: ec2bcfd29ce34be43a760e6331917cb6, type: 3}
     <IsCrop>k__BackingField: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
     - 0
   - <Name>k__BackingField: 4x4_Field
     <ID>k__BackingField: 3
-    <BuyPrice>k__BackingField: 4
+    <BuyPrice>k__BackingField: 2000
     <Size>k__BackingField: {x: 4, y: 4}
     <Prefab>k__BackingField: {fileID: 6738069917117409528, guid: 4c42edbd1f890964ab3416926486d5b6, type: 3}
     <IsCrop>k__BackingField: 0
@@ -478,6 +478,72 @@ MonoBehaviour:
   - <Name>k__BackingField: Watermelon
     <ID>k__BackingField: 47
     <BuyPrice>k__BackingField: 150000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: fddc1c0948c01a3468dfb0cd59e4b675, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 2100
+    - 4200
+    - 6300
+    - 8400
+  - <Name>k__BackingField: Mandrake
+    <ID>k__BackingField: 48
+    <BuyPrice>k__BackingField: 100000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 9015011021862184802, guid: d3d90aeae6cb8ce4dbd0258c746deb09, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1350
+    - 2700
+    - 4050
+    - 5400
+  - <Name>k__BackingField: RainbowFlower
+    <ID>k__BackingField: 49
+    <BuyPrice>k__BackingField: 120000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: fddc1c0948c01a3468dfb0cd59e4b675, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1500
+    - 3000
+    - 4500
+    - 6000
+  - <Name>k__BackingField: SmileMushroom
+    <ID>k__BackingField: 50
+    <BuyPrice>k__BackingField: 140000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: fddc1c0948c01a3468dfb0cd59e4b675, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1650
+    - 3300
+    - 4950
+    - 6600
+  - <Name>k__BackingField: FrostFlower
+    <ID>k__BackingField: 51
+    <BuyPrice>k__BackingField: 160000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: fddc1c0948c01a3468dfb0cd59e4b675, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1800
+    - 3600
+    - 5400
+    - 7200
+  - <Name>k__BackingField: SunFlower
+    <ID>k__BackingField: 52
+    <BuyPrice>k__BackingField: 180000
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: fddc1c0948c01a3468dfb0cd59e4b675, type: 3}
+    <IsCrop>k__BackingField: 1
+    <GrowthTimes>k__BackingField:
+    - 1950
+    - 3900
+    - 5850
+    - 7800
+  - <Name>k__BackingField: BellFruit
+    <ID>k__BackingField: 53
+    <BuyPrice>k__BackingField: 200000
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 4118633994428351739, guid: fddc1c0948c01a3468dfb0cd59e4b675, type: 3}
     <IsCrop>k__BackingField: 1
