@@ -214,15 +214,17 @@ public class GridData
         // 작물 복원
         foreach (var cropSave in saveData.crops)
         {
-            placedCrops[cropSave.position] = cropSave.placementData;
-            Debug.Log($"Loading crop data at position: {cropSave.position}, ID: {cropSave.id}");
+            Vector3Int intPosition = Vector3Int.FloorToInt(cropSave.position); // Vector3를 Vector3Int로 변환
+            placedCrops[intPosition] = cropSave.placementData;
+            Debug.Log($"Loading crop data at position: {intPosition}, ID: {cropSave.id}");
         }
 
         // 밭 복원
         foreach (var fieldSave in saveData.fields)
         {
-            placedFields[fieldSave.position] = fieldSave.placementData;
-            Debug.Log($"Loading field data at position: {fieldSave.position}, ID: {fieldSave.id}");
+            Vector3Int intPosition = Vector3Int.FloorToInt(fieldSave.position); // Vector3를 Vector3Int로 변환
+            placedFields[intPosition] = fieldSave.placementData;
+            Debug.Log($"Loading field data at position: {intPosition}, ID: {fieldSave.id}");
         }
 
         Debug.Log($"Loaded Field Positions: {string.Join(", ", placedFields.Keys)}");
@@ -266,7 +268,7 @@ public class GridDataSave
 [System.Serializable]
 public class GridFieldSave
 {
-    public Vector3Int position;       // 밭 위치
+    public Vector3 position;       // 밭 위치
     public PlacementData placementData; // PlacementData 정보
     public int id;
 }
@@ -274,7 +276,7 @@ public class GridFieldSave
 [System.Serializable]
 public class GridCropSave
 {
-    public Vector3Int position;       // 작물 위치
+    public Vector3 position;       // 작물 위치
     public PlacementData placementData; // PlacementData 정보
     public int id;
 }

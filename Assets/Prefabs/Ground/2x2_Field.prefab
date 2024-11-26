@@ -51,6 +51,8 @@ MonoBehaviour:
   cropState: 0
   seedPlantedState: 0
   occupiedPositions: []
+  grid: {fileID: 0}
+  fieldPos: {x: 0, y: 0}
 --- !u!1 &8382401420189692387
 GameObject:
   m_ObjectHideFlags: 0
