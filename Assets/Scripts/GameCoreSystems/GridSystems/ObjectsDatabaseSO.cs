@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable/ObjectsDatabaseSO", fileName = "ObjectsDatabase")]
@@ -33,6 +35,22 @@ public class ObjectData
 
     [field: SerializeField]
     public float[] GrowthTimes { get; private set; } = new float[4]; // 작물의 단계별 성장 시간
+
+
+    public void Twice(int price, int i)
+    {
+        if (ID < 4)
+        {
+            if (i == 2)
+            {
+                BuyPrice = price * 2;
+            }
+            else if (i == -2)
+            {
+                BuyPrice = price / 2;
+            }
+        }
+    }
 }
 
 public static class ObjectsDatabase
@@ -47,5 +65,30 @@ public static class ObjectsDatabase
     public static ObjectData GetObjectByID(int id)
     {
         return database.objectsData.Find(obj => obj.ID == id);
+    }
+
+    // 가격을 증가시키는 메서드
+    public static void PriceIncrease(int id)
+    {
+        Debug.LogWarning("가격 증가 호출됨");
+        ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
+        int currentPrice = objectData.BuyPrice;         // 현재 가격을 받아옴
+        objectData.Twice(currentPrice, 2);
+    }
+
+    // 가격을 감소시키는 메서드
+    public static void PriceDecrease(int id)
+    {
+        Debug.LogWarning("가격 감소 호출됨");
+        ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
+        int currentPrice = objectData.BuyPrice;         // 현재 가격을 받아옴
+        objectData.Twice(currentPrice, -2);
+    }
+
+    // 가격을 리턴하는 메서드
+    public static int CurrentPrice(int id)
+    {
+        ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
+        return objectData.BuyPrice;
     }
 }

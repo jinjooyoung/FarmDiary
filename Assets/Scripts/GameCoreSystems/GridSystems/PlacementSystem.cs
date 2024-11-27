@@ -46,6 +46,11 @@ public class PlacementSystem : MonoBehaviour
         placedOBJData = new();
     }
 
+    private void Start()
+    {
+        ObjectsDatabase.Initialize(database);
+    }
+
     public void StartPlacement(int ID)
     {
         StopPlacement();

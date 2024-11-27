@@ -21,6 +21,13 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Button[] SeedButtons;        // 작물 선택 버튼 배열 (수확한 갯수에 따라서 해금할거라서)
 
+    [Header("Field Price Text")]
+    public Text one;
+    public Text two;
+    public Text three;
+    public Text four;
+
+    [Header("Storage")]
     public Storage storage; // Storage 참조
 
     public Text beat, Blueberry, Carrot, Corn, Cucumber, Eggplant, Garlic, Greenonion, Melon, Onion, Pea,
@@ -54,6 +61,11 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         UpdateStoragePanel();
+
+        one.text = ObjectsDatabase.CurrentPrice(0).ToString();
+        two.text = ObjectsDatabase.CurrentPrice(1).ToString();
+        three.text = ObjectsDatabase.CurrentPrice(2).ToString();
+        four.text = ObjectsDatabase.CurrentPrice(3).ToString();
     }
 
     // 패널의 활성화 상태를 토글하는 메서드

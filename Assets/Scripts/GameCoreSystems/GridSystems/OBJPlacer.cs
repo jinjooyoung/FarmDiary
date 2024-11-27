@@ -43,6 +43,26 @@ public class OBJPlacer : MonoBehaviour
         {
             return;
         }
+
+        string objName = placedGameObjects[gameObjectIndex].name;   // 삭제될 오브젝트의 이름
+
+        // 오브젝트의 이름을 보고 밭 오브젝트라면 해당 밭 가격을 감소시킴
+        switch (objName)
+        {
+            case "1x1_Field(Clone)":
+                ObjectsDatabase.PriceDecrease(0);
+                break;
+            case "2x2_Field(Clone)":
+                ObjectsDatabase.PriceDecrease(1);
+                break;
+            case "3x3_Field(Clone)":
+                ObjectsDatabase.PriceDecrease(2);
+                break;
+            case "4x4_Field(Clone)":
+                ObjectsDatabase.PriceDecrease(3);
+                break;
+        }
+
         Destroy(placedGameObjects[gameObjectIndex]);
         placedGameObjects[gameObjectIndex] = null;
     }

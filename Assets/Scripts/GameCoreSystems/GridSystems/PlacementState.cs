@@ -65,6 +65,23 @@ public class PlacementState : IBuildingState
 
         GameManager.SubtractCoins(database.objectsData[selectedObjectIndex].BuyPrice);
 
+        // 오브젝트의 ID를 보고 밭 오브젝트라면 해당 밭 가격을 증가시킴
+        switch (ID)
+        {
+            case 0:
+                ObjectsDatabase.PriceIncrease(0);
+                break;
+            case 1:
+                ObjectsDatabase.PriceIncrease(1);
+                break;
+            case 2:
+                ObjectsDatabase.PriceIncrease(2);
+                break;
+            case 3:
+                ObjectsDatabase.PriceIncrease(3);
+                break;
+        }
+
         // 프리뷰 업데이트 (위 PlaceObject 메서드 호출과정에서 오브젝트를 설치했으므로 이제 설치 불가능.
         // 따라서 false로 커서 UI를 빨간색으로 업데이트)
         previewSystem.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), false);
