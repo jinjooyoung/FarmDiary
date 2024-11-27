@@ -191,8 +191,8 @@ public class GameManager : MonoBehaviour
         // 에디터에서는 플레이 모드를 중지합니다.
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-            // 빌드된 애플리케이션에서는 게임을 종료합니다.
-            Application.Quit();
+        // 빌드된 애플리케이션에서는 게임을 종료합니다.
+        Application.Quit();
 #endif
     }
 
@@ -267,8 +267,8 @@ public class GameManager : MonoBehaviour
         foreach (var field in field)
         {
             Vector3 worldPosition = field.transform.position;
-
-            field.SetFieldPosition(worldPosition); // 그리드 좌표 계산(디버깅용)
+            Renderer renderer = field.GetComponent<Renderer>(); // Renderer 가져오기
+            float alpha = renderer != null ? renderer.material.color.a : 1.0f; // 알파 값 가져오기
 
             var fieldData = new GridFieldSave
             {
@@ -279,12 +279,13 @@ public class GameManager : MonoBehaviour
                     field.ID,
                     field.PlacedObjectIndex,
                     field.cropState,
-                    field.seedPlantedState
+                    field.seedPlantedState,
+                    alpha // 알파 값 저장
                 )
             };
             fieldSaves.Add(fieldData);
 
-            Debug.Log($"밭 저장: ID={field.ID}, 월드 위치={worldPosition}");
+            Debug.Log($"밭 저장: ID={field.ID}, 월드 위치={worldPosition}, 알파 값={alpha}");
         }
 
         // 작물 데이터 수집
@@ -292,6 +293,8 @@ public class GameManager : MonoBehaviour
         foreach (var crop in crop)
         {
             Vector3 worldPosition = crop.transform.position;
+            Renderer renderer = crop.GetComponent<Renderer>(); // Renderer 가져오기
+            float alpha = renderer != null ? renderer.material.color.a : 1.0f; // 알파 값 가져오기
 
             var cropData = new GridCropSave
             {
@@ -302,10 +305,13 @@ public class GameManager : MonoBehaviour
                     crop.ID,
                     crop.PlacedObjectIndex,
                     crop.cropState,
-                    crop.seedPlantedState
+                    crop.seedPlantedState,
+                    alpha // 알파 값 저장
                 )
             };
             cropSaves.Add(cropData);
+
+            Debug.Log($"작물 저장: ID={crop.ID}, 월드 위치={worldPosition}, 알파 값={alpha}");
         }
 
         // 저장 객체 생성
@@ -328,6 +334,7 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         SaveSystem.Save(json, "GameData.json");
     }
+
 
     public void LoadGameData()
     {
@@ -356,6 +363,16 @@ public class GameManager : MonoBehaviour
                     if (farmField != null)
                     {
                         farmField.LoadPlacementData(fieldSave.placementData);
+
+                        // 부모의 자식 SpriteRenderer들에 알파 값 복원
+                        SpriteRenderer[] childRenderers = newField.GetComponentsInChildren<SpriteRenderer>();
+                        foreach (var spriteRenderer in childRenderers)
+                        {
+                            Color color = spriteRenderer.color;
+                            color.a = fieldSave.placementData.alpha; // 저장된 알파 값 적용
+                            spriteRenderer.color = color;
+                        }
+
                         field.Add(farmField);
                     }
                 }
@@ -372,6 +389,16 @@ public class GameManager : MonoBehaviour
                     if (cropInstance != null)
                     {
                         cropInstance.LoadPlacementData(cropSave.placementData);
+
+                        // 부모의 자식 SpriteRenderer들에 알파 값 복원
+                        SpriteRenderer[] childRenderers = newCrop.GetComponentsInChildren<SpriteRenderer>();
+                        foreach (var spriteRenderer in childRenderers)
+                        {
+                            Color color = spriteRenderer.color;
+                            color.a = cropSave.placementData.alpha; // 저장된 알파 값 적용
+                            spriteRenderer.color = color;
+                        }
+
                         crop.Add(cropInstance);
                     }
                 }

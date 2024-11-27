@@ -180,10 +180,20 @@ public class GridData
         // 작물 저장
         foreach (var crop in placedCrops)
         {
+            Renderer renderer = crop.Value != null ? GetRendererFromPositions(crop.Key) : null;
+            float alpha = renderer != null ? renderer.material.color.a : 1.0f;
+
             saveData.crops.Add(new GridCropSave
             {
                 position = crop.Key,
-                placementData = crop.Value,
+                placementData = new PlacementData(
+                    crop.Value.occupiedPositions,
+                    crop.Value.ID,
+                    crop.Value.PlacedObjectIndex,
+                    crop.Value.cropState,
+                    crop.Value.seedPlantedState,
+                    alpha // 알파 값 저장
+                ),
                 id = crop.Value.ID
             });
         }
@@ -191,16 +201,38 @@ public class GridData
         // 밭 저장
         foreach (var field in placedFields)
         {
+            Renderer renderer = field.Value != null ? GetRendererFromPositions(field.Key) : null;
+            float alpha = renderer != null ? renderer.material.color.a : 1.0f;
+
             saveData.fields.Add(new GridFieldSave
             {
                 position = field.Key,
-                placementData = field.Value,
+                placementData = new PlacementData(
+                    field.Value.occupiedPositions,
+                    field.Value.ID,
+                    field.Value.PlacedObjectIndex,
+                    field.Value.cropState,
+                    field.Value.seedPlantedState,
+                    alpha // 알파 값 저장
+                ),
                 id = field.Value.ID
             });
         }
 
         return JsonUtility.ToJson(saveData);
     }
+
+    // Helper 함수: 위치에서 Renderer 가져오기
+    private Renderer GetRendererFromPositions(Vector3 position)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit, 10f))
+        {
+            return hit.collider.GetComponent<Renderer>();
+        }
+        return null;
+    }
+
 
     public void LoadFieldsAndCrops(string json)
     {
@@ -214,22 +246,45 @@ public class GridData
         // 작물 복원
         foreach (var cropSave in saveData.crops)
         {
-            Vector3Int intPosition = Vector3Int.FloorToInt(cropSave.position); // Vector3를 Vector3Int로 변환
+            Vector3Int intPosition = Vector3Int.FloorToInt(cropSave.position);
             placedCrops[intPosition] = cropSave.placementData;
+
+            // 알파 값 복원
+            Renderer renderer = GetRendererFromPositions(cropSave.position);
+            if (renderer != null)
+            {
+                Material material = renderer.material;
+                Color color = material.color;
+                color.a = cropSave.placementData.alpha;
+                material.color = color;
+            }
+
             Debug.Log($"Loading crop data at position: {intPosition}, ID: {cropSave.id}");
         }
 
         // 밭 복원
         foreach (var fieldSave in saveData.fields)
         {
-            Vector3Int intPosition = Vector3Int.FloorToInt(fieldSave.position); // Vector3를 Vector3Int로 변환
+            Vector3Int intPosition = Vector3Int.FloorToInt(fieldSave.position);
             placedFields[intPosition] = fieldSave.placementData;
+
+            // 알파 값 복원
+            Renderer renderer = GetRendererFromPositions(fieldSave.position);
+            if (renderer != null)
+            {
+                Material material = renderer.material;
+                Color color = material.color;
+                color.a = fieldSave.placementData.alpha;
+                material.color = color;
+            }
+
             Debug.Log($"Loading field data at position: {intPosition}, ID: {fieldSave.id}");
         }
 
         Debug.Log($"Loaded Field Positions: {string.Join(", ", placedFields.Keys)}");
         Debug.Log($"Loaded Crop Positions: {string.Join(", ", placedCrops.Keys)}");
     }
+
 }
 
 [System.Serializable]
@@ -244,14 +299,18 @@ public class PlacementData      // 오브젝트의 정보 클래스
     public CropState cropState;
     public SeedPlantedState seedPlantedState;
 
-    public PlacementData(List<Vector3Int> occupiedPositions, int iD, int placedObjectIndex, 
-                        CropState cropState = CropState.NeedsWater, SeedPlantedState seedPlantedState = SeedPlantedState.No)
+    public float alpha;
+
+    public PlacementData(List<Vector3Int> occupiedPositions, int iD, int placedObjectIndex,
+                        CropState cropState = CropState.NeedsWater, SeedPlantedState seedPlantedState = SeedPlantedState.No,
+                        float alpha = 1.0f)
     {
         this.occupiedPositions = occupiedPositions;
         ID = iD;
         PlacedObjectIndex = placedObjectIndex;
         this.cropState = cropState;
         this.seedPlantedState = seedPlantedState;
+        this.alpha = alpha;
     }
 
     // JSON 저장을 위해 기본 생성자 추가
@@ -278,5 +337,5 @@ public class GridCropSave
 {
     public Vector3 position;       // 작물 위치
     public PlacementData placementData; // PlacementData 정보
-    public int id;
+    public int id; 
 }
