@@ -88,6 +88,31 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // 모든 씨앗 버튼의 이미지를 설정하는 메서드
+    private void ButtonSetting()
+    {
+        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 0);       // 기본값은 0 (첫 번째 작물만 해금)
+
+        for (int i = 0; i < SeedButtons.Length; i++)
+        {
+            Transform childTransform = SeedButtons[i].transform.GetChild(0);
+
+            if (childTransform != null)
+            {
+                Image iconImage = childTransform.GetComponent<Image>();     // 해당 버튼 작물의 이미지 오브젝트의 이미지 컴포넌트
+
+                if (unlockedIndex >= i)     // 해금되었을 때
+                {
+                    iconImage.color = new Color(255, 255, 255, 255);
+                }
+                else                        // 해금되지 않았을 때
+                {
+                    iconImage.color = new Color(0, 0, 0, 0.5f);
+                }
+            }
+        }
+    }
+
     // 모든 씨앗 버튼의 상태를 업데이트하는 메서드
     private void UpdateButtons()
     {
@@ -97,6 +122,8 @@ public class UIManager : MonoBehaviour
         {
             SeedButtons[i].interactable = (i <= unlockedIndex);         // 해금된 인덱스 이하의 버튼만 활성화
         }
+
+        ButtonSetting();
     }
 
     // 작물이 수확되거나 갯수가 변경될 때 호출되는 메서드
@@ -106,22 +133,24 @@ public class UIManager : MonoBehaviour
 
         foreach (var cropStorage in storage.storedCropsByID)
         {
-            int cropCount = cropStorage.crops.Count;                    // 해당 ID의 작물 수확 수
-
-            // 현재 해금된 인덱스의 작물이 10개 수확되었는지 확인
-            if (cropCount >= 3 && unlockedIndex < SeedButtons.Length - 1)
+            int id = cropStorage.cropID;
+            // 해당 작물의 업적 Goal 을 충족 시켰는가 = 클리어했는가
+            if (AchievementsDatabase.GetCleared(id))
             {
+                Debug.LogWarning("==========해당 작물 업적 클리어==========");
                 // 해당 cropID에 대한 해금 여부 확인
-                Debug.Log("==========3개 이상 수확됨==========");
-                string cropKey = "CropUnlocked_" + cropStorage.cropID;
+                string cropKey = "CropUnlocked_" + id;
                 if (PlayerPrefs.GetInt(cropKey, 0) == 0) // 해금되지 않은 경우
                 {
-                    Debug.Log("==========해금처리 진행됨==========");
+                    Debug.LogWarning("==========해금처리 진행됨==========");
                     // 해금 처리
                     PlayerPrefs.SetInt(cropKey, 1); // 해당 작물 해금 상태 저장
                     unlockedIndex++; // 해금된 작물 인덱스 증가
                     PlayerPrefs.SetInt("UnlockPlant", unlockedIndex); // 전체 해금 인덱스 저장
+                    AchievementsDatabase.UnlockAchievement(id + 1);
+                    ButtonSetting();
                     SeedButtons[unlockedIndex].interactable = true; // 해당 버튼 활성화
+                    // 나중에 위의 문장 삭제하고 새 씨앗 버튼 해금 버튼으로 수정한 다음 그거 누르면 UpdateButtons 호출되도록.
                 }
             }
         }

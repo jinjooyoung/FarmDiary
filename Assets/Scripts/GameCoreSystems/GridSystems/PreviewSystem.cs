@@ -10,6 +10,7 @@ public class PreviewSystem : MonoBehaviour
     private GameObject previewObject;               // 미리보기 오브젝트
 
     private AIStateManager aiStateManager;
+    private GameManager gameManager;
 
     //[SerializeField]
     //private SpriteRenderer previewPrefab;
@@ -23,6 +24,7 @@ public class PreviewSystem : MonoBehaviour
         cellIndicatorRenderer = cellIndicator.GetComponentInChildren<SpriteRenderer>();
 
         aiStateManager = FindAnyObjectByType<AIStateManager>();
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     public void StartShowingPlacementPreview(GameObject prefab, Vector2Int size)        // 프리뷰 시작
@@ -38,6 +40,13 @@ public class PreviewSystem : MonoBehaviour
             crop.isPreview = true;
             crop.seedPlantedState = Crop.SeedPlantedState.No;
             aiStateManager.crop.Remove(crop);
+        }
+
+        FarmField farmField = previewObject.GetComponent<FarmField>();
+        if (farmField != null)
+        {
+            farmField.isPreview = true;
+            gameManager.field.Remove(farmField);
         }
 
         PrepareCursor(size);                        // 커서의 사이즈를 선택한 오브젝트 크기에 맞게 조절

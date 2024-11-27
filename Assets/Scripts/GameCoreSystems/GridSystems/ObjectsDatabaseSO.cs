@@ -34,3 +34,18 @@ public class ObjectData
     [field: SerializeField]
     public float[] GrowthTimes { get; private set; } = new float[4]; // 작물의 단계별 성장 시간
 }
+
+public static class ObjectsDatabase
+{
+    private static ObjectsDatabaseSO database;
+
+    public static void Initialize(ObjectsDatabaseSO db)
+    {
+        database = db;
+    }
+
+    public static ObjectData GetObjectByID(int id)
+    {
+        return database.objectsData.Find(obj => obj.ID == id);
+    }
+}

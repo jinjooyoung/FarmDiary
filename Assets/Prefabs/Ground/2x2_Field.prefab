@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4042be46c51d3af46ac53acc25e6a727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPreview: 0
+  ID: 1
+  PlacedObjectIndex: 0
+  cropState: 0
+  seedPlantedState: 0
+  occupiedPositions: []
+  grid: {fileID: 0}
+  fieldPos: {x: 0, y: 0}
 --- !u!1 &8382401420189692387
 GameObject:
   m_ObjectHideFlags: 0

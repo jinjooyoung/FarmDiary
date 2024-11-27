@@ -303,6 +303,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 29
+  PlacedObjectIndex: 0
+  occupiedPositions: []
   sellPrice: 28900
   cropState: 0
   seedPlantedState: 0

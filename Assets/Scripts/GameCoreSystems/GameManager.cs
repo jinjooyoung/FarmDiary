@@ -8,6 +8,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] private List<PrefabData> seedPrefabs; // 씨앗 프리팹 리스트
+    [SerializeField] private List<PrefabData> fieldPrefabs; // 밭 프리팹 리스트
+
+    private Dictionary<int, GameObject> seedDictionary; // 씨앗 ID-프리팹 매핑
+    private Dictionary<int, GameObject> fieldDictionary; // 밭 ID-프리팹 매핑
+
+    public GridData gridData;
+
     public Camera mainCam;
     public Text testText;
 
@@ -22,6 +30,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Transform playerTransform;
 
+    [SerializeField] private PlacementSystem placementSystem;
+
+    [SerializeField] private List<Crop> crop = new List<Crop>();
+    [SerializeField] public List<FarmField> field = new List<FarmField>();
+
     private void Awake()
     {
         if (instance == null)
@@ -34,12 +47,96 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (gridData == null)
+        {
+            gridData = new GridData(); // 필요한 경우 ScriptableObject나 새 인스턴스 생성
+        }
+
+        // 씨앗 Dictionary 초기화
+        seedDictionary = new Dictionary<int, GameObject>();
+        foreach (var seedData in seedPrefabs)
+        {
+            if (!seedDictionary.ContainsKey(seedData.id))
+            {
+                seedDictionary.Add(seedData.id, seedData.prefab);
+                Debug.Log($"Seed ID: {seedData.id}, Prefab Name: {seedData.prefab.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"중복된 Seed ID: {seedData.id}. 확인 필요!");
+            }
+        }
+
+        // 밭 Dictionary 초기화
+        fieldDictionary = new Dictionary<int, GameObject>();
+        foreach (var fieldData in fieldPrefabs)
+        {
+            if (!fieldDictionary.ContainsKey(fieldData.id))
+            {
+                fieldDictionary.Add(fieldData.id, fieldData.prefab);
+                Debug.Log($"Field ID: {fieldData.id}, Prefab Name: {fieldData.prefab.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"중복된 Field ID: {fieldData.id}. 확인 필요!");
+            }
+        }
+
         SaveSystem.Init();
         InitializePlayerPrefs();
     }
 
-    private void Update()
+    public GameObject GetSeedPrefabById(int id)
     {
+        if (seedDictionary.TryGetValue(id, out var prefab))
+        {
+            return prefab;
+        }
+        else
+        {
+            Debug.LogWarning($"Seed ID {id}에 해당하는 프리팹이 없습니다.");
+            return null;
+        }
+    }
+
+    public GameObject GetFieldPrefabById(int id)
+    {
+        if (fieldDictionary.TryGetValue(id, out var prefab))
+        {
+            return prefab;
+        }
+        else
+        {
+            Debug.LogWarning($"Field ID {id}에 해당하는 프리팹이 없습니다.");
+            return null;
+        }
+    }
+
+    void Start()
+    {
+        gridData = placementSystem.placedOBJData;
+
+        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
+        {
+            currentCoin = 210;
+        }
+
+        Crop[] crops = FindObjectsOfType<Crop>();
+        FarmField[] fields = FindObjectsOfType<FarmField>();
+
+        crop.AddRange(crops);
+        field.AddRange(fields);
+    }
+
+    public void RemoveMissingCrops()
+    {
+        crop.RemoveAll(c => c == null);
+    }
+
+    void Update()
+    {
+        RemoveMissingCrops();
+
         testText.text = "현재 코인: " + currentCoin;
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -72,7 +169,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetCropKeys()
     {
-        int totalCrops = 50; // 작물의 마지막 ID(임시로 해둠 나중에 수정해야함)
+        int totalCrops = 61; // 작물의 마지막 ID
 
         for (int i = 9; i <= totalCrops; i++)
         {
@@ -90,13 +187,13 @@ public class GameManager : MonoBehaviour
         // 플레이어 프리퍼런스를 저장하고 게임 종료
         PlayerPrefs.Save();
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         // 에디터에서는 플레이 모드를 중지합니다.
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         // 빌드된 애플리케이션에서는 게임을 종료합니다.
         Application.Quit();
-        #endif
+#endif
     }
 
     // 코인 추가 메서드
@@ -161,39 +258,162 @@ public class GameManager : MonoBehaviour
         //Debug.Log("총 보석 : " + gems);
     }
 
-
     public void SaveGameData()
     {
         Vector3 playerPosition = playerTransform.position;
 
+        // 밭 데이터 수집
+        List<GridFieldSave> fieldSaves = new();
+        foreach (var field in field)
+        {
+            Vector3 worldPosition = field.transform.position;
+            Renderer renderer = field.GetComponent<Renderer>(); // Renderer 가져오기
+            float alpha = renderer != null ? renderer.material.color.a : 1.0f; // 알파 값 가져오기
+
+            var fieldData = new GridFieldSave
+            {
+                position = worldPosition, // Vector3를 그대로 저장
+                id = field.ID,
+                placementData = new PlacementData(
+                    field.occupiedPositions,
+                    field.ID,
+                    field.PlacedObjectIndex,
+                    field.cropState,
+                    field.seedPlantedState,
+                    alpha // 알파 값 저장
+                )
+            };
+            fieldSaves.Add(fieldData);
+
+            Debug.Log($"밭 저장: ID={field.ID}, 월드 위치={worldPosition}, 알파 값={alpha}");
+        }
+
+        // 작물 데이터 수집
+        List<GridCropSave> cropSaves = new();
+        foreach (var crop in crop)
+        {
+            Vector3 worldPosition = crop.transform.position;
+            Renderer renderer = crop.GetComponent<Renderer>(); // Renderer 가져오기
+            float alpha = renderer != null ? renderer.material.color.a : 1.0f; // 알파 값 가져오기
+
+            var cropData = new GridCropSave
+            {
+                position = worldPosition, // Vector3를 그대로 저장
+                id = crop.ID,
+                placementData = new PlacementData(
+                    crop.occupiedPositions,
+                    crop.ID,
+                    crop.PlacedObjectIndex,
+                    crop.cropState,
+                    crop.seedPlantedState,
+                    alpha // 알파 값 저장
+                )
+            };
+            cropSaves.Add(cropData);
+
+            Debug.Log($"작물 저장: ID={crop.ID}, 월드 위치={worldPosition}, 알파 값={alpha}");
+        }
+
+        // 저장 객체 생성
+        GridDataSave gridSaveData = new GridDataSave
+        {
+            crops = cropSaves,
+            fields = fieldSaves
+        };
+
+        // AllSaveData 객체 생성
         AllSaveData saveData = new AllSaveData
         {
             coin = currentCoin,
             gem = currentGem,
-            playerPosition = playerPosition
+            playerPosition = playerPosition,
+            gridDataJson = JsonUtility.ToJson(gridSaveData)
         };
 
+        // JSON 직렬화 및 저장
         string json = JsonUtility.ToJson(saveData);
-
-        // SaveSystem.Save 호출 시 파일 이름 추가
         SaveSystem.Save(json, "GameData.json");
     }
 
+
     public void LoadGameData()
     {
-        string saveString = SaveSystem.Load("GameData.json"); // 파일 이름 추가
+        string saveString = SaveSystem.Load("GameData.json");
+
         if (!string.IsNullOrEmpty(saveString))
         {
             AllSaveData saveData = JsonUtility.FromJson<AllSaveData>(saveString);
+
+            // 기본 데이터 적용
             currentCoin = saveData.coin;
             currentGem = saveData.gem;
-
             playerTransform.position = saveData.playerPosition;
+
+            // GridData 역직렬화
+            GridDataSave gridSaveData = JsonUtility.FromJson<GridDataSave>(saveData.gridDataJson);
+
+            // 밭 데이터 로드
+            foreach (var fieldSave in gridSaveData.fields)
+            {
+                GameObject prefab = GetFieldPrefabById(fieldSave.id);
+                if (prefab != null)
+                {
+                    GameObject newField = Instantiate(prefab, fieldSave.position, Quaternion.identity);
+                    FarmField farmField = newField.GetComponent<FarmField>();
+                    if (farmField != null)
+                    {
+                        farmField.LoadPlacementData(fieldSave.placementData);
+
+                        // 부모의 자식 SpriteRenderer들에 알파 값 복원
+                        SpriteRenderer[] childRenderers = newField.GetComponentsInChildren<SpriteRenderer>();
+                        foreach (var spriteRenderer in childRenderers)
+                        {
+                            Color color = spriteRenderer.color;
+                            color.a = fieldSave.placementData.alpha; // 저장된 알파 값 적용
+                            spriteRenderer.color = color;
+                        }
+
+                        field.Add(farmField);
+                    }
+                }
+            }
+
+            // 작물 데이터 로드
+            foreach (var cropSave in gridSaveData.crops)
+            {
+                GameObject prefab = GetSeedPrefabById(cropSave.id);
+                if (prefab != null)
+                {
+                    GameObject newCrop = Instantiate(prefab, cropSave.position, Quaternion.identity);
+                    Crop cropInstance = newCrop.GetComponent<Crop>();
+                    if (cropInstance != null)
+                    {
+                        cropInstance.LoadPlacementData(cropSave.placementData);
+
+                        // 부모의 자식 SpriteRenderer들에 알파 값 복원
+                        SpriteRenderer[] childRenderers = newCrop.GetComponentsInChildren<SpriteRenderer>();
+                        foreach (var spriteRenderer in childRenderers)
+                        {
+                            Color color = spriteRenderer.color;
+                            color.a = cropSave.placementData.alpha; // 저장된 알파 값 적용
+                            spriteRenderer.color = color;
+                        }
+
+                        crop.Add(cropInstance);
+                    }
+                }
+            }
         }
-        else
-        {
-            Debug.Log("저장된 데이터가 없습니다.");
-        }
+    }
+
+    public void AddSeed(Crop newCrop)
+    {
+        crop.Add(newCrop);
+    }
+
+    public void Addfield(FarmField newFarmField)
+    {
+        field.Add(newFarmField);
     }
 }
 
@@ -203,4 +423,7 @@ public class AllSaveData
     public int coin;
     public int gem;
     public Vector3 playerPosition;
+    public string gridDataJson;
+    public List<Crop> crops;
+    public List<FarmField> fields;
 }
