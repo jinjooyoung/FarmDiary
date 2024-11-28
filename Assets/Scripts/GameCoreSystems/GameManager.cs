@@ -307,7 +307,9 @@ public class GameManager : MonoBehaviour
                     crop.cropState,
                     crop.seedPlantedState,
                     alpha // 알파 값 저장
-                )
+                ),
+                currentStage = crop.currentStage, // 성장 단계 저장
+                cropState = crop.cropState // 작물 상태 저장
             };
             cropSaves.Add(cropData);
 
@@ -389,6 +391,10 @@ public class GameManager : MonoBehaviour
                     if (cropInstance != null)
                     {
                         cropInstance.LoadPlacementData(cropSave.placementData);
+                        cropInstance.currentStage = cropSave.currentStage; // 성장 단계 복원
+                        cropInstance.cropState = cropSave.cropState; // 상태 복원
+                        cropInstance.UpdateCropVisual(); // 시각적 상태 업데이트
+                        cropInstance.UpdateSortingLayer(); // 소팅 레이어 복원
 
                         // 부모의 자식 SpriteRenderer들에 알파 값 복원
                         SpriteRenderer[] childRenderers = newCrop.GetComponentsInChildren<SpriteRenderer>();

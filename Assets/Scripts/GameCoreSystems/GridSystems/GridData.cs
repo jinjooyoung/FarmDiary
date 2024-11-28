@@ -337,5 +337,7 @@ public class GridCropSave
 {
     public Vector3 position;       // 작물 위치
     public PlacementData placementData; // PlacementData 정보
-    public int id; 
+    public int id;
+    public int currentStage; // 성장 단계 추가
+    public Crop.CropState cropState; // 작물 상태 추가
 }

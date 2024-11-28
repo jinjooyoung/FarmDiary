@@ -234,7 +234,7 @@ public class Crop : MonoBehaviour
     }
 
     // 작물의 상태를 업데이트
-    private void UpdateCropVisual()
+    public void UpdateCropVisual()
     {
         // 모든 성장 단계를 일단 비활성화
         for (int i = 0; i < 5; i++)
@@ -250,7 +250,7 @@ public class Crop : MonoBehaviour
     }
 
     // 소팅 레이어 업데이트
-    private void UpdateSortingLayer()
+    public void UpdateSortingLayer()
     {
         for (int i = 0; i < 5; i++)
         {
