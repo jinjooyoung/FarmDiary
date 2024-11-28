@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PlacementSystem placementSystem;
 
+    [SerializeField] private float autoSaveInterval = 300f; // 자동 저장 간격 (초)
+    private float autoSaveTimer; // 자동 저장 타이머
+
     [SerializeField] private List<Crop> crop = new List<Crop>();
     [SerializeField] public List<FarmField> field = new List<FarmField>();
 
@@ -114,6 +117,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // 자동 저장 타이머 초기화
+        autoSaveTimer = autoSaveInterval;
+
         gridData = placementSystem.placedOBJData;
 
         if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
@@ -135,21 +141,19 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // 타이머 업데이트
+        autoSaveTimer -= Time.deltaTime;
+
+        if (autoSaveTimer <= 0)
+        {
+            SaveGameData();
+            Debug.Log("자동 저장 완료!");
+            autoSaveTimer = autoSaveInterval; // 타이머 리셋
+        }
+
         RemoveMissingCrops();
 
         testText.text = "현재 코인: " + currentCoin;
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SaveGameData();
-            Debug.Log("게임 데이터 저장 완료!");
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LoadGameData();
-            Debug.Log("게임 데이터 로드 완료!");
-        }
 
         float currentTime = Time.time;
 

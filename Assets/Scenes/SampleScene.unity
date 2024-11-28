@@ -45496,6 +45496,7 @@ MonoBehaviour:
   testText: {fileID: 1256271318}
   playerTransform: {fileID: 1726576883}
   placementSystem: {fileID: 435543044}
+  autoSaveInterval: 10
   crop: []
   field: []
 --- !u!4 &1903297168
