@@ -6,19 +6,17 @@ using UnityEngine.UI;
 
 public class AchievementManager : MonoBehaviour
 {
-    public static AchievementManager instance;          // 싱글톤 화
-    [SerializeField] private AchievementsDatabaseSO achievementsDatabase; // SO를 에디터에서 할당
-    [SerializeField] private Storage storage;                             // 작물 수확량 체크를 위해서
+    public static AchievementManager Instance;
 
-    // UI 요소들을 담을 게임 오브젝트 배열
-    public GameObject[] achievementUI;
+    [SerializeField] private AchievementUI[] achievementUIs;  // 각 업적 UI 요소 배열
+    [SerializeField] private AchievementsDatabaseSO achievementsDatabase; // 업적 데이터베이스
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);              // 다른 씬에서도 적용하기 위해서 파괴되지 않게 설정
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -28,32 +26,37 @@ public class AchievementManager : MonoBehaviour
 
     private void Start()
     {
-        // AchievementsDatabase 초기화
         AchievementsDatabase.Initialize(achievementsDatabase);
+
+        // 각 업적 UI를 초기화
+        InitializeAchievementUIs();
     }
 
-    // 게임에서 단 한 번 특수한 상황에서 진행되는 업적 (튜토리얼 완료)
-    public void CompleteTutorial()
+    // 각 업적 UI 초기화
+    private void InitializeAchievementUIs()
     {
-        int achievementID = 1;  // 튜토리얼 완료 업적 ID
-
-        // 업적을 달성하려면 이 메서드가 한 번만 호출되도록 관리
-        AchievementsDatabase.AddProgressToAchievement(achievementID, 1); // 목표에 맞는 진척도 추가
-    }
-
-    /*// 수확된 작물에 따른 업적 진행
-    public void OnCropHarvested(int harvestedAmount)
-    {
-        harvestedCropCount += harvestedAmount;
-
-        int achievementID = 3;  // 작물 수확 업적 ID
-        int goal = 1000;  // 목표 수확량 (예: 1000개)
-
-        // 목표 수확량을 달성하면 진행도 추가
-        if (harvestedCropCount >= goal)
+        for (int a = 1; a <= 5; a++)
         {
-            AddProgressToAchievement(achievementID, harvestedCropCount);
-            UnlockAchievement(achievementID);
+            achievementUIs[a - 1].Initialize(-a);
         }
-    }*/
+
+        for (int i = 1; i <= 61; i++)
+        {
+            achievementUIs[i + 4].Initialize(i);
+        }
+    }
+
+    // 업적 진행 상태 업데이트
+    public void UpdateAchievementProgress(int achievementID)
+    {
+        // 해당 업적의 UI만 갱신
+        if (achievementID < 0)
+        {
+            achievementUIs[(-achievementID) - 1].Initialize(achievementID);
+        }
+        else
+        {
+            achievementUIs[achievementID + 4].Initialize(achievementID);
+        }
+    }
 }

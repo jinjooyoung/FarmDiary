@@ -184,10 +184,7 @@ public class TutorialUI : MonoBehaviour
         {
             index = -1;
             PlayerPrefs.SetInt("TutorialDone", 1);
-            AchievementsDatabase.AddProgressToAchievement(1, 1);
-            AchievementsDatabase.AddProgressToAchievement(2, 1);
-            AchievementsDatabase.AddProgressToAchievement(3, 1);
-            AchievementsDatabase.AddProgressToAchievement(4, 1);
+            AchievementsDatabase.TutorialAchievement();
             tutorialCanvas.SetActive(false);    // 마지막 패널이면 튜토리얼 캔버스를 끔
         }
 

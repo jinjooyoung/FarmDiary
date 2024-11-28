@@ -86,16 +86,11 @@ public class KeyboardHookManager : MonoBehaviour
 
                         // 키보드 관련 업적 1씩 증가 & 클리어
                         AchievementsDatabase.AddProgressToAchievement(3, 1);
-                        AchievementsDatabase.AddProgressToAchievement(6, 1);
-                        AchievementsDatabase.AddProgressToAchievement(7, 1);
-                        AchievementsDatabase.AddProgressToAchievement(8, 1);
 
                         // 키보드 업적 해금
                         if (AchievementsDatabase.GetCleared(3))
                         {
-                            AchievementsDatabase.UnlockAchievement(6);
-                            AchievementsDatabase.UnlockAchievement(7);
-                            AchievementsDatabase.UnlockAchievement(8);
+                            AchievementsDatabase.KeyboardProgress();
                         }
                         else if (AchievementsDatabase.GetCleared(8))
                         {

@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviour
         if (amount < 0)
             return;
         currentCoin += amount;
+        AchievementsDatabase.CoinProgress(currentCoin);
         PlayerPrefs.SetInt(CoinKey, currentCoin);
         PlayerPrefs.Save();
         //Debug.Log("ÃÑ ÄÚÀÎ : " + coin);
@@ -244,6 +245,7 @@ public class GameManager : MonoBehaviour
         else
         {
             currentCoin -= amount;
+            AchievementsDatabase.CoinProgress(currentCoin);
             PlayerPrefs.SetInt(CoinKey, currentCoin);
             PlayerPrefs.Save();
         }
