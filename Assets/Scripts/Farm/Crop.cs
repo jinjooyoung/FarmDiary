@@ -35,9 +35,9 @@ public class Crop : MonoBehaviour
     public bool isPreview;
 
     public GameObject[] growthStages; // 성장 단계별로 할당된 리소스 오브젝트들 (총 5개)
-    private float[] growthTimes;  // 각 성장 단계에 필요한 시간
+    public float[] growthTimes;  // 각 성장 단계에 필요한 시간
     public int currentStage = 0;  // 현재 작물의 성장 단계
-    private float growthStartTime; // 성장이 시작된 시간
+    public float growthStartTime; // 성장이 시작된 시간
 
     private AIStateManager aiStateManager;
 

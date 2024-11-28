@@ -150,6 +150,13 @@ public class GameManager : MonoBehaviour
             LoadGameData();
             Debug.Log("게임 데이터 로드 완료!");
         }
+
+        float currentTime = Time.time;
+
+        foreach (var crop in crop)
+        {
+            crop.CheckGrowth(currentTime); // 현재 시간 전달
+        }
     }
 
     private void InitializePlayerPrefs()
@@ -308,8 +315,10 @@ public class GameManager : MonoBehaviour
                     crop.seedPlantedState,
                     alpha // 알파 값 저장
                 ),
-                currentStage = crop.currentStage, // 성장 단계 저장
-                cropState = crop.cropState // 작물 상태 저장
+                currentStage = crop.currentStage,           // 성장 단계 저장
+                cropState = crop.cropState,                 // 작물 상태 저장
+                growthStartTime = crop.growthStartTime,      // 성장 시작 시간 저장
+                growthTimes = crop.growthTimes
             };
             cropSaves.Add(cropData);
 
@@ -393,6 +402,8 @@ public class GameManager : MonoBehaviour
                         cropInstance.LoadPlacementData(cropSave.placementData);
                         cropInstance.currentStage = cropSave.currentStage; // 성장 단계 복원
                         cropInstance.cropState = cropSave.cropState; // 상태 복원
+                        cropInstance.growthStartTime = cropSave.growthStartTime;
+                        cropInstance.growthTimes = cropSave.growthTimes;
                         cropInstance.UpdateCropVisual(); // 시각적 상태 업데이트
                         cropInstance.UpdateSortingLayer(); // 소팅 레이어 복원
 

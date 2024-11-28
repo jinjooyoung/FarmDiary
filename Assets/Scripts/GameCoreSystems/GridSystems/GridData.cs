@@ -340,4 +340,6 @@ public class GridCropSave
     public int id;
     public int currentStage; // 성장 단계 추가
     public Crop.CropState cropState; // 작물 상태 추가
+    public float growthStartTime; // 성장 시작 시간 추가
+    public float[] growthTimes;
 }

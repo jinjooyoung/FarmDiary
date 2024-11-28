@@ -570,4 +570,6 @@ MonoBehaviour:
   - {fileID: 4617620030223638775}
   - {fileID: 5527069741259683640}
   - {fileID: 4187798459123870893}
+  growthTimes: []
   currentStage: 0
+  growthStartTime: 0
