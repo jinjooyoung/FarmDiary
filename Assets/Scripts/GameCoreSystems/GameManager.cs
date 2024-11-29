@@ -372,6 +372,10 @@ public class GameManager : MonoBehaviour
         var storage = FindObjectOfType<Storage>();
         List<CropStorage> storedCrops = storage != null ? storage.storedCropsByID : new List<CropStorage>();
 
+        // AIStateManager에서 물의 양 가져오기
+        var aiStateManager = FindObjectOfType<AIStateManager>();
+        int currentWaterAmount = aiStateManager != null ? aiStateManager.currentWaterAmount : 0;
+
         // AllSaveData 객체 생성
         AllSaveData saveData = new AllSaveData
         {
@@ -379,7 +383,8 @@ public class GameManager : MonoBehaviour
             gem = currentGem,
             playerPosition = playerPosition,
             gridDataJson = JsonUtility.ToJson(gridSaveData),
-            storedCropsByID = storedCrops // 저장소 데이터 추가
+            storedCropsByID = storedCrops, // 저장소 데이터 추가
+            currentWaterAmount = currentWaterAmount // 물의 양 저장
         };
 
         // JSON 직렬화 및 저장
@@ -471,6 +476,12 @@ public class GameManager : MonoBehaviour
                 storage.storedCropsByID = saveData.storedCropsByID;
                 Debug.Log("저장소 데이터가 성공적으로 로드되었습니다.");
             }
+
+            var aiStateManager = FindObjectOfType<AIStateManager>();
+            if (aiStateManager != null)
+            {
+                aiStateManager.currentWaterAmount = saveData.currentWaterAmount;
+            }
         }
     }
 
@@ -494,5 +505,6 @@ public class AllSaveData
     public string gridDataJson;
     public List<Crop> crops;
     public List<FarmField> fields;
-    public List<CropStorage> storedCropsByID; // 새로 추가된 저장소 데이터
+    public List<CropStorage> storedCropsByID;
+    public int currentWaterAmount;
 }
