@@ -35,11 +35,11 @@ public class AchievementUI : MonoBehaviour
         rewardButton.interactable = isCleared; // 클리어된 업적만 보상 버튼 활성화
 
         // 업적 아이콘과 보상 아이콘 로드
-        if (ID > 0)    // 리소스가 없어서 임시로 이렇게 해둠 나중에 리소스 다 생기면 if 문 삭제
+        /*if (ID > 0)    // 리소스가 없어서 임시로 이렇게 해둠 나중에 리소스 다 생기면 if 문 삭제
         {
             achievementIcon.sprite = LoadAchievementIcon(ID);
             rewardIcon.sprite = LoadRewardIcon(ID);
-        }
+        }*/
 
         /*// 잠금 상태라면 UI 요소 숨기기
         if (!isUnlocked)

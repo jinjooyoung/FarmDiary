@@ -177,7 +177,7 @@ public static class AchievementsDatabase
         if (achievement != null)
         {
             achievement.AddProgress(progressAmount);  // 진행도 추가
-            //AchievementManager.Instance.UpdateAchievementProgress(achievementID);
+            AchievementManager.Instance.SafeUpdateAchievementProgress(achievementID);
         }
     }
 
@@ -188,7 +188,7 @@ public static class AchievementsDatabase
         if (achievement != null)
         {
             achievement.RemoveProgress(progressAmount);  // 진행도 추가
-            //AchievementManager.Instance.UpdateAchievementProgress(achievementID);
+            AchievementManager.Instance.SafeUpdateAchievementProgress(achievementID);
         }
     }
 
@@ -199,7 +199,7 @@ public static class AchievementsDatabase
         if (achievement != null)
         {
             achievement.SetProgress(amount);  // 진행도 할당
-            //AchievementManager.Instance.UpdateAchievementProgress(achievementID);
+            AchievementManager.Instance.SafeUpdateAchievementProgress(achievementID);
         }
     }
 

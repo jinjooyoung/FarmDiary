@@ -47,16 +47,32 @@ public class AchievementManager : MonoBehaviour
     }
 
     // 업적 진행 상태 업데이트
-    public void UpdateAchievementProgress(int achievementID)
+    public void SafeUpdateAchievementProgress(int achievementID)
     {
-        // 해당 업적의 UI만 갱신
-        if (achievementID < 0)
+        // achievementUIs 배열의 범위 확인
+        if (achievementID < 0 || achievementID >= achievementUIs.Length)
         {
-            achievementUIs[(-achievementID) - 1].Initialize(achievementID);
+            Debug.LogError($"잘못된 achievementID: {achievementID}, UI를 업데이트할 수 없습니다.");
+            return;
+        }
+
+        AchievementData achievement = AchievementsDatabase.GetAchievementByID(achievementID);
+
+        // 업적이 클리어된 상태이면 업데이트하지 않음
+        if (achievement != null && achievement.Clear)
+        {
+            return;  // 클리어된 업적은 UI 갱신을 하지 않음
+        }
+
+        AchievementUI achievementUI = achievementUIs[achievementID];
+        if (achievementUI != null)
+        {
+            achievementUI.Initialize(achievementID);
+            //Debug.LogWarning("UI 초기화 업데이트 호출됨");
         }
         else
         {
-            achievementUIs[achievementID + 4].Initialize(achievementID);
+            Debug.LogError($"인덱스 {achievementID}의 Achievement UI가 null입니다.");
         }
     }
 }
