@@ -53,6 +53,7 @@ MonoBehaviour:
   occupiedPositions: []
   grid: {fileID: 0}
   fieldPos: {x: 0, y: 0}
+  PlantedCrop: {fileID: 0}
 --- !u!1 &8382401420189692387
 GameObject:
   m_ObjectHideFlags: 0

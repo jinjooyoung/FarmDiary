@@ -16,6 +16,15 @@ public class Storage : MonoBehaviour
     public AIStateManager aiStateManager; // AIStateManager 참조
     public UIManager UIManager;
 
+    private void Awake()
+    {
+        // 저장된 데이터가 있다면 초기화 (GameManager에서 로드된 후 반영)
+        if (storedCropsByID == null)
+        {
+            storedCropsByID = new List<CropStorage>();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

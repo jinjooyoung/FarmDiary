@@ -368,13 +368,18 @@ public class GameManager : MonoBehaviour
             fields = fieldSaves
         };
 
+        // 저장소 데이터 수집
+        var storage = FindObjectOfType<Storage>();
+        List<CropStorage> storedCrops = storage != null ? storage.storedCropsByID : new List<CropStorage>();
+
         // AllSaveData 객체 생성
         AllSaveData saveData = new AllSaveData
         {
             coin = currentCoin,
             gem = currentGem,
             playerPosition = playerPosition,
-            gridDataJson = JsonUtility.ToJson(gridSaveData)
+            gridDataJson = JsonUtility.ToJson(gridSaveData),
+            storedCropsByID = storedCrops // 저장소 데이터 추가
         };
 
         // JSON 직렬화 및 저장
@@ -409,6 +414,7 @@ public class GameManager : MonoBehaviour
                     if (farmField != null)
                     {
                         farmField.LoadPlacementData(fieldSave.placementData);
+                        farmField.ID = fieldSave.id;
 
                         // 부모의 자식 SpriteRenderer들에 알파 값 복원
                         SpriteRenderer[] childRenderers = newField.GetComponentsInChildren<SpriteRenderer>();
@@ -457,6 +463,14 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+
+            // 저장소 데이터 로드
+            var storage = FindObjectOfType<Storage>();
+            if (storage != null)
+            {
+                storage.storedCropsByID = saveData.storedCropsByID;
+                Debug.Log("저장소 데이터가 성공적으로 로드되었습니다.");
+            }
         }
     }
 
@@ -480,4 +494,5 @@ public class AllSaveData
     public string gridDataJson;
     public List<Crop> crops;
     public List<FarmField> fields;
+    public List<CropStorage> storedCropsByID; // 새로 추가된 저장소 데이터
 }
