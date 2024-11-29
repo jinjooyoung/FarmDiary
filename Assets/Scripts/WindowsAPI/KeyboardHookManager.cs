@@ -42,11 +42,7 @@ public class KeyboardHookManager : MonoBehaviour
     {
         keyPressCount = 0;
         // 백그라운드에서 실행되도록 설정
-        Application.runInBackground = true;
-
-        // 키 입력 횟수 초기화
-        //keyPressCount = 0; // 앱 시작 시 카운트 초기화
-        
+        Application.runInBackground = true;      
 
         // 훅 설정
         _proc = HookCallback;
@@ -111,12 +107,4 @@ public class KeyboardHookManager : MonoBehaviour
 
         return CallNextHookEx(_hookID, nCode, wParam, lParam);
     }
-
-    /*private void UpdateUIText()
-    {
-        if (uiText != null)
-        {
-            uiText.text = $"키 입력 횟수: {keyPressCount}";
-        }
-    }*/
 }

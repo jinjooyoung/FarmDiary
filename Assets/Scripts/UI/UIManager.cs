@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
         {
             if (cropTextFields.TryGetValue(cropStorage.cropID, out Text cropText))
             {
-                cropText.text = cropStorage.crops.Count.ToString();
+                cropText.text = cropStorage.cropCount.ToString(); // 개수만 업데이트
             }
         }
     }

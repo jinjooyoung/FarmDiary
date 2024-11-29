@@ -120,6 +120,10 @@ public class GameManager : MonoBehaviour
         // 자동 저장 타이머 초기화
         autoSaveTimer = autoSaveInterval;
 
+        // 기존 데이터 초기화
+        crop.Clear();
+        field.Clear();
+
         gridData = placementSystem.placedOBJData;
 
         if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
@@ -127,16 +131,35 @@ public class GameManager : MonoBehaviour
             currentCoin = 210;
         }
 
+        // 씬에 배치된 Crop과 Field 추가
         Crop[] crops = FindObjectsOfType<Crop>();
         FarmField[] fields = FindObjectsOfType<FarmField>();
 
-        crop.AddRange(crops);
-        field.AddRange(fields);
+        foreach (var item in crops)
+        {
+            if (!crop.Contains(item))
+            {
+                crop.Add(item);
+            }
+        }
+
+        foreach (var item in fields)
+        {
+            if (!field.Contains(item))
+            {
+                field.Add(item);
+            }
+        }
     }
 
     public void RemoveMissingCrops()
     {
         crop.RemoveAll(c => c == null);
+    }
+
+    public void RemoveMissingFields()
+    {
+        field.RemoveAll(f => f == null);
     }
 
     void Update()
@@ -151,6 +174,7 @@ public class GameManager : MonoBehaviour
             autoSaveTimer = autoSaveInterval; // 타이머 리셋
         }
 
+        RemoveMissingFields();
         RemoveMissingCrops();
 
         testText.text = "현재 코인: " + currentCoin;
@@ -273,6 +297,10 @@ public class GameManager : MonoBehaviour
 
     public void SaveGameData()
     {
+        // 누락된 객체 제거
+        RemoveMissingCrops();
+        RemoveMissingFields();
+
         Vector3 playerPosition = playerTransform.position;
 
         // 밭 데이터 수집
@@ -280,6 +308,7 @@ public class GameManager : MonoBehaviour
         foreach (var field in field)
         {
             Vector3 worldPosition = field.transform.position;
+
             Renderer renderer = field.GetComponent<Renderer>(); // Renderer 가져오기
             float alpha = renderer != null ? renderer.material.color.a : 1.0f; // 알파 값 가져오기
 
@@ -306,6 +335,7 @@ public class GameManager : MonoBehaviour
         foreach (var crop in crop)
         {
             Vector3 worldPosition = crop.transform.position;
+
             Renderer renderer = crop.GetComponent<Renderer>(); // Renderer 가져오기
             float alpha = renderer != null ? renderer.material.color.a : 1.0f; // 알파 값 가져오기
 
@@ -351,7 +381,6 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         SaveSystem.Save(json, "GameData.json");
     }
-
 
     public void LoadGameData()
     {
@@ -406,10 +435,12 @@ public class GameManager : MonoBehaviour
                     if (cropInstance != null)
                     {
                         cropInstance.LoadPlacementData(cropSave.placementData);
+                        cropInstance.ID = cropSave.id;
                         cropInstance.currentStage = cropSave.currentStage; // 성장 단계 복원
                         cropInstance.cropState = cropSave.cropState; // 상태 복원
                         cropInstance.growthStartTime = cropSave.growthStartTime;
                         cropInstance.growthTimes = cropSave.growthTimes;
+
                         cropInstance.UpdateCropVisual(); // 시각적 상태 업데이트
                         cropInstance.UpdateSortingLayer(); // 소팅 레이어 복원
 

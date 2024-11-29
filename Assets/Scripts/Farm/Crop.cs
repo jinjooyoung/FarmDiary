@@ -173,7 +173,7 @@ public class Crop : MonoBehaviour
         {
             Debug.Log("작물을 수확했습니다.");
             cropState = CropState.Harvested;
-            gameObject.SetActive(false);
+            Destroy(gameObject);
             GameManager.AddCoins(sellPrice);
             aiStateManager.AddToInventory(this);
         }
@@ -199,6 +199,12 @@ public class Crop : MonoBehaviour
     // CropGrowthManager 스크립트에서 호출됨
     public void CheckGrowth(float currentTime)
     {
+        if (currentStage >= growthTimes.Length)
+        {
+            Debug.LogWarning($"currentStage ({currentStage})가 growthTimes 배열 크기 ({growthTimes.Length})를 초과했습니다. 초기화가 필요합니다.");
+            return; // 배열 범위를 벗어나면 함수 종료
+        }
+
         // 수확된 경우에는 아무 작업도 하지 않음
         if (cropState == CropState.ReadyToHarvest)      // 수확 대기상태
         {
@@ -218,15 +224,17 @@ public class Crop : MonoBehaviour
         }
 
         // 물을 준 이후 성장 단계가 1 이상으로 진행되도록 설정
-        if (currentStage < growthStages.Length && currentTime - growthStartTime >= growthTimes[currentStage])
+        if (currentStage < growthTimes.Length && currentTime - growthStartTime >= growthTimes[currentStage])
         {
             currentStage++;
             UpdateCropVisual();
+
             Debug.Log($"현재 성장 단계: {currentStage}");
 
-            // 성장 단계가 마지막 단계인 경우 ReadyToHarvest 상태로 설정
-            if (currentStage == 4)  // 배열 마지막 단계 확인
+            // 마지막 단계일 경우 ReadyToHarvest로 설정
+            if (currentStage >= growthTimes.Length - 1)
             {
+                currentStage = growthTimes.Length - 1; // 안전하게 마지막 단계로 고정
                 cropState = CropState.ReadyToHarvest;
                 Debug.Log("작물이 다 자라서 수확할 준비가 되었습니다.");
             }

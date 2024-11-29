@@ -1,7 +1,6 @@
+using static Crop;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
-using static Crop; // Crop 클래스 내부의 열거형 참조
 
 public class FarmField : MonoBehaviour
 {
@@ -18,6 +17,8 @@ public class FarmField : MonoBehaviour
     public Grid grid;
 
     public Vector2 fieldPos;
+
+    public Crop PlantedCrop; // 밭에 심어진 작물 참조
 
     private void Awake()
     {
@@ -51,6 +52,33 @@ public class FarmField : MonoBehaviour
     public void SetGrid(Grid grid)
     {
         this.grid = grid;
+    }
+
+    public void SetPlantedCrop(Crop crop, GridCropSave cropSaveData)
+    {
+        this.PlantedCrop = crop;
+
+        // 작물 데이터 복원
+        if (cropSaveData != null)
+        {
+            crop.LoadPlacementData(cropSaveData.placementData);
+            crop.ID = cropSaveData.id;
+            crop.currentStage = cropSaveData.currentStage; // 성장 단계 복원
+            crop.cropState = cropSaveData.cropState; // 상태 복원
+            crop.growthStartTime = cropSaveData.growthStartTime;
+
+            crop.UpdateCropVisual(); // 시각적 상태 업데이트
+            crop.UpdateSortingLayer(); // 소팅 레이어 복원
+
+            // 자식 SpriteRenderer의 알파 값 복원
+            SpriteRenderer[] childRenderers = crop.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spriteRenderer in childRenderers)
+            {
+                Color color = spriteRenderer.color;
+                color.a = cropSaveData.placementData.alpha; // 저장된 알파 값 적용
+                spriteRenderer.color = color;
+            }
+        }
     }
 
     public void LoadPlacementData(PlacementData placementData)
