@@ -6,7 +6,7 @@ using UnityEngine;
 public class CropStorage
 {
     public int cropID; // 작물 ID
-    public List<Crop> crops = new List<Crop>(); // 해당 ID의 작물 리스트
+    public int cropCount; // 작물 개수
 }
 
 public class Storage : MonoBehaviour
@@ -20,8 +20,6 @@ public class Storage : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("들어옴");
-
             foreach (var harvestedCrop in aiStateManager.harvestedCrops)
             {
                 AddCropToHouse(harvestedCrop); // 작물을 집에 추가
@@ -31,6 +29,7 @@ public class Storage : MonoBehaviour
             Debug.Log("모든 수확한 작물이 집으로 이동되었습니다.");
         }
     }
+
     private void AddCropToHouse(Crop crop)
     {
         // 해당 ID의 CropStorage 찾기
@@ -39,13 +38,15 @@ public class Storage : MonoBehaviour
         // 없다면 새로 생성하여 추가
         if (storage == null)
         {
-            storage = new CropStorage { cropID = crop.ID };
+            storage = new CropStorage { cropID = crop.ID, cropCount = 0 };
             storedCropsByID.Add(storage);
         }
 
-        storage.crops.Add(crop); // 작물 추가
-        Debug.Log($"ID {crop.ID}인 작물이 추가되었습니다.");
+        // 작물 개수 추가
+        storage.cropCount++;
+        Debug.Log($"ID {crop.ID}인 작물이 추가되었습니다. 현재 개수: {storage.cropCount}");
 
+        // 업적 및 UI 갱신 호출
         AchievementsDatabase.AddProgressToAchievement(crop.ID, 1);
         UIManager.CheckAndUnlockCrops();
     }

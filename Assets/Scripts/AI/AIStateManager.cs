@@ -72,7 +72,6 @@ public class AIStateManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("모든 작물이 수확되었거나 삭제되었습니다.");
                 IsMove = false;  // 더 이상 이동할 작물이 없음
                 return;
             }
