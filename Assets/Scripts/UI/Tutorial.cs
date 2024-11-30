@@ -73,6 +73,9 @@ public class TutorialUI : MonoBehaviour
                     }
                     else if (index == 14)
                     {
+                        AchievementsDatabase.UnlockAchievement(6);
+                        AchievementsDatabase.UnlockAchievement(7);
+                        AchievementsDatabase.UnlockAchievement(8);
                         keyboardCount = AchievementsDatabase.GetAchievementByID(6).Progress;
                         PlayerPrefs.SetInt("TutorialKeyboard", 1);
                     }

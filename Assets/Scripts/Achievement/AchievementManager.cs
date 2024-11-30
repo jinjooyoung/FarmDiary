@@ -49,8 +49,20 @@ public class AchievementManager : MonoBehaviour
     // 업적 진행 상태 업데이트
     public void SafeUpdateAchievementProgress(int achievementID)
     {
+        int index = -99;
+
+        if (achievementID < 0)
+        {
+            index = (-achievementID) - 1;
+        }
+        else
+        {
+            index = achievementID + 4;
+        }
+
+
         // achievementUIs 배열의 범위 확인
-        if (achievementID < 0 || achievementID >= achievementUIs.Length)
+        if (achievementID >= achievementUIs.Length)
         {
             Debug.LogError($"잘못된 achievementID: {achievementID}, UI를 업데이트할 수 없습니다.");
             return;
@@ -64,7 +76,7 @@ public class AchievementManager : MonoBehaviour
             return;  // 클리어된 업적은 UI 갱신을 하지 않음
         }
 
-        AchievementUI achievementUI = achievementUIs[achievementID];
+        AchievementUI achievementUI = achievementUIs[index];
         if (achievementUI != null)
         {
             achievementUI.Initialize(achievementID);

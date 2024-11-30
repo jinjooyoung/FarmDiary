@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class AchievementUI : MonoBehaviour
@@ -11,7 +11,6 @@ public class AchievementUI : MonoBehaviour
     [SerializeField] private Text descText;             // 업적 설명 텍스트
     [SerializeField] private Text progressText;         // 진행도 텍스트 (0/100 형식)
     [SerializeField] private Image rewardIcon;          // 보상 아이콘
-    [SerializeField] private Button rewardButton;       // "보상 받기" 버튼
 
     private int ID; // 해당 UI가 관리하는 업적 ID
 
@@ -28,41 +27,33 @@ public class AchievementUI : MonoBehaviour
         bool isCleared = AchievementsDatabase.GetCleared(ID);
         bool isUnlocked = AchievementsDatabase.GetUnlocked(ID);
 
-        // UI 설정
+        // 업적 이름
         nameText.text = name;
-        descText.text = description;
-        progressText.text = $"({progress}/{goal})";
-        rewardButton.interactable = isCleared; // 클리어된 업적만 보상 버튼 활성화
 
-        // 업적 아이콘과 보상 아이콘 로드
-        /*if (ID > 0)    // 리소스가 없어서 임시로 이렇게 해둠 나중에 리소스 다 생기면 if 문 삭제
+        if (isUnlocked) // 업적이 해금되었을 경우
         {
-            achievementIcon.sprite = LoadAchievementIcon(ID);
+            // 업적 설명과 진행도 표시
+            descText.text = description;
+            progressText.text = $"({progress}/{goal})";
+
+            // 업적 아이콘 색상을 원래대로 복원
+            achievementIcon.color = Color.white;
+            // 보상 아이콘 설정
             rewardIcon.sprite = LoadRewardIcon(ID);
-        }*/
-
-        /*// 잠금 상태라면 UI 요소 숨기기
-        if (!isUnlocked)
-        {
-            SetLockedUI();
         }
-        else
+        else // 업적이 잠금 상태일 경우
         {
-            // 잠금이 해제되었을 때는 모든 UI 요소 보이기
-            ShowUnlockedUI();
-        }*/
-    }
+            // 잠금 상태일 경우: ???와 ?/? 표시
+            descText.text = "???";
+            progressText.text = "(?/?)";
 
-    // 보상 받기 버튼 클릭 시 호출
-    public void ClickRewardButton()
-    {
-        if (AchievementsDatabase.GetCleared(ID))
-        {
-            GiveReward(ID);
-
-            // UI 업데이트
-            rewardButton.interactable = false; // 보상을 이미 받았으므로 버튼 비활성화
+            // 업적 아이콘을 검은색으로 설정하고 알파값 50%로 변경
+            achievementIcon.color = new Color(0f, 0f, 0f, 0.5f);
+            rewardIcon.sprite = Resources.Load<Sprite>("Achievements/Rewards/Reward_Q");
         }
+
+        // 업적 아이콘 설정
+        achievementIcon.sprite = LoadAchievementIcon(ID);
     }
 
     // 업적 아이콘 로드
@@ -79,33 +70,30 @@ public class AchievementUI : MonoBehaviour
         return Resources.Load<Sprite>($"Achievements/Rewards/Reward_{id}");
     }
 
-    // 잠금 상태 UI 설정 (잠금된 상태일 때 설명, 진행도, 보상 버튼 숨기기)
-    private void SetLockedUI()
-    {
-        // 아이콘과 이름은 그대로 보이게 하고, 나머지 UI 요소들은 숨김
-        achievementIcon.color = new Color(1f, 1f, 1f, 0.5f); // 반투명
-        nameText.color = Color.white; // 이름은 그대로 보이게
-
-        // 나머지 UI 요소들 숨기기
-        descText.gameObject.SetActive(false);
-        progressText.gameObject.SetActive(false);
-        rewardIcon.gameObject.SetActive(false);
-        rewardButton.gameObject.SetActive(false);
-    }
-
-    // 잠금 해제 후 UI 요소 보이기
-    private void ShowUnlockedUI()
-    {
-        // 모든 UI 요소를 다시 보이게 설정
-        descText.gameObject.SetActive(true);
-        progressText.gameObject.SetActive(true);
-        rewardIcon.gameObject.SetActive(true);
-        rewardButton.gameObject.SetActive(true);
-    }
-
-    // 보상 지급 처리
+    /*// 보상 지급 처리
     private void GiveReward(int id)
     {
-        // 보상 지급 로직 구현
-    }
+        Enum rewardType = AchievementsDatabase.GetRewardType(id);
+        int rewardData = AchievementsDatabase.GetRewardAmount(id);
+
+        // 보상 지급 로직
+        switch (rewardType)
+        {
+            case AchievementData.RewardType.Coin:
+                // 코인 보상 지급
+                GameManager.AddCoins(rewardData);
+                Debug.Log($"업적 {id}: {rewardData}개의 코인을 지급받았습니다.");
+                break;
+
+            case AchievementData.RewardType.NextCrop:
+                // 작물 보상 지급
+                //CropManager.UnlockCrop(rewardData);
+                Debug.Log($"업적 {id}: ID {rewardData}의 작물을 해금했습니다.");
+                break;
+
+            default:
+                Debug.LogError($"업적 {id}: 알 수 없는 보상 타입 {rewardType}입니다.");
+                break;
+        }
+    }*/
 }

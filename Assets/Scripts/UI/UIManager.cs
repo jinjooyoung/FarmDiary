@@ -160,6 +160,7 @@ public class UIManager : MonoBehaviour
                     unlockedIndex++; // 해금된 작물 인덱스 증가
                     PlayerPrefs.SetInt("UnlockPlant", unlockedIndex); // 전체 해금 인덱스 저장
                     AchievementsDatabase.UnlockAchievement(id + 1);
+                    AchievementManager.Instance.SafeUpdateAchievementProgress(id + 1);
                     ButtonSetting();
                     SeedButtons[unlockedIndex].interactable = true; // 해당 버튼 활성화
                     // 나중에 위의 문장 삭제하고 새 씨앗 버튼 해금 버튼으로 수정한 다음 그거 누르면 UpdateButtons 호출되도록.

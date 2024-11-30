@@ -20,6 +20,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: -2
     <Name>k__BackingField: "\uBD80\uC790\uAC00 \uB420\uAC70\uC57C!"
     <Description>k__BackingField: "100,000\uC6D0 \uC774\uC0C1 \uBCF4\uC720\uD558\uC138\uC694."
@@ -27,6 +30,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: -3
     <Name>k__BackingField: "\uBC31\uB9CC\uC7A5\uC790"
     <Description>k__BackingField: "1,000,000\uC6D0 \uC774\uC0C1 \uBCF4\uC720\uD558\uC138\uC694."
@@ -34,6 +40,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: -4
     <Name>k__BackingField: "\uC774\uAC74 \uBB50\uC9C0?"
     <Description>k__BackingField: "\uC1A5\uC744 \uAD6C\uB9E4\uD558\uC138\uC694."
@@ -41,6 +50,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: -5
     <Name>k__BackingField: "\uCCAB \uD3EC\uC158"
     <Description>k__BackingField: "\uD3EC\uC158\uC744 \uD55C \uAC1C \uC774\uC0C1
@@ -49,6 +61,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 1
     <Name>k__BackingField: "\uCCAB \uAC78\uC74C"
     <Description>k__BackingField: "\uBC2D \uD55C \uCE78\uC744 \uACBD\uC791\uD558\uC138\uC694.
@@ -57,6 +72,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 1
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 2
     <Name>k__BackingField: "\uCCAB \uC0C8\uC2F9"
     <Description>k__BackingField: "\uC544\uB9C8\uB780\uC2A4\uB97C \uD55C \uBC88 \uC774\uC0C1
@@ -65,6 +83,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 1
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 3
     <Name>k__BackingField: "\uACF5\uC9DC!"
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 1\uC6D0 \uC774\uC0C1
@@ -73,6 +94,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 1
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 4
     <Name>k__BackingField: "\uC2DC\uC791"
     <Description>k__BackingField: "\uD29C\uD1A0\uB9AC\uC5BC\uC744 \uC644\uB8CC\uD558\uC138\uC694."
@@ -80,6 +104,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 1
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 5
     <Name>k__BackingField: "\uB9C8\uC2A4\uD130"
     <Description>k__BackingField: "\uBAA8\uB4E0 \uAE30\uB2A5\uC744 \uBC30\uC6B0\uC138\uC694."
@@ -87,6 +114,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 6
     <Name>k__BackingField: "\uD0A4"
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 100,000\uC6D0
@@ -95,6 +125,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 213
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 7
     <Name>k__BackingField: "\uBCF4"
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 1,000,000\uC6D0
@@ -103,6 +136,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 213
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 8
     <Name>k__BackingField: "\uB4DC"
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 100,000,000\uC6D0
@@ -111,6 +147,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 213
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 9
     <Name>k__BackingField: "\uC0C8\uB85C\uC6B4 \uC791\uBB3C!"
     <Description>k__BackingField: "\uC544\uB9C8\uB780\uC2A4\uB97C 10\uBC88 \uC774\uC0C1
@@ -119,6 +158,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 10
     <Name>k__BackingField: "\uB545\uC758 \uC120\uBB3C"
     <Description>k__BackingField: "\uC544\uC2A4\uD30C\uB77C\uAC70\uC2A4\uB97C 10\uBC88
@@ -127,6 +169,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 11
     <Name>k__BackingField: "\uBE44\uD2B8 \uC8FC\uC138\uC694!"
     <Description>k__BackingField: "\uB3C4\uB77C\uC9C0\uB97C 10\uBC88 \uC774\uC0C1
@@ -135,6 +180,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 12
     <Name>k__BackingField: "\uD478\uB978 \uBCF4\uC11D"
     <Description>k__BackingField: "\uBE44\uD2B8\uB97C 10\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -142,6 +190,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 13
     <Name>k__BackingField: "\uC2E0\uC120\uC758 \uC120\uD0DD"
     <Description>k__BackingField: "\uBE14\uB8E8\uBCA0\uB9AC\uB97C 10\uBC88 \uC774\uC0C1
@@ -150,6 +201,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 14
     <Name>k__BackingField: "\uCCD0\uB2E4\uBCF4\uC9C0 \uB9C8!"
     <Description>k__BackingField: "\uCCAD\uACBD\uCC44\uB97C 12\uBC88 \uC774\uC0C1
@@ -158,6 +212,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 15
     <Name>k__BackingField: "\uC791\uC740 \uB098\uBB34"
     <Description>k__BackingField: "\uACE0\uC0AC\uB9AC\uB97C 12\uBC88 \uC774\uC0C1
@@ -166,6 +223,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 16
     <Name>k__BackingField: "\uB2E4\uC774\uC5B4\uD2B8 \uC2DD\uD488"
     <Description>k__BackingField: "\uBE0C\uB85C\uCF5C\uB9AC\uB97C 12\uBC88 \uC774\uC0C1
@@ -174,6 +234,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 17
     <Name>k__BackingField: "\uD1A0\uB07C\uB294 \uC5B4\uB528\uC9C0?"
     <Description>k__BackingField: "\uC591\uC0C1\uCD94\uB97C 12\uBC88 \uC774\uC0C1
@@ -182,6 +245,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 18
     <Name>k__BackingField: "\uB9E4\uC6CC!!!"
     <Description>k__BackingField: "\uB2F9\uADFC\uC744 12\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -189,6 +255,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 19
     <Name>k__BackingField: "\uD669\uAE08\uC758 \uACE1\uC2DD"
     <Description>k__BackingField: "\uACE0\uCD94\uB97C 15\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -196,6 +265,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 20
     <Name>k__BackingField: "\uD3EC\uADFC\uD574"
     <Description>k__BackingField: "\uC625\uC218\uC218\uB97C 15\uBC88 \uC774\uC0C1
@@ -204,6 +276,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 21
     <Name>k__BackingField: "\uD3B8\uC2DD\uC758 \uB300\uBA85\uC0AC"
     <Description>k__BackingField: "\uBAA9\uD654\uB97C 15\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -211,6 +286,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 22
     <Name>k__BackingField: "\uC0B0\uC758 \uBCF4\uBB3C"
     <Description>k__BackingField: "\uC624\uC774\uB97C 15\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -218,6 +296,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 23
     <Name>k__BackingField: "\uB2EC\uAC40 \uC2DD\uBB3C"
     <Description>k__BackingField: "\uB354\uB355\uC744 15\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -225,6 +306,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 24
     <Name>k__BackingField: "\uC54C\uB9AC\uC624 \uC62C\uB9AC\uC624"
     <Description>k__BackingField: "\uAC00\uC9C0\uB97C 20\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -232,6 +316,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 25
     <Name>k__BackingField: "\uBE0C\uB808\uB4DC\uB9E8"
     <Description>k__BackingField: "\uB9C8\uB298\uC744 20\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -239,6 +326,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 26
     <Name>k__BackingField: "\uCD08\uB85D \uC591\uD30C"
     <Description>k__BackingField: "\uC0DD\uAC15\uC744 20\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -246,6 +336,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 27
     <Name>k__BackingField: "\uC308\uCC44\uC18C"
     <Description>k__BackingField: "\uD30C\uB97C 20\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -253,6 +346,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 28
     <Name>k__BackingField: "\uC774\uC0C1\uC758 \uC720\uC5B8"
     <Description>k__BackingField: "\uC0C1\uCD94\uB97C 20\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -260,6 +356,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 29
     <Name>k__BackingField: "\uC0B0\uC18D\uC758 \uC57D\uCD08"
     <Description>k__BackingField: "\uBA5C\uB860\uC744 30\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -267,6 +366,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 30
     <Name>k__BackingField: "\uAE40\uCE58"
     <Description>k__BackingField: "\uC465\uC744 30\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -274,6 +376,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 31
     <Name>k__BackingField: "\uC88B\uC740 \uB9D0, \uB098\uC05C \uB9D0"
     <Description>k__BackingField: "\uBC30\uCD94\uB97C 30\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -281,6 +386,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 32
     <Name>k__BackingField: "\uCF69\uAE4D\uC9C0"
     <Description>k__BackingField: "\uC591\uD30C\uB97C 30\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -288,6 +396,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 33
     <Name>k__BackingField: "\uB545\uC758 \uBCF4\uBB3C"
     <Description>k__BackingField: "\uCF69\uC744 30\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -295,6 +406,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 34
     <Name>k__BackingField: "\uC9F1\uAD6C"
     <Description>k__BackingField: "\uB545\uCF69\uC744 40\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -302,6 +416,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 35
     <Name>k__BackingField: "\uD53C\uC790"
     <Description>k__BackingField: "\uD53C\uB9DD\uC744 40\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -309,6 +426,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 36
     <Name>k__BackingField: "\uC18C\uAE08 vs \uC124\uD0D5"
     <Description>k__BackingField: "\uD30C\uC778\uC560\uD50C\uC744 40\uBC88 \uC774\uC0C1
@@ -317,6 +437,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 37
     <Name>k__BackingField: "\uD560\uB85C\uC708!"
     <Description>k__BackingField: "\uAC10\uC790\uB97C 40\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -324,6 +447,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 38
     <Name>k__BackingField: "\uD558\uC580 \uBFCC\uB9AC"
     <Description>k__BackingField: "\uD638\uBC15\uC744 40\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -331,6 +457,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 39
     <Name>k__BackingField: "\uBC25\uC2EC"
     <Description>k__BackingField: "\uBB34\uB97C 50\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -338,6 +467,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 40
     <Name>k__BackingField: "\uB17C\uC7C1"
     <Description>k__BackingField: "\uBCBC\uB97C 50\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -345,6 +477,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 41
     <Name>k__BackingField: "\uC0C8\uCF64\uB2EC\uCF64"
     <Description>k__BackingField: "\uAE7B\uC78E\uC744 50\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -352,6 +487,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 42
     <Name>k__BackingField: "\uB2F9\uADFC\uC77C\uAE4C? \uC778\uC0BC\uC77C\uAE4C?"
     <Description>k__BackingField: "\uB538\uAE30\uB97C 50\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -359,6 +497,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 43
     <Name>k__BackingField: "\uB2EC\uCF64\uD55C \uAC10\uC790"
     <Description>k__BackingField: "\uC124\uD0D5 \uB2F9\uADFC\uC744 50\uBC88 \uC774\uC0C1
@@ -367,6 +508,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 44
     <Name>k__BackingField: "\uBE44\uD2B8 \uC78E"
     <Description>k__BackingField: "\uACE0\uAD6C\uB9C8\uB97C 60\uBC88 \uC774\uC0C1
@@ -375,6 +519,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 45
     <Name>k__BackingField: "\uCC44\uC18C? \uACFC\uC77C?"
     <Description>k__BackingField: "\uADFC\uB300\uB97C 60\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -382,6 +529,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 46
     <Name>k__BackingField: "\uC5EC\uB984\uC758 \uC0C1\uC9D5"
     <Description>k__BackingField: "\uD1A0\uB9C8\uD1A0\uB97C 60\uBC88 \uC774\uC0C1
@@ -390,6 +540,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 47
     <Name>k__BackingField: "\uC2DC\uB044\uB7EC\uC6CC!"
     <Description>k__BackingField: "\uC218\uBC15\uC744 60\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -397,6 +550,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 48
     <Name>k__BackingField: "\uBE44\uAC00 \uB0B4\uB9B0 \uB4A4\uC5D0"
     <Description>k__BackingField: "\uB9E8\uB4DC\uB808\uC774\uD06C\uB97C 60\uBC88
@@ -405,6 +561,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 49
     <Name>k__BackingField: "\uBA39\uC73C\uBA74 \uC548 \uB3FC!"
     <Description>k__BackingField: "\uBB34\uC9C0\uAC1C \uAF43\uC744 70\uBC88 \uC774\uC0C1
@@ -413,6 +572,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 50
     <Name>k__BackingField: "\uC557 \uCC28\uAC00!"
     <Description>k__BackingField: "\uC6C3\uC74C \uBC84\uC12F\uC744 70\uBC88 \uC774\uC0C1
@@ -421,6 +583,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 51
     <Name>k__BackingField: "\uC557 \uB728\uAC70!"
     <Description>k__BackingField: "\uC11C\uB9AC\uAF43\uC744 70\uBC88 \uC774\uC0C1
@@ -429,6 +594,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 52
     <Name>k__BackingField: "\uB529\uB3D9\uB315"
     <Description>k__BackingField: "\uD0DC\uC591\uAF43\uC744 70\uBC88 \uC774\uC0C1
@@ -437,6 +605,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 53
     <Name>k__BackingField: "\uAC00\uC7A5 \uBE44\uC2FC \uB364\uBD88"
     <Description>k__BackingField: "\uBC29\uC6B8\uC5F4\uB9E4\uB97C 70\uBC88 \uC774\uC0C1
@@ -445,6 +616,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 54
     <Name>k__BackingField: "\uBD80\uB4DC\uB7EC\uC6B4 \uAF43"
     <Description>k__BackingField: "\uBCF4\uC11D \uB364\uBD88\uC744 80\uBC88 \uC774\uC0C1
@@ -453,6 +627,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 55
     <Name>k__BackingField: "\uD654\uB824\uD55C \uAF43"
     <Description>k__BackingField: "\uAD6C\uB984\uAF43\uC744 80\uBC88 \uC774\uC0C1
@@ -461,6 +638,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 56
     <Name>k__BackingField: "\uC774\uAC8C \uBB50\uC57C?"
     <Description>k__BackingField: "\uD314\uB808\uD2B8 \uAF43\uC744 80\uBC88 \uC774\uC0C1
@@ -469,6 +649,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 57
     <Name>k__BackingField: "\uC870\uAC1C \uB098\uBB34?"
     <Description>k__BackingField: "\uD574\uACE8 \uC5F4\uB9E4\uB97C 80\uBC88 \uC774\uC0C1
@@ -477,6 +660,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 58
     <Name>k__BackingField: "\uC870\uC2EC\uD574!"
     <Description>k__BackingField: "\uC9C4\uC8FC \uB098\uBB34 \uC5F4\uB9E4\uB97C 90\uBC88
@@ -485,6 +671,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 59
     <Name>k__BackingField: "\uC96C\uC528"
     <Description>k__BackingField: "\uAC00\uC704 \uAF43\uC744 90\uBC88 \uC774\uC0C1
@@ -493,6 +682,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 60
     <Name>k__BackingField: "\uC5EC\uAE30 \uBC14\uB2E4\uC57C?"
     <Description>k__BackingField: "\uBB3C\uBC30\uB97C 90\uBC88 \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
@@ -500,6 +692,9 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0
   - <ID>k__BackingField: 61
     <Name>k__BackingField: "\uB2EC\uB3C4 \uB530\uB2E4 \uC904\uAC8C"
     <Description>k__BackingField: "\uC721\uC9C0 \uC0B0\uD638\uCD08\uB97C 100\uBC88
@@ -508,3 +703,6 @@ MonoBehaviour:
     <Progress>k__BackingField: 0
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+    <NextCropID>k__BackingField: 0

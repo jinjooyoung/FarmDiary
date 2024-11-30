@@ -34,6 +34,19 @@ public class AchievementData
     [field: SerializeField]
     public bool Clear { get; private set; }           // 업적 달성 유무
 
+    // 보상 유형 Enum
+    public enum RewardType
+    {
+        NextCrop,   // 다음 작물 보상
+        Coin        // 코인 보상
+    }
+
+    [field: SerializeField]
+    public RewardType Reward { get; private set; }    // 보상 유형
+
+    [field: SerializeField, Tooltip("보상이 코인일 경우 코인의 수량")]
+    public int CoinAmount { get; private set; }       // 코인 보상의 수량
+
     // 업적 진행도 증가
     public void AddProgress(int amount)
     {
@@ -51,6 +64,10 @@ public class AchievementData
                 {
                     Progress = Goal;  // 목표 이상은 목표 값으로 고정
                     Clear = true;
+                    if (Reward == RewardType.Coin)      // 보상 타입이 코인이라면
+                    {
+                        GameManager.AddCoins(CoinAmount);   // 정해진 코인을 받음
+                    }
                 }
             }
         }
@@ -118,6 +135,7 @@ public static class AchievementsDatabase
         for (int i = 1; i <= 5; i++)    // 초기에 진행할 수 있는 (잠금해제(클리어와 다름)되어있는) 업적
         {
             UnlockAchievement(i);
+            UnlockAchievement(-i);
         }
         UnlockAchievement(9);
     }
