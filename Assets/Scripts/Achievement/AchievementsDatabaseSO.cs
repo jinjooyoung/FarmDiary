@@ -68,6 +68,16 @@ public class AchievementData
                     {
                         GameManager.AddCoins(CoinAmount);   // 정해진 코인을 받음
                     }
+
+                    if (ID < 0)
+                    {
+                        AchievementManager.Instance.achievementUIs[(-ID)-1].Initialize(ID);
+                    }
+                    else
+                    {
+                        AchievementManager.Instance.achievementUIs[ID + 4].Initialize(ID);
+                    }
+                    
                 }
             }
         }

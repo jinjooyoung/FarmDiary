@@ -8,7 +8,7 @@ public class AchievementManager : MonoBehaviour
 {
     public static AchievementManager Instance;
 
-    [SerializeField] private AchievementUI[] achievementUIs;  // 각 업적 UI 요소 배열
+    public AchievementUI[] achievementUIs;  // 각 업적 UI 요소 배열
     [SerializeField] private AchievementsDatabaseSO achievementsDatabase; // 업적 데이터베이스
 
     private void Awake()

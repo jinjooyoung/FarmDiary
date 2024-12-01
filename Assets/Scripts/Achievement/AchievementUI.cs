@@ -11,6 +11,7 @@ public class AchievementUI : MonoBehaviour
     [SerializeField] private Text descText;             // 업적 설명 텍스트
     [SerializeField] private Text progressText;         // 진행도 텍스트 (0/100 형식)
     [SerializeField] private Image rewardIcon;          // 보상 아이콘
+    [SerializeField] private Image clearIcon;           // 클리어 아이콘
 
     private int ID; // 해당 UI가 관리하는 업적 ID
 
@@ -30,7 +31,7 @@ public class AchievementUI : MonoBehaviour
         // 업적 이름
         nameText.text = name;
 
-        if (isUnlocked) // 업적이 해금되었을 경우
+        if (isUnlocked && !isCleared) // 업적이 해금되었고 클리어 되지 않았을때
         {
             // 업적 설명과 진행도 표시
             descText.text = description;
@@ -40,8 +41,9 @@ public class AchievementUI : MonoBehaviour
             achievementIcon.color = Color.white;
             // 보상 아이콘 설정
             rewardIcon.sprite = LoadRewardIcon(ID);
+            clearIcon.color = new Color(1f, 1f, 1f, 0f);
         }
-        else // 업적이 잠금 상태일 경우
+        else if (!isUnlocked)       // 업적이 잠금 상태일 경우
         {
             // 잠금 상태일 경우: ???와 ?/? 표시
             descText.text = "???";
@@ -50,6 +52,19 @@ public class AchievementUI : MonoBehaviour
             // 업적 아이콘을 검은색으로 설정하고 알파값 50%로 변경
             achievementIcon.color = new Color(0f, 0f, 0f, 0.5f);
             rewardIcon.sprite = Resources.Load<Sprite>("Achievements/Rewards/Reward_Q");
+            clearIcon.color = new Color(1f, 1f, 1f, 0f);
+        }
+        else if (isUnlocked && isCleared)   // 해금되었고 클리어 되었을때
+        {
+            descText.text = description;
+            progressText.text = $"({progress}/{goal})";
+            achievementIcon.color = Color.white;
+            rewardIcon.sprite = LoadRewardIcon(ID);
+
+            nameText.color = Color.white;
+            descText.color = Color.white;
+            progressText.color = Color.white;
+            clearIcon.color = Color.white;
         }
 
         // 업적 아이콘 설정
