@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject StoragePanel;
     public GameObject seedPanel;
-    public GameObject DecoPanel;
+    public GameObject FieldPanel;
     public GameObject AchievementsPanel;
-    public GameObject CollectionPanel;
+    public GameObject PotionPanel;
+    public GameObject DecoPanel;
     public GameObject settingPanel;
 
     public Button StorageButton;
     public Button seedButton;
-    public Button DecoButton;
+    public Button FieldButton;
     public Button AchievementsButton;
-    public Button CollectionButton;
+    public Button PotionButton;
+    public Button DecoButton;
     public Button settingButton;
 
     [SerializeField] private Button[] SeedButtons;        // 작물 선택 버튼 배열 (수확한 갯수에 따라서 해금할거라서)
@@ -30,8 +33,11 @@ public class UIManager : MonoBehaviour
     [Header("Storage")]
     public Storage storage; // Storage 참조
 
-    public Text beat, Blueberry, Carrot, Corn, Cucumber, Eggplant, Garlic, Greenonion, Melon, Onion, Pea,
-                Pimento, Pineapple, Potato, Pumpkin, Radish, Rice, Strawberry, Tomato, Watermelon;
+    public Text amaranth, asparagus, balloonFlower, beat, Blueberry, bokChoy, bracken, broccoli, cabbage, Carrot, chili, Corn, cotton, Cucumber,
+                deodeok, Eggplant, Garlic, ginger, Greenonion, lettuce, Melon, mugwort, napaCabbage, Onion, Pea, peanut, Pimento, Pineapple, Potato,
+                Pumpkin, Radish, Rice, sesameLeaf, Strawberry, sugerCarrot, sweetPotato, swissChard, Tomato, Watermelon, mandrake, rainbowFlower,
+                smileMushroom, frostFlower, sunFlower, bellFruit, jewelryBush, cloudFlower, paletteFlower, skeletonFruit, pearlTree, scissorsFlower,
+                waterPear, landCoralReef, starFlower;
 
     private Dictionary<int, Text> cropTextFields;
 
@@ -43,9 +49,10 @@ public class UIManager : MonoBehaviour
         // 버튼에 클릭 이벤트 추가
         StorageButton.onClick.AddListener(() => TogglePanel(StoragePanel));
         seedButton.onClick.AddListener(() => TogglePanel(seedPanel));
-        DecoButton.onClick.AddListener(() => TogglePanel(DecoPanel));
+        FieldButton.onClick.AddListener(() => TogglePanel(FieldPanel));
         AchievementsButton.onClick.AddListener(() => TogglePanel(AchievementsPanel));
-        CollectionButton.onClick.AddListener(() => TogglePanel(CollectionPanel));
+        PotionButton.onClick.AddListener(() => TogglePanel(PotionPanel));
+        DecoButton.onClick.AddListener(() => TogglePanel(DecoPanel));
         settingButton.onClick.AddListener(() => TogglePanel(settingPanel));
 
         // ID와 텍스트 필드를 매핑합니다.
@@ -83,9 +90,10 @@ public class UIManager : MonoBehaviour
     {
         StoragePanel.SetActive(false);
         seedPanel.SetActive(false);
-        DecoPanel.SetActive(false);
+        FieldPanel.SetActive(false);
         AchievementsPanel.SetActive(false);
-        CollectionPanel.SetActive(false);
+        PotionPanel.SetActive(false);
+        DecoPanel.SetActive(false);
         settingPanel.SetActive(false);
     }
 
