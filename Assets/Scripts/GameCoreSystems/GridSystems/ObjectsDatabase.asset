@@ -15,7 +15,7 @@ MonoBehaviour:
   objectsData:
   - <Name>k__BackingField: 1x1_Field
     <ID>k__BackingField: 0
-    <BuyPrice>k__BackingField: 200
+    <BuyPrice>k__BackingField: 400
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 8593517314844702569, guid: 4c48ad1b319d3714f84b821f8e1deedf, type: 3}
     <IsCrop>k__BackingField: 0
@@ -51,6 +51,50 @@ MonoBehaviour:
     <BuyPrice>k__BackingField: 2000
     <Size>k__BackingField: {x: 4, y: 4}
     <Prefab>k__BackingField: {fileID: 6738069917117409528, guid: 4c42edbd1f890964ab3416926486d5b6, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField:
+    - 0
+    - 0
+    - 0
+    - 0
+  - <Name>k__BackingField: Pot
+    <ID>k__BackingField: 4
+    <BuyPrice>k__BackingField: 8
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 5030730579419075711, guid: abbdce9b1f434eb429e1ad4dbc7d32b2, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField:
+    - 0
+    - 0
+    - 0
+    - 0
+  - <Name>k__BackingField: SubCharacterHouse
+    <ID>k__BackingField: 5
+    <BuyPrice>k__BackingField: 1111
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 8357468141816938305, guid: bcf4995239cf858458d2a129bce803a8, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField:
+    - 0
+    - 0
+    - 0
+    - 0
+  - <Name>k__BackingField: WaterCharacterHouse
+    <ID>k__BackingField: 6
+    <BuyPrice>k__BackingField: 2222
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2714535384954562178, guid: e5303b88150997f488ee343ea7dc8cb6, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField:
+    - 0
+    - 0
+    - 0
+    - 0
+  - <Name>k__BackingField: HarvestCharacterHouse
+    <ID>k__BackingField: 7
+    <BuyPrice>k__BackingField: 3333
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 438480203451955565, guid: acc19d8d97720c74a8a181e4408e48e3, type: 3}
     <IsCrop>k__BackingField: 0
     <GrowthTimes>k__BackingField:
     - 0

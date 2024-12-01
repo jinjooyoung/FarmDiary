@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
     public GameObject StoragePanel;
     public GameObject seedPanel;
     public GameObject FieldPanel;
@@ -30,6 +32,12 @@ public class UIManager : MonoBehaviour
     public Text three;
     public Text four;
 
+    [Header("Character & Pot Price Text")]
+    public Text SubC;
+    public Text WaterC;
+    public Text HarvestC;
+    public Text Pot;
+
     [Header("Storage")]
     public Storage storage; // Storage 참조
 
@@ -40,6 +48,19 @@ public class UIManager : MonoBehaviour
                 waterPear, landCoralReef, starFlower;
 
     private Dictionary<int, Text> cropTextFields;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -55,6 +76,16 @@ public class UIManager : MonoBehaviour
         DecoButton.onClick.AddListener(() => TogglePanel(DecoPanel));
         settingButton.onClick.AddListener(() => TogglePanel(settingPanel));
 
+        // 시작할 때 가격 초기화
+        one.text = ObjectsDatabase.CurrentPrice(0).ToString();
+        two.text = ObjectsDatabase.CurrentPrice(1).ToString();
+        three.text = ObjectsDatabase.CurrentPrice(2).ToString();
+        four.text = ObjectsDatabase.CurrentPrice(3).ToString();
+        SubC.text = ObjectsDatabase.CurrentPrice(5).ToString();
+        WaterC.text = ObjectsDatabase.CurrentPrice(6).ToString();
+        HarvestC.text = ObjectsDatabase.CurrentPrice(7).ToString();
+        Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
+
         // ID와 텍스트 필드를 매핑합니다.
         cropTextFields = new Dictionary<int, Text>
         {
@@ -68,11 +99,6 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         UpdateStoragePanel();
-
-        one.text = ObjectsDatabase.CurrentPrice(0).ToString();
-        two.text = ObjectsDatabase.CurrentPrice(1).ToString();
-        three.text = ObjectsDatabase.CurrentPrice(2).ToString();
-        four.text = ObjectsDatabase.CurrentPrice(3).ToString();
     }
 
     // 패널의 활성화 상태를 토글하는 메서드

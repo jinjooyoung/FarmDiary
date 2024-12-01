@@ -55,6 +55,12 @@ public class PlacementState : IBuildingState
         {
             return;
         }
+
+        if (ID == 4 && objectPlacer.potCount >= 5)      // 솥을 설치할 때 이미 솥이 5개 이상 있다면 설치 불가능
+        {
+            return;
+        }
+
         // 마지막으로 설치된 오브젝트의 인덱스(데이터 인덱스 말고)
         int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
 
@@ -65,20 +71,31 @@ public class PlacementState : IBuildingState
 
         GameManager.SubtractCoins(database.objectsData[selectedObjectIndex].BuyPrice);
 
+        if (ID == 4 && objectPlacer.potCount < 5)       // 솥을 설치할 때 솥이 5개 이하라면 설치 로직 이후 솥 개수 증가, 가격 증가
+        {
+            objectPlacer.potCount++;
+            ObjectsDatabase.PriceIncrease(4);
+            UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
+        }
+
         /*// 오브젝트의 ID를 보고 밭 오브젝트라면 해당 밭 가격을 증가시킴
         switch (ID)
         {
             case 0:
                 ObjectsDatabase.PriceIncrease(0);
+                UIManager.instance.one.text = ObjectsDatabase.CurrentPrice(0).ToString();
                 break;
             case 1:
                 ObjectsDatabase.PriceIncrease(1);
+                UIManager.instance.two.text = ObjectsDatabase.CurrentPrice(1).ToString();
                 break;
             case 2:
                 ObjectsDatabase.PriceIncrease(2);
+                UIManager.instance.three.text = ObjectsDatabase.CurrentPrice(2).ToString();
                 break;
             case 3:
                 ObjectsDatabase.PriceIncrease(3);
+                UIManager.instance.four.text = ObjectsDatabase.CurrentPrice(3).ToString();
                 break;
         }*/
 

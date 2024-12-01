@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3530917910359889361
+--- !u!1 &438480203451955565
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,53 +8,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1366779312044967642}
-  - component: {fileID: 3724076515307070817}
+  - component: {fileID: 8863170286860548424}
   m_Layer: 0
-  m_Name: 3x3_Field
+  m_Name: HarvestCharacterHouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1366779312044967642
+--- !u!4 &8863170286860548424
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3530917910359889361}
+  m_GameObject: {fileID: 438480203451955565}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3410421401369542356}
+  - {fileID: 4707979801544306484}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3724076515307070817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3530917910359889361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4042be46c51d3af46ac53acc25e6a727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPreview: 0
-  ID: 2
-  PlacedObjectIndex: 0
-  cropState: 0
-  seedPlantedState: 0
-  occupiedPositions: []
-  grid: {fileID: 0}
-  fieldPos: {x: 0, y: 0}
-  PlantedCrop: {fileID: 0}
---- !u!1 &5170693385198703945
+--- !u!1 &2051515194590130368
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,37 +40,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3410421401369542356}
-  - component: {fileID: 5439601367276035556}
+  - component: {fileID: 4707979801544306484}
+  - component: {fileID: 6878471028926057899}
   m_Layer: 0
-  m_Name: 3x3 Field
+  m_Name: house3 (harvest)_32x16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3410421401369542356
+--- !u!4 &4707979801544306484
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5170693385198703945}
+  m_GameObject: {fileID: 2051515194590130368}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0.75, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1366779312044967642}
+  m_Father: {fileID: 8863170286860548424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5439601367276035556
+--- !u!212 &6878471028926057899
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5170693385198703945}
+  m_GameObject: {fileID: 2051515194590130368}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -127,12 +105,12 @@ SpriteRenderer:
   m_SortingLayerID: -21160097
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 03356d160f1192c4a808efb919c1c57f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.2}
+  m_Sprite: {fileID: 21300000, guid: 02d5ff0388296ba4d813c7d8de3606d1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 1, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

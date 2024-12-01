@@ -39,7 +39,7 @@ public class ObjectData
 
     public void Twice(int price, int i)
     {
-        if (ID < 4)
+        if (ID < 9)
         {
             if (i == 2)
             {

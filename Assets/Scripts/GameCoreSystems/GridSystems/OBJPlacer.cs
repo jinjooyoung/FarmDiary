@@ -11,6 +11,8 @@ public class OBJPlacer : MonoBehaviour
     [SerializeField]
     public List<GameObject> placedGameObjects = new(); // 설치된 오브젝트들
 
+    public int potCount = 0;
+
     // 실제 설치 구현
     public int PlaceObject(GameObject prefab, Vector3 position)     // 설치할 오브젝트 프리팹과 설치할 그리드 위치를 받아옴
     {
@@ -46,20 +48,31 @@ public class OBJPlacer : MonoBehaviour
 
         string objName = placedGameObjects[gameObjectIndex].name;   // 삭제될 오브젝트의 이름
 
+        if (objName == "Pot(Clone)")    // 삭제할 오브젝트가 밭이라면
+        {
+            potCount--;
+            ObjectsDatabase.PriceDecrease(4);
+            UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
+        }
+
         /*// 오브젝트의 이름을 보고 밭 오브젝트라면 해당 밭 가격을 감소시킴
         switch (objName)
         {
             case "1x1_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(0);
+                UIManager.instance.one.text = ObjectsDatabase.CurrentPrice(0).ToString();
                 break;
             case "2x2_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(1);
+                UIManager.instance.two.text = ObjectsDatabase.CurrentPrice(1).ToString();
                 break;
             case "3x3_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(2);
+                UIManager.instance.three.text = ObjectsDatabase.CurrentPrice(2).ToString();
                 break;
             case "4x4_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(3);
+                UIManager.instance.four.text = ObjectsDatabase.CurrentPrice(3).ToString();
                 break;
         }*/
 
