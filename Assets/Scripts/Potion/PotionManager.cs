@@ -6,8 +6,8 @@ public class PotionManager : MonoBehaviour
 {
     public static PotionManager instance;
 
-    [SerializeField]
-    private List<GameObject> potList = new List<GameObject>(new GameObject[5]);
+    public List<GameObject> potList = new List<GameObject>(new GameObject[5]);
+    [SerializeField] private PotionDatabaseSO potionsDatabase; // 포션 데이터베이스
 
     private void Awake()
     {
@@ -19,6 +19,11 @@ public class PotionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        PotionDatabase.Initialize(potionsDatabase);
     }
 
     // 솥을 추가하는 메서드
@@ -37,6 +42,7 @@ public class PotionManager : MonoBehaviour
         if (potComponent != null)
         {
             potComponent.SetID(idToAssign);  // Pot 컴포넌트에 ID 설정
+            potComponent.Initialize();      // pot 초기화
         }
 
         potList[idToAssign] = pot;  // 해당 ID 위치에 게임 오브젝트 할당

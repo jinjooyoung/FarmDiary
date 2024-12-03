@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e53acf06ca3d39c4f8d6b92044bdb43a, type: 3}
+  m_Name: PotionDatabaseSO
+  m_EditorClassIdentifier: 
+  potionData:
+  - <ID>k__BackingField: 48
+    <Name>k__BackingField: "\uBE44\uBA85\uC758 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 10800
+    <price>k__BackingField: 110000
+  - <ID>k__BackingField: 49
+    <Name>k__BackingField: "\uBB34\uC9C0\uAC1C \uD3EC\uC158"
+    <craftingTime>k__BackingField: 12600
+    <price>k__BackingField: 131500
+  - <ID>k__BackingField: 50
+    <Name>k__BackingField: "\uAE54\uAE54 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 14400
+    <price>k__BackingField: 153000
+  - <ID>k__BackingField: 51
+    <Name>k__BackingField: "\uB0C9\uAE30\uC758 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 16200
+    <price>k__BackingField: 174500
+  - <ID>k__BackingField: 52
+    <Name>k__BackingField: "\uC774\uAE00\uC774\uAE00 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 18000
+    <price>k__BackingField: 196000
+  - <ID>k__BackingField: 53
+    <Name>k__BackingField: "\uB538\uB791\uB538\uB791 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 19800
+    <price>k__BackingField: 217500
+  - <ID>k__BackingField: 54
+    <Name>k__BackingField: "\uBC18\uC9DD\uBC18\uC9DD \uD3EC\uC158"
+    <craftingTime>k__BackingField: 21600
+    <price>k__BackingField: 249000
+  - <ID>k__BackingField: 55
+    <Name>k__BackingField: "\uBB49\uAC8C\uBB49\uAC8C \uD3EC\uC158"
+    <craftingTime>k__BackingField: 23400
+    <price>k__BackingField: 281000
+  - <ID>k__BackingField: 56
+    <Name>k__BackingField: "\uC54C\uB85D\uB2EC\uB85D \uD3EC\uC158"
+    <craftingTime>k__BackingField: 25200
+    <price>k__BackingField: 303000
+  - <ID>k__BackingField: 57
+    <Name>k__BackingField: "\uD574\uACE8\uBB3C \uD3EC\uC158"
+    <craftingTime>k__BackingField: 27000
+    <price>k__BackingField: 335000
+  - <ID>k__BackingField: 58
+    <Name>k__BackingField: "\uC778\uC5B4\uC758 \uB208\uBB3C \uD3EC\uC158"
+    <craftingTime>k__BackingField: 28800
+    <price>k__BackingField: 367000
+  - <ID>k__BackingField: 59
+    <Name>k__BackingField: "\uBA54\uD0C8 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 30600
+    <price>k__BackingField: 419000
+  - <ID>k__BackingField: 60
+    <Name>k__BackingField: "\uC218\uC6D0\uC758 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 32400
+    <price>k__BackingField: 461000
+  - <ID>k__BackingField: 61
+    <Name>k__BackingField: "\uD638\uD761\uC758 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 34200
+    <price>k__BackingField: 503000
+  - <ID>k__BackingField: 62
+    <Name>k__BackingField: "\uBE45\uBC45\uC758 \uD3EC\uC158"
+    <craftingTime>k__BackingField: 36000
+    <price>k__BackingField: 540000
