@@ -40,7 +40,7 @@ public class AchievementManager : MonoBehaviour
             achievementUIs[a - 1].Initialize(-a);
         }
 
-        for (int i = 1; i <= 61; i++)
+        for (int i = 1; i <= 76; i++)
         {
             achievementUIs[i + 4].Initialize(i);
         }

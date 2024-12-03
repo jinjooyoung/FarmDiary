@@ -148,6 +148,8 @@ public static class AchievementsDatabase
             UnlockAchievement(-i);
         }
         UnlockAchievement(9);
+        UnlockAchievement(48);
+        UnlockAchievement(62);
     }
 
     // ID로 업적 가져오기

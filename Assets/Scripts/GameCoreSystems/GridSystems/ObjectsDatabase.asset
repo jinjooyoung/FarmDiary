@@ -15,7 +15,7 @@ MonoBehaviour:
   objectsData:
   - <Name>k__BackingField: 1x1_Field
     <ID>k__BackingField: 0
-    <BuyPrice>k__BackingField: 400
+    <BuyPrice>k__BackingField: 200
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 8593517314844702569, guid: 4c48ad1b319d3714f84b821f8e1deedf, type: 3}
     <IsCrop>k__BackingField: 0

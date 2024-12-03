@@ -507,7 +507,7 @@ MonoBehaviour:
       \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
     <Goal>k__BackingField: 60
     <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 0
     <CoinAmount>k__BackingField: 0
@@ -639,4 +639,154 @@ MonoBehaviour:
     <IsUnlocked>k__BackingField: 0
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 0
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 62
+    <Name>k__BackingField: "\uB9E8\uB4DC\uB808\uC774\uD06C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uBE44\uBA85\uC758 \uD3EC\uC158]\uC744 1\uD68C
+      \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 1
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 63
+    <Name>k__BackingField: "\uBB34\uC9C0\uAC1C\uAF43\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uBB34\uC9C0\uAC1C \uD3EC\uC158]\uC744 1\uD68C
+      \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 64
+    <Name>k__BackingField: "\uC6C3\uC74C \uBC84\uC12F\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uAE54\uAE54 \uD3EC\uC158]\uC744 1\uD68C \uC774\uC0C1
+      \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 65
+    <Name>k__BackingField: "\uC11C\uB9AC\uAF43\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uB0C9\uAE30\uC758 \uD3EC\uC158]\uC744 1\uD68C
+      \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 66
+    <Name>k__BackingField: "\uD0DC\uC591\uAF43\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uC774\uAE00\uC774\uAE00 \uD3EC\uC158]\uC744
+      1\uD68C \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 67
+    <Name>k__BackingField: "\uBC29\uC6B8\uC5F4\uB9E4\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uB538\uB791\uB538\uB791 \uD3EC\uC158]\uC744
+      1\uD68C \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 68
+    <Name>k__BackingField: "\uBCF4\uC11D \uB364\uBD88\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uBC18\uC9DD\uBC18\uC9DD \uD3EC\uC158]\uC744
+      1\uD68C \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 69
+    <Name>k__BackingField: "\uAD6C\uB984\uAF43\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uBB49\uAC8C\uBB49\uAC8C \uD3EC\uC158]\uC744
+      1\uD68C \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 70
+    <Name>k__BackingField: "\uD314\uB808\uD2B8\uAF43\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uC54C\uB85D\uB2EC\uB85D \uD3EC\uC158]\uC744
+      1\uD68C \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 71
+    <Name>k__BackingField: "\uD574\uACE8\uC5F4\uB9E4\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uD574\uACE8\uBB3C \uD3EC\uC158]\uC744 1\uD68C
+      \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 72
+    <Name>k__BackingField: "\uC9C4\uC8FC\uB098\uBB34\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uC778\uC5B4\uC758 \uB208\uBB3C \uD3EC\uC158]\uC744
+      1\uD68C \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 73
+    <Name>k__BackingField: "\uAC00\uC704\uAF43\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uBA54\uD0C8 \uD3EC\uC158]\uC744 1\uD68C \uC774\uC0C1
+      \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 74
+    <Name>k__BackingField: "\uBB3C\uBC30\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uC131\uC218 \uD3EC\uC158]\uC744 1\uD68C \uC774\uC0C1
+      \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 75
+    <Name>k__BackingField: "\uC721\uC9C0\uC0B0\uD638\uCD08\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uD638\uD761\uC758 \uD3EC\uC158]\uC744 1\uD68C
+      \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
+    <CoinAmount>k__BackingField: 0
+  - <ID>k__BackingField: 76
+    <Name>k__BackingField: "\uBCC4\uAF43\uC73C\uB85C \uB9CC\uB4E0 \uD3EC\uC158"
+    <Description>k__BackingField: "[\uBE45\uBC45\uC758 \uD3EC\uC158]\uC744 1\uD68C
+      \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
+    <Goal>k__BackingField: 1
+    <Progress>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 0
+    <Clear>k__BackingField: 0
+    <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 0

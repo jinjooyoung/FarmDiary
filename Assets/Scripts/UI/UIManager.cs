@@ -157,6 +157,10 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+
+        Transform magic = SeedButtons[39].transform.GetChild(0);        // 마법 작물 첫 번째
+        Image magicImage = magic.GetComponent<Image>();
+        magicImage.color = new Color(255, 255, 255, 255);
     }
 
     // 모든 씨앗 버튼의 상태를 업데이트하는 메서드
@@ -166,7 +170,14 @@ public class UIManager : MonoBehaviour
 
         for (int i = 0; i < SeedButtons.Length; i++)
         {
-            SeedButtons[i].interactable = (i <= unlockedIndex);         // 해금된 인덱스 이하의 버튼만 활성화
+            if (i == 39)
+            {
+                SeedButtons[i].interactable = true;
+            }
+            else
+            {
+                SeedButtons[i].interactable = (i <= unlockedIndex);         // 해금된 인덱스 이하의 버튼만 활성화
+            }
         }
 
         ButtonSetting();
@@ -196,6 +207,13 @@ public class UIManager : MonoBehaviour
                     AchievementsDatabase.UnlockAchievement(id + 1);
                     AchievementManager.Instance.SafeUpdateAchievementProgress(id);
                     AchievementManager.Instance.SafeUpdateAchievementProgress(id + 1);
+
+                    if (id >=47)    // 마법작물 심기 가능
+                    {
+                        AchievementsDatabase.UnlockAchievement(id + 15);        // 해당 작물 포션 업적 해금
+                        AchievementManager.Instance.SafeUpdateAchievementProgress(id + 15);     // 해당 업적 UI 업데이트
+                    }
+
                     ButtonSetting();
                     SeedButtons[unlockedIndex].interactable = true; // 해당 버튼 활성화
                     // 나중에 위의 문장 삭제하고 새 씨앗 버튼 해금 버튼으로 수정한 다음 그거 누르면 UpdateButtons 호출되도록.
