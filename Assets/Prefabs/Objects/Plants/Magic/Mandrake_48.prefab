@@ -410,7 +410,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b948818b8768ced43b3ef51d077024c2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -570,4 +570,6 @@ MonoBehaviour:
   - {fileID: 5880406704960039533}
   - {fileID: 8758239822110290832}
   - {fileID: 6338492126366718991}
+  growthTimes: []
   currentStage: 0
+  growthStartTime: 0

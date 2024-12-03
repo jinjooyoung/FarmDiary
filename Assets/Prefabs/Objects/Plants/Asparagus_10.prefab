@@ -66,7 +66,9 @@ MonoBehaviour:
   - {fileID: 8425770427414337337}
   - {fileID: 8468834366608065126}
   - {fileID: 8953557160727654947}
+  growthTimes: []
   currentStage: 0
+  growthStartTime: 0
 --- !u!1 &518586207381496166
 GameObject:
   m_ObjectHideFlags: 0

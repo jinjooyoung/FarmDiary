@@ -150,7 +150,9 @@ MonoBehaviour:
   - {fileID: 9042513229234493657}
   - {fileID: 6355354846785509039}
   - {fileID: 8053394982064894783}
+  growthTimes: []
   currentStage: 0
+  growthStartTime: 0
 --- !u!1 &4590500368588140328
 GameObject:
   m_ObjectHideFlags: 0
