@@ -41,6 +41,10 @@ public class AchievementUI : MonoBehaviour
             achievementIcon.color = Color.white;
             // 보상 아이콘 설정
             rewardIcon.sprite = LoadRewardIcon(ID);
+            if (ID >= 9 && ID <= 61)
+            {
+                rewardIcon.color = new Color(0f, 0f, 0f, 0.5f);
+            }
             clearIcon.color = new Color(1f, 1f, 1f, 0f);
         }
         else if (!isUnlocked)       // 업적이 잠금 상태일 경우
@@ -65,6 +69,7 @@ public class AchievementUI : MonoBehaviour
             descText.color = Color.white;
             progressText.color = Color.white;
             clearIcon.color = Color.white;
+            rewardIcon.color = Color.white;
         }
 
         // 업적 아이콘 설정
@@ -82,7 +87,15 @@ public class AchievementUI : MonoBehaviour
     private Sprite LoadRewardIcon(int id)
     {
         // 업적 ID에 해당하는 보상 아이콘 로드
-        return Resources.Load<Sprite>($"Achievements/Rewards/Reward_{id}");
+
+        if (id <= 8 || id >= 62)
+        {
+            return Resources.Load<Sprite>($"Achievements/Rewards/Reward_Coin");
+        }
+        else
+        {
+            return Resources.Load<Sprite>($"Achievements/Rewards/Reward_{id}");
+        }
     }
 
     /*// 보상 지급 처리
