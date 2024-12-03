@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class OBJPlacer : MonoBehaviour
@@ -18,6 +20,12 @@ public class OBJPlacer : MonoBehaviour
     {
         GameObject newObject = Instantiate(prefab);     // 오브젝트 생성
         newObject.transform.position = position;        // 설치할 위치로 이동
+
+        Pot potComponent = newObject.GetComponent<Pot>();
+        if (potComponent != null)
+        {
+            PotionManager.instance.AddPot(newObject);
+        }
 
         for (int i = 0; i < placedGameObjects.Count; i++)
         {
@@ -51,6 +59,7 @@ public class OBJPlacer : MonoBehaviour
         if (objName == "Pot(Clone)")    // 삭제할 오브젝트가 밭이라면
         {
             potCount--;
+            PotionManager.instance.RemovePot(placedGameObjects[gameObjectIndex]);
             ObjectsDatabase.PriceDecrease(4);
             UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
         }
