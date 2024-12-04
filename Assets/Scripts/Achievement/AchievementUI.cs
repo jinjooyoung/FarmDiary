@@ -10,6 +10,7 @@ public class AchievementUI : MonoBehaviour
     [SerializeField] private Text nameText;             // 업적 이름 텍스트
     [SerializeField] private Text descText;             // 업적 설명 텍스트
     [SerializeField] private Text progressText;         // 진행도 텍스트 (0/100 형식)
+    [SerializeField] private Text rewardText;           // 보상 수량
     [SerializeField] private Image rewardIcon;          // 보상 아이콘
     [SerializeField] private Image clearIcon;           // 클리어 아이콘
 
@@ -27,12 +28,14 @@ public class AchievementUI : MonoBehaviour
         int goal = AchievementsDatabase.GetGoal(ID);
         bool isCleared = AchievementsDatabase.GetCleared(ID);
         bool isUnlocked = AchievementsDatabase.GetUnlocked(ID);
+        string rewardCount = AchievementsDatabase.GetRewardCount(ID);
 
         // 업적 이름
         nameText.text = name;
 
         if (isUnlocked && !isCleared) // 업적이 해금되었고 클리어 되지 않았을때
         {
+            rewardText.text = rewardCount;
             // 업적 설명과 진행도 표시
             descText.text = description;
             progressText.text = $"({progress}/{goal})";
@@ -49,6 +52,7 @@ public class AchievementUI : MonoBehaviour
         }
         else if (!isUnlocked)       // 업적이 잠금 상태일 경우
         {
+            rewardText.text = "";
             // 잠금 상태일 경우: ???와 ?/? 표시
             descText.text = "???";
             progressText.text = "(?/?)";
@@ -60,6 +64,7 @@ public class AchievementUI : MonoBehaviour
         }
         else if (isUnlocked && isCleared)   // 해금되었고 클리어 되었을때
         {
+            rewardText.text = rewardCount;
             descText.text = description;
             progressText.text = $"({progress}/{goal})";
             achievementIcon.color = Color.white;

@@ -85,7 +85,6 @@ public class Pot : MonoBehaviour
         {
             Debug.Log($"솥 클릭됨. ID: {id}");
             PotionUIManager.instance.currentPotID = id;     // 포션 UI 매니저로 클릭한 솥의 ID를 보냄
-            PotionUIManager.instance.InitializePotionUI();  // 그 ID를 참고하여 UI를 초기화함
             UIManager.instance.TogglePanel(panel);          // 패널을 열음
         }
     }

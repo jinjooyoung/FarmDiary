@@ -200,6 +200,20 @@ public static class AchievementsDatabase
         return achievement.Clear;
     }
 
+    // 업적 보상 리턴 (보상은 진행도 메서드에서 클리어하면 자동으로 주니까 UI용으로)
+    public static string GetRewardCount(int id)
+    {
+        AchievementData achievement = GetAchievementByID(id);
+        if (achievement.Reward == AchievementData.RewardType.Coin)
+        {
+            return achievement.CoinAmount.ToString();
+        }
+        else
+        {
+            return "";
+        }
+    }
+
     // 업적 진행도 추가
     public static void AddProgressToAchievement(int achievementID, int progressAmount)
     {

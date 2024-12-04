@@ -63,7 +63,7 @@ public class PotionUIManager : MonoBehaviour
     // currentPotID를 참고하여 구성요소들을 초기화하는 메서드
     public void InitializePotionUI()
     {
-        if (PotionManager.instance.potList.Count > 0)
+        if (currentPotID != -1)
         {
             currentPot = PotionManager.instance.potList[currentPotID].GetComponent<Pot>();  // 선택한 솥의 Pot 컴포넌트
 
@@ -95,6 +95,11 @@ public class PotionUIManager : MonoBehaviour
     // 일반 재료 패널을 엶 위가 1 왼쪽이 2 오른쪽이 3
     public void OpenBasicMaterialPanel(int ID)       // 마법진 위에 있는 동그라미 버튼에 붙이는 함수
     {
+        if (currentPot == null)
+        {
+            return;
+        }
+
         currentButton = ID;
         materialListPanel.SetActive(true);
         magicPanel.SetActive(false);
@@ -113,6 +118,11 @@ public class PotionUIManager : MonoBehaviour
     // 마법 재료 패널을 엶
     public void OpenMagicMaterialPanel()       // 마법진 위에 있는 동그라미 버튼에 붙이는 함수
     {
+        if (currentPot == null)
+        {
+            return;
+        }
+
         currentButton = 0;
         magicPanel.SetActive(true);
         materialListPanel.SetActive(false);
@@ -161,9 +171,7 @@ public class PotionUIManager : MonoBehaviour
             // pot에 옮겨주기
             if (currentButton == 0)
             {
-                // 아래꺼 삭제하고 주석 해제
-                magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_Coin");
-                //magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{ID+1}");
+                magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{ID+1}");
                 material3.image.color = Color.white;
                 currentPot.magicID = ID;
                 currentPot.totalCraftingTime = PotionDatabase.GetCraftingTime(currentPot.magicID);
@@ -320,9 +328,7 @@ public class PotionUIManager : MonoBehaviour
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
         magicCircleImage.color = Color.green;
 
-        // 나중에 포션 리소스 이름 변경해서 리소스 폴더에 넣으면 아래 코드로 바꾸기
-        //potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
-        potionImage.sprite = Resources.Load<Sprite>("Achievements/ClearIcon");
+        potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
         if (AchievementsDatabase.GetCleared(currentPot.magicID + 14))
         {
             potionImage.color = Color.white;
@@ -331,9 +337,7 @@ public class PotionUIManager : MonoBehaviour
         {
             potionImage.color = new Color(0f, 0f, 0f, 0.5f);
         }
-        // 아래꺼 삭제하고 주석 해제
-        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_Coin");
-        //magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
+        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
 
         craftingTime.text = "남은 시간 : " + Mathf.FloorToInt(currentPot.remainingTime).ToString();
 
@@ -357,9 +361,7 @@ public class PotionUIManager : MonoBehaviour
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
         magicCircleImage.color = Color.blue;
 
-        // 나중에 포션 리소스 이름 변경해서 리소스 폴더에 넣으면 아래 코드로 바꾸기
-        //potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
-        potionImage.sprite = Resources.Load<Sprite>("Achievements/ClearIcon");
+        potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
         if (AchievementsDatabase.GetCleared(currentPot.magicID + 14))
         {
             potionImage.color = Color.white;
@@ -368,9 +370,7 @@ public class PotionUIManager : MonoBehaviour
         {
             potionImage.color = new Color(0f, 0f, 0f, 0.5f);
         }
-        // 아래꺼 삭제하고 주석 해제
-        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_Coin");
-        //magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
+        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
 
         craftingTime.text = "제작 완료";
 
@@ -479,9 +479,7 @@ public class PotionUIManager : MonoBehaviour
     {
         if (currentPot.magicID != -1)   // 마법작물이 선택되었다면
         {
-            // 나중에 포션 리소스 이름 변경해서 리소스 폴더에 넣으면 아래 코드로 바꾸기
-            //potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
-            potionImage.sprite = Resources.Load<Sprite>("Achievements/ClearIcon");
+            potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
             if (AchievementsDatabase.GetCleared(currentPot.magicID + 14))
             {
                 potionImage.color = Color.white;
@@ -490,9 +488,7 @@ public class PotionUIManager : MonoBehaviour
             {
                 potionImage.color = new Color(0f, 0f, 0f, 0.5f);
             }
-            // 아래꺼 삭제하고 주석 해제
-            magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_Coin");
-            //magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
+            magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
             currentPot.totalCraftingTime = PotionDatabase.GetCraftingTime(currentPot.magicID);
             craftingTime.text = "제작 시간 : " + PotionDatabase.GetCraftingTime(currentPot.magicID).ToString();
         }

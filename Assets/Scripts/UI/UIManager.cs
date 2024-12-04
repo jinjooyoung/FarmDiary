@@ -107,6 +107,11 @@ public class UIManager : MonoBehaviour
         // 모든 패널을 먼저 닫기
         CloseAllPanels();
 
+        if (panel == PotionPanel)
+        {
+            PotionUIManager.instance.InitializePotionUI();
+        }
+
         // 클릭된 패널만 현재 상태의 반대로 설정
         panel.SetActive(!panel.activeSelf);
     }
