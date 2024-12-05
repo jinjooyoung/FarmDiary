@@ -65,7 +65,7 @@ public class TutorialUI : MonoBehaviour
                 }
                 else
                 {
-                    effectsobj.transform.position = new Vector3(2.4f, -3.5f, 90);
+                    effectsobj.transform.position = new Vector3(2.4f, -3.3f, 90);
                 }
                 
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))  // 엔터 키를 누르면
@@ -226,7 +226,7 @@ public class TutorialUI : MonoBehaviour
     // 오브젝트가 움직이는 효과 (type 0 : 위아래, 1 : 왼쪽부터 좌우, 2 : 오른쪽부터 좌우, 3 : 오브젝트가 깜빡임)
     private IEnumerator FloatingTextEffect(GameObject textOBJ, int type, float amplitude = 0.05f, float frequency = 0.7f)
     {
-        Vector3 textBoxPos = new Vector3(1.7f, -2.7f, 90.00f);
+        Vector3 textBoxPos = new Vector3(1.69f, -2.48f, 90.00f);
         Vector3 startPos = textOBJ.transform.position; // 초기 위치 저장
         Vector3 offsetFromCamera = textOBJ.transform.position - mainCamera.transform.position; // 카메라 기준 위치 오프셋 저장
         float timer = 0f;
