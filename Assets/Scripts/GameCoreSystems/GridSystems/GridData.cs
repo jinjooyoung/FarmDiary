@@ -25,7 +25,7 @@ public class GridData
 
         // foreach 반복을 돌면서 이미 차지된 칸이 있는지 확인
         // 어짜피 이 함수를 호출하는 과정에서 설치 가능 유무를 체크하지만 한 번 더 체크함으로서 혹시 모를 버그를 예방
-        if (ID < 5) // 밭 ID는 밭 딕셔너리에 추가
+        if (ID < 4) // 밭 ID는 밭 딕셔너리에 추가
         {
             foreach (var pos in positionToOccupy)
             {
@@ -45,7 +45,7 @@ public class GridData
                 // 오브젝트가 차지하는 칸의 pos마다 오브젝트의 정보를 딕셔너리에 저장
             }
         }
-        else if (ID >= 200 && ID < 300)     // 데코오브젝트 ID는 데코 딕셔너리에 추가
+        else if (ID > 100 && ID < 300)     // 데코오브젝트 ID는 데코 딕셔너리에 추가
         {
             foreach (var pos in positionToOccupy)
             {

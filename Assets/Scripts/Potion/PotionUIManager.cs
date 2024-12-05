@@ -171,10 +171,23 @@ public class PotionUIManager : MonoBehaviour
             // pot에 옮겨주기
             if (currentButton == 0)
             {
-                magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{ID+1}");
-                material3.image.color = Color.white;
                 currentPot.magicID = ID;
+
+                magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID - 1}");
+                magic.image.color = Color.white;
+                
                 currentPot.totalCraftingTime = PotionDatabase.GetCraftingTime(currentPot.magicID);
+
+                potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
+
+                if (AchievementsDatabase.GetCleared(currentPot.magicID + 14))
+                {
+                    potionImage.color = Color.white;
+                }
+                else
+                {
+                    potionImage.color = new Color(1f, 1f, 1f, 0f);
+                }
 
                 // 작물 선택했으니 false로
                 ButtonInteractMagic(false);
@@ -185,7 +198,7 @@ public class PotionUIManager : MonoBehaviour
         {
             currentPot.ChangeState(PotState.ReadyToStart);
             magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
-            magicCircleImage.color = Color.yellow;       // 제작 준비 완료되면 노란색
+            magicCircleImage.color = Color.yellow;       // 제작 준비 완료되면 노란색\
             startButton.interactable = true;
         }
         else
@@ -212,6 +225,8 @@ public class PotionUIManager : MonoBehaviour
         currentPot.basicMaterial[2] = 0;
         currentPot.totalCraftingTime = 0;
         currentPot.remainingTime = 0;
+
+        currentPot.currentState = PotState.Empty;
 
         magic.interactable = true;
         material1.interactable = true;
@@ -255,6 +270,9 @@ public class PotionUIManager : MonoBehaviour
     public void HarvestingPotion()
     {
         GameManager.AddCoins(PotionDatabase.GetPotionPrice(currentPot.magicID));
+        AchievementsDatabase.AddProgressToAchievement(currentPot.magicID + 14, 1);
+        AchievementsDatabase.UnlockAchievement(currentPot.magicID + 15);
+        
         ClearSelectMaterial();
         Debug.Log("포션 제작 수확완료");
     }
@@ -266,12 +284,19 @@ public class PotionUIManager : MonoBehaviour
         materialListPanel.SetActive(false);
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_0");
+        magicCircleImage.color = Color.white;
         potionImage.sprite = Resources.Load<Sprite>("Achievements/Rewards/Reward_Q");
         craftingTime.text = null;
         magic.image.color = new Color(1f, 1f, 1f, 0f);
         material1.image.color = new Color(1f, 1f, 1f, 0f);
         material2.image.color = new Color(1f, 1f, 1f, 0f);
         material3.image.color = new Color(1f, 1f, 1f, 0f);
+
+        magic.interactable = true;
+        material1.interactable = true;
+        material2.interactable = true;
+        material3.interactable = true;
+
         startButton.interactable = false;
         endButton.interactable = false;
         currentButton = -1;
@@ -282,8 +307,18 @@ public class PotionUIManager : MonoBehaviour
         materialListPanel.SetActive(false);
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_1");
+        magicCircleImage.color = Color.white;
+
+        magic.interactable = true;
+        material1.interactable = true;
+        material2.interactable = true;
+        material3.interactable = true;
 
         SelectedMagic();
+
+        material1.image.color = new Color(1f, 1f, 1f, 0f);
+        material2.image.color = new Color(1f, 1f, 1f, 0f);
+        material3.image.color = new Color(1f, 1f, 1f, 0f);
 
         if (currentPot.basicMaterial[0] != 0)   // 첫번째 일반 작물 선택됨
         {
@@ -312,7 +347,17 @@ public class PotionUIManager : MonoBehaviour
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
         magicCircleImage.color = Color.yellow;
+
+        magic.interactable = true;
+        material1.interactable = true;
+        material2.interactable = true;
+        material3.interactable = true;
         SelectedMagic();
+
+        material1.image.color = Color.white;
+        material2.image.color = Color.white;
+        material3.image.color = Color.white;
+
         material1.image.sprite = LoadIcon(currentPot.basicMaterial[0]);
         material2.image.sprite = LoadIcon(currentPot.basicMaterial[1]);
         material3.image.sprite = LoadIcon(currentPot.basicMaterial[2]);
@@ -337,13 +382,18 @@ public class PotionUIManager : MonoBehaviour
         {
             potionImage.color = new Color(0f, 0f, 0f, 0.5f);
         }
-        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
+        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID-1}");
 
         craftingTime.text = "남은 시간 : " + Mathf.FloorToInt(currentPot.remainingTime).ToString();
 
         material1.image.sprite = LoadIcon(currentPot.basicMaterial[0]);
         material2.image.sprite = LoadIcon(currentPot.basicMaterial[1]);
         material3.image.sprite = LoadIcon(currentPot.basicMaterial[2]);
+
+        magic.image.color = Color.white;
+        material1.image.color = Color.white;
+        material2.image.color = Color.white;
+        material3.image.color = Color.white;
 
         magic.interactable = false;
         material1.interactable = false;
@@ -370,7 +420,7 @@ public class PotionUIManager : MonoBehaviour
         {
             potionImage.color = new Color(0f, 0f, 0f, 0.5f);
         }
-        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
+        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID-1}");
 
         craftingTime.text = "제작 완료";
 
@@ -380,6 +430,11 @@ public class PotionUIManager : MonoBehaviour
         material1.image.sprite = LoadIcon(currentPot.basicMaterial[0]);
         material2.image.sprite = LoadIcon(currentPot.basicMaterial[1]);
         material3.image.sprite = LoadIcon(currentPot.basicMaterial[2]);
+
+        magic.image.color = Color.white;
+        material1.image.color = Color.white;
+        material2.image.color = Color.white;
+        material3.image.color = Color.white;
 
         magic.interactable = false;
         material1.interactable = false;
@@ -488,7 +543,7 @@ public class PotionUIManager : MonoBehaviour
             {
                 potionImage.color = new Color(0f, 0f, 0f, 0.5f);
             }
-            magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID+1}");
+            magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID-1}");
             currentPot.totalCraftingTime = PotionDatabase.GetCraftingTime(currentPot.magicID);
             craftingTime.text = "제작 시간 : " + PotionDatabase.GetCraftingTime(currentPot.magicID).ToString();
         }

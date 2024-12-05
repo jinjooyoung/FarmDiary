@@ -17,27 +17,27 @@ MonoBehaviour:
     <Name>k__BackingField: "\uD2F0\uB04C\uBAA8\uC544 \uD0DC\uC0B0"
     <Description>k__BackingField: "10,000\uC6D0 \uC774\uC0C1 \uBCF4\uC720\uD558\uC138\uC694."
     <Goal>k__BackingField: 10000
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 10000
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 500
   - <ID>k__BackingField: -2
     <Name>k__BackingField: "\uBD80\uC790\uAC00 \uB420\uAC70\uC57C!"
     <Description>k__BackingField: "100,000\uC6D0 \uC774\uC0C1 \uBCF4\uC720\uD558\uC138\uC694."
     <Goal>k__BackingField: 100000
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 100000
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 5000
   - <ID>k__BackingField: -3
     <Name>k__BackingField: "\uBC31\uB9CC\uC7A5\uC790"
     <Description>k__BackingField: "1,000,000\uC6D0 \uC774\uC0C1 \uBCF4\uC720\uD558\uC138\uC694."
     <Goal>k__BackingField: 1000000
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 1000000
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 20000
   - <ID>k__BackingField: -4
@@ -64,9 +64,9 @@ MonoBehaviour:
     <Description>k__BackingField: "\uBC2D \uD55C \uCE78\uC744 \uACBD\uC791\uD558\uC138\uC694.
       (1x1 \uBC2D\uC744 1\uAC1C \uC124\uCE58)"
     <Goal>k__BackingField: 1
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 100
   - <ID>k__BackingField: 2
@@ -74,9 +74,9 @@ MonoBehaviour:
     <Description>k__BackingField: "\uC544\uB9C8\uB780\uC2A4\uB97C \uD55C \uBC88 \uC774\uC0C1
       \uC2EC\uC73C\uC138\uC694."
     <Goal>k__BackingField: 1
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 50
   - <ID>k__BackingField: 3
@@ -84,18 +84,18 @@ MonoBehaviour:
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 1\uC6D0 \uC774\uC0C1
       \uBC8C\uC5B4\uBCF4\uC138\uC694."
     <Goal>k__BackingField: 1
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 100
   - <ID>k__BackingField: 4
     <Name>k__BackingField: "\uC2DC\uC791"
     <Description>k__BackingField: "\uD29C\uD1A0\uB9AC\uC5BC\uC744 \uC644\uB8CC\uD558\uC138\uC694."
     <Goal>k__BackingField: 1
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 50
   - <ID>k__BackingField: 5
@@ -112,8 +112,8 @@ MonoBehaviour:
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 100,000\uC6D0
       \uC774\uC0C1 \uBC8C\uC5B4\uBCF4\uC138\uC694."
     <Goal>k__BackingField: 100000
-    <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <Progress>k__BackingField: 661
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 500
@@ -122,8 +122,8 @@ MonoBehaviour:
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 1,000,000\uC6D0
       \uC774\uC0C1 \uBC8C\uC5B4\uBCF4\uC138\uC694."
     <Goal>k__BackingField: 1000000
-    <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <Progress>k__BackingField: 661
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 800
@@ -132,8 +132,8 @@ MonoBehaviour:
     <Description>k__BackingField: "\uD0A4\uBCF4\uB4DC\uB9CC\uC73C\uB85C 100,000,000\uC6D0
       \uC774\uC0C1 \uBC8C\uC5B4\uBCF4\uC138\uC694."
     <Goal>k__BackingField: 100000000
-    <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <Progress>k__BackingField: 661
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 1000
@@ -152,9 +152,9 @@ MonoBehaviour:
     <Description>k__BackingField: "\uC544\uC2A4\uD30C\uB77C\uAC70\uC2A4\uB97C 10\uBC88
       \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
     <Goal>k__BackingField: 10
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 10
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 0
     <CoinAmount>k__BackingField: 0
   - <ID>k__BackingField: 11
@@ -162,8 +162,8 @@ MonoBehaviour:
     <Description>k__BackingField: "\uB3C4\uB77C\uC9C0\uB97C 10\uBC88 \uC774\uC0C1
       \uC218\uD655\uD558\uC138\uC694."
     <Goal>k__BackingField: 10
-    <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <Progress>k__BackingField: 7
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 0
     <CoinAmount>k__BackingField: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
     <Description>k__BackingField: "\uB9E8\uB4DC\uB808\uC774\uD06C\uB97C 60\uBC88
       \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
     <Goal>k__BackingField: 60
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 11
     <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 0
@@ -645,9 +645,9 @@ MonoBehaviour:
     <Description>k__BackingField: "[\uBE44\uBA85\uC758 \uD3EC\uC158]\uC744 1\uD68C
       \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
     <Goal>k__BackingField: 1
-    <Progress>k__BackingField: 0
+    <Progress>k__BackingField: 1
     <IsUnlocked>k__BackingField: 1
-    <Clear>k__BackingField: 0
+    <Clear>k__BackingField: 1
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 0
   - <ID>k__BackingField: 63
@@ -656,7 +656,7 @@ MonoBehaviour:
       \uC774\uC0C1 \uC81C\uC791\uD558\uC138\uC694."
     <Goal>k__BackingField: 1
     <Progress>k__BackingField: 0
-    <IsUnlocked>k__BackingField: 0
+    <IsUnlocked>k__BackingField: 1
     <Clear>k__BackingField: 0
     <Reward>k__BackingField: 1
     <CoinAmount>k__BackingField: 0
