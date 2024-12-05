@@ -243,19 +243,6 @@ public class GameManager : MonoBehaviour
         //Debug.Log("총 코인 : " + coin);
     }
 
-    // 보석 추가 메서드
-    public static void AddGems(int amount)
-    {
-        if (amount < 0)
-            return;
-        currentGem += amount;
-        PlayerPrefs.SetInt(GemKey, currentGem);
-        PlayerPrefs.Save();
-        //Debug.Log("총 보석 : " + gems);
-    }
-
-    //==========================================================================
-
     // 코인 차감 메서드
     public static void SubtractCoins(int amount)
     {
@@ -276,24 +263,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("총 코인 : " + coin);
     }
 
-    // 보석 차감 메서드
-    public static void SubtractGems(int amount)
-    {
-        if (amount < 0)
-            return;
-        if (currentGem - amount < 0)
-        {
-            Debug.Log("보석이 충분하지 않습니다.");
-            return;
-        }
-        else
-        {
-            currentGem -= amount;
-            PlayerPrefs.SetInt(GemKey, currentGem);
-            PlayerPrefs.Save();
-        }
-        //Debug.Log("총 보석 : " + gems);
-    }
+    //==========================================================================
 
     public void SaveGameData()
     {
@@ -380,7 +350,6 @@ public class GameManager : MonoBehaviour
         AllSaveData saveData = new AllSaveData
         {
             coin = currentCoin,
-            gem = currentGem,
             playerPosition = playerPosition,
             gridDataJson = JsonUtility.ToJson(gridSaveData),
             storedCropsByID = storedCrops, // 저장소 데이터 추가
@@ -402,7 +371,6 @@ public class GameManager : MonoBehaviour
 
             // 기본 데이터 적용
             currentCoin = saveData.coin;
-            currentGem = saveData.gem;
             playerTransform.position = saveData.playerPosition;
 
             // GridData 역직렬화
@@ -500,7 +468,6 @@ public class GameManager : MonoBehaviour
 public class AllSaveData
 {
     public int coin;
-    public int gem;
     public Vector3 playerPosition;
     public string gridDataJson;
     public List<Crop> crops;

@@ -36,8 +36,8 @@ public class TutorialUI : MonoBehaviour
         }
 
         // 이 아래는 테스트용으로 나중에 삭제해야함
-        PlayerPrefs.DeleteKey("TutorialDone");      // 테스트용. 항상 튜토리얼을 처음보는 상태로 만듦. 다 개발되면 삭제해야함
-        PlayerPrefs.DeleteKey("TutorialKeyboard");
+        //PlayerPrefs.DeleteKey("TutorialDone");      // 테스트용. 항상 튜토리얼을 처음보는 상태로 만듦. 다 개발되면 삭제해야함
+        //PlayerPrefs.DeleteKey("TutorialKeyboard");
         OBJPlacer.potCount = 0;
     }
 
