@@ -27,16 +27,20 @@ public class RemovingState : IBuildingState
 
     public void OnAction(Vector3Int gridPosition)
     {
+        Debug.LogWarning("삭제 클릭 호출됨");
+
         GridData selectedData = null;
         // false = 이미 오브젝트가 존재한다는 의미 즉, 삭제를 할 수 있는 위치일 때
         if (placedOBJData.CanPlaceObjectAt(gridPosition, Vector2Int.one) == false)
         {
             selectedData = placedOBJData;
+            Debug.LogWarning("삭제 데이터 할당");
         }
 
         if (selectedData == null)
         {
             // 삭제할 오브젝트가 존재하지 않음을 알려주는 사운드 재생
+            Debug.LogWarning("삭제 오브젝트 존재 X");
         }
         else
         {
@@ -47,6 +51,8 @@ public class RemovingState : IBuildingState
             }
             selectedData.RemoveObjectAt(gridPosition);      // 오브젝트의 정보 삭제
             objectPlacer.RemoveObjectAt(gameObjectIndex);   // 오브젝트 자체를 파괴
+            Debug.LogWarning("삭제 완료");
+            selectedData.currentDictionary = -1;
         }
         Vector3 cellPos = grid.CellToWorld(gridPosition);
         previewSystem.UpdatePreviewOBJPos(cellPos, CheckIfSelectionIsValid(gridPosition));

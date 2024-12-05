@@ -81,6 +81,8 @@ public class Pot : MonoBehaviour
     {
         if (!isInitialized) return;     // 설치하자마자 패널 열리는 것 방지
 
+        if (PlacementSystem.Instance.IsDeleteModeActive()) return;
+
         if (PotionManager.instance != null && UIManager.instance != null)
         {
             Debug.Log($"솥 클릭됨. ID: {id}");

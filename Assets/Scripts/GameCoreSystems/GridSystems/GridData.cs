@@ -12,6 +12,10 @@ public class GridData
     public Dictionary<Vector3Int, PlacementData> placedFacilities = new();
     public Dictionary<Vector3Int, PlacementData> placedCrops = new();
 
+    // 삭제하는 오브젝트가 무슨 딕셔너리인지
+    // 0 : 필드, 1 : 데코, 2 : 시설, 3 : 작물
+    public int currentDictionary = -1;
+
     // 설치할 오브젝트의 정보를 저장하고 한 번 더 설치 가능한지 체크하는 메서드
     public void AddObjectAt(Vector3Int gridPosition,
                             Vector2Int objectSize,
@@ -149,20 +153,66 @@ public class GridData
     // 여기에서 말하는 오브젝트 인덱스는 스크립터블오브젝트의 인덱스가 아닌 GridData에 설치할 때 마다 추가되는 리스트의 인덱스
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
-        if (placedFields.ContainsKey(gridPosition) == false)       // 아무것도 설치되어 있지 않은 칸이라면 -1 리턴
+        if (!placedFields.ContainsKey(gridPosition) && !placedDecos.ContainsKey(gridPosition) && !placedFacilities.ContainsKey(gridPosition) && !placedCrops.ContainsKey(gridPosition))       // 아무것도 설치되어 있지 않은 칸이라면 -1 리턴
         {
             return -1;
         }
-        return placedFields[gridPosition].PlacedObjectIndex;
+
+        if(placedFields.ContainsKey(gridPosition))
+        {
+            currentDictionary = 0;
+            return placedFields[gridPosition].PlacedObjectIndex;
+        }
+        else if (placedDecos.ContainsKey(gridPosition))
+        {
+            currentDictionary = 1;
+            return placedDecos[gridPosition].PlacedObjectIndex;
+        }
+        else if (placedFacilities.ContainsKey(gridPosition))
+        {
+            currentDictionary = 2;
+            return placedFacilities[gridPosition].PlacedObjectIndex;
+        }
+        else
+        {
+            currentDictionary = 3;
+            return placedCrops[gridPosition].PlacedObjectIndex;
+        }
+        
     }
 
     internal void RemoveObjectAt(Vector3Int gridPosition)
     {
-        foreach (var pos in placedFields[gridPosition].occupiedPositions)
+        if (currentDictionary == 0)
         {
-            placedFields.Remove(pos);
-            placedCrops.Remove(pos);
+            foreach (var pos in placedFields[gridPosition].occupiedPositions)
+            {
+                placedFields.Remove(pos);
+                placedCrops.Remove(pos);
+            }
         }
+        else if (currentDictionary == 1)
+        {
+            foreach (var pos in placedDecos[gridPosition].occupiedPositions)
+            {
+                placedDecos.Remove(pos);
+            }
+        }
+        else if (currentDictionary == 2)
+        {
+            foreach (var pos in placedFacilities[gridPosition].occupiedPositions)
+            {
+                placedFacilities.Remove(pos);
+            }
+        }
+        else if (currentDictionary == 3)
+        {
+            foreach (var pos in placedCrops[gridPosition].occupiedPositions)
+            {
+                placedCrops.Remove(pos);
+            }
+        }
+
     }
 
     internal void RemoveCropAt(Vector3Int gridPosition)

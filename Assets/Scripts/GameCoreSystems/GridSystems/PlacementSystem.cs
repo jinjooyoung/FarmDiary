@@ -7,6 +7,8 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class PlacementSystem : MonoBehaviour
 {
+    public static PlacementSystem Instance;
+
     [SerializeField]
     private InputManager inputManager;
 
@@ -36,12 +38,22 @@ public class PlacementSystem : MonoBehaviour
     private OBJPlacer objectPlacer;
 
     private int ID = -1;
+    private bool isDeleteMode = false;      // 솥 오브젝트가 클릭으로 상호작용해서 삭제가 안 먹힘 그래서 추가한 bool
 
 
     IBuildingState buildingState;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         StopPlacement();
         placedOBJData = new();
     }
@@ -69,6 +81,7 @@ public class PlacementSystem : MonoBehaviour
     public void StartRemoving()
     {
         StopPlacement();
+        isDeleteMode = true;
         gridVisualization.SetActive(true);
         buildingState = new RemovingState(grid, preview, placedOBJData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;       // 삭제 중일때 항상 입력을 받을 수 있도록 이벤트에 할당
@@ -191,8 +204,14 @@ public class PlacementSystem : MonoBehaviour
         buildingState.EndState();                   // 프리뷰 종료
         inputManager.OnClicked -= PlaceStructure;   // 설치 상태가 종료되었으므로 이벤트 할당 해제
         inputManager.OnExit -= StopPlacement;
+        isDeleteMode = false;
         lastDetectedPosition = Vector3Int.zero;
         buildingState = null;
+    }
+
+    public bool IsDeleteModeActive()
+    {
+        return isDeleteMode;
     }
 
     private void Update()
