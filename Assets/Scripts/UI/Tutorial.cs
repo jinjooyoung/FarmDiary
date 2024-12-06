@@ -1,14 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Pot;
 using static UnityEngine.Rendering.DebugUI;
 
 public class TutorialUI : MonoBehaviour
 {
     private GameObject tutorialCanvas;
     private int index = -1;
+    private int created = 0;
     private int keyboardCount = 0;
     private GameObject effectOBJ;
     private GameObject effectsobj;
@@ -16,13 +19,16 @@ public class TutorialUI : MonoBehaviour
     private GameObject panelOBJ;
 
     [SerializeField] private PlacementSystem placementSystem;
+    [SerializeField] private PotionUIManager potionUIManager;
     [SerializeField] private OBJPlacer OBJPlacer;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject DecoPanel;
     [SerializeField] private GameObject GridVisualization;
     [SerializeField] private GameObject SeedPanel;
+    [SerializeField] private GameObject StoragePanel;
+    [SerializeField] private GameObject PotionPanel;
 
-    HashSet<int> values = new HashSet<int> { 0, 1, 2, 6, 8, 11, 13, 14, 16, 17, 18, 19, 20 };
+    HashSet<int> values = new HashSet<int> { 0, 1, 2, 6, 8, 11, 14, 16, 21, 23, 25, 27, 30, 31, 32, 33, 34 };
 
     private void Awake()
     {
@@ -39,14 +45,16 @@ public class TutorialUI : MonoBehaviour
         //PlayerPrefs.DeleteKey("TutorialDone");      // 테스트용. 항상 튜토리얼을 처음보는 상태로 만듦. 다 개발되면 삭제해야함
         //PlayerPrefs.DeleteKey("TutorialKeyboard");
         OBJPlacer.potCount = 0;
+        mainCamera = Camera.main;
     }
 
     private void Start()
     {
-        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)     // 튜토리얼을 봤는지 안 봤는지. 
+        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)     // 튜토리얼을 봤는지 안 봤는가? = 첫 시작인가?
         {
-            Debug.Log("튜토리얼 시작 호출됨");
             // 튜토리얼을 보지 않았다면 아래 코드 실행
+            index = 0;
+            GameManager.instance.InitializePlayerPrefs();   // PlayerPrefs로 저장하는 모든 것들 초기화
             TutorialStart();
             effectOBJ = tutorialCanvas.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
             effectsobj = tutorialCanvas.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject;
@@ -59,34 +67,44 @@ public class TutorialUI : MonoBehaviour
         {
             if (values.Contains(index)) // 엔터를 눌러야하는 화면일때
             {
-                if (index == 16)
-                {
-                    effectOBJs.transform.position = new Vector3(2.4f, -3.5f, 90);
-                }
-                else
-                {
-                    effectsobj.transform.position = new Vector3(2.4f, -3.3f, 90);
-                }
-                
+                // 엔터 아이콘 위치 고정
+                effectsobj.transform.position = new Vector3(2.4f, -3.3f, 90);
+
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))  // 엔터 키를 누르면
                 {
-                    if (index == 6 || index == 11)
+                    if (index == 25)
                     {
-                        placementSystem.StopPlacement();    // 설치 상태를 종료시켜서 그리드 프리뷰를 끔
-                    }
-                    else if (index == 14)
-                    {
+                        // 키보드 업적 진행 가능
                         AchievementsDatabase.UnlockAchievement(6);
                         AchievementsDatabase.UnlockAchievement(7);
                         AchievementsDatabase.UnlockAchievement(8);
+
+                        // 현재 키보드 입력한 횟수 받아옴 (0일텐데 혹시 모르니까 일단 받아옴)
                         keyboardCount = AchievementsDatabase.GetAchievementByID(6).Progress;
+                        // 키보드 튜토리얼 시작했다고 알림 = 키보드 입력하면 +1원 되기 시작
                         PlayerPrefs.SetInt("TutorialKeyboard", 1);
+                    }
+                    else if (index == 23)
+                    {
+                        potionUIManager.startButton.interactable = true;
+                    }
+                    else if (index == 21)
+                    {
+                        // 설명 읽고 엔터 누르면 상호작용 가능하게
+                        potionUIManager.magic.interactable = true;
+                        potionUIManager.material1.interactable = true;
+                        potionUIManager.material2.interactable = true;
+                        potionUIManager.material3.interactable = true;
+                    }
+                    else if (index == 30)
+                    {
+                        GameManager.AddCoins(102000);
                     }
                     // 다음 화면으로 넘어가는 로직
                     NextPanel();
                 }
             }
-            else if (index == 4 || index == 9)
+            else if (index == 4 || index == 9 || index == 18)      // 선택
             {
                 // 그리드 뷰 on
                 if (GridVisualization.activeSelf)
@@ -94,7 +112,7 @@ public class TutorialUI : MonoBehaviour
                     NextPanel();
                 }
             }
-            else if (index == 3)
+            else if (index == 3 || index == 17)
             {
                 // 설치 탭 on
                 if (DecoPanel.activeSelf)
@@ -107,25 +125,98 @@ public class TutorialUI : MonoBehaviour
                 // 씨앗 탭 on
                 if (SeedPanel.activeSelf)
                 {
+                    UIManager.instance.SeedButtons[1].interactable = false;
+                    UIManager.instance.SeedButtons[2].interactable = false;
+                    UIManager.instance.SeedButtons[39].interactable = false;
                     NextPanel();
                 }
             }
             else if (index == 5)
             {
-                // objPlacer 로직
-                if (OBJPlacer.placedGameObjects.Count == 1)
+                // 최근에 설치한 오브젝트의 이름이 저거라면
+                if (OBJPlacer.placedGameObjects.Count > 0 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "2x2_Field(Clone)")     // 밭 설치
                 {
                     NextPanel();
+                    placementSystem.StopPlacement();
                 }
             }
             else if (index == 10)
             {
-                if (OBJPlacer.placedGameObjects.Count == 2)
+                if (OBJPlacer.placedGameObjects.Count > 1 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Amaranth_9(Clone)")     // 아마란스 설치
                 {
                     NextPanel();
+                    placementSystem.StopPlacement();
+                    OBJPlacer.placedObjectIndex = 0;
+                    created = 0;
                 }
             }
             else if (index == 12)
+            {
+                Debug.LogWarning(OBJPlacer.placedGameObjects.Count);
+                if (created == 0)
+                {
+                    UIManager.instance.SeedButtons[0].interactable = false;
+                    UIManager.instance.SeedButtons[1].interactable = true;
+                    UIManager.instance.SeedButtons[2].interactable = false;
+                    UIManager.instance.SeedButtons[39].interactable = false;
+                }
+                else if (created == 1)
+                {
+                    Debug.LogWarning("지역변수 1");
+                    UIManager.instance.SeedButtons[0].interactable = false;
+                    UIManager.instance.SeedButtons[1].interactable = false;
+                    UIManager.instance.SeedButtons[2].interactable = true;
+                    UIManager.instance.SeedButtons[39].interactable = false;
+                }
+                else if (created == 2)
+                {
+                    Debug.LogWarning("지역변수 2");
+                    UIManager.instance.SeedButtons[0].interactable = false;
+                    UIManager.instance.SeedButtons[1].interactable = false;
+                    UIManager.instance.SeedButtons[2].interactable = false;
+                    UIManager.instance.SeedButtons[39].interactable = true;
+                }
+                else if (created == 3)
+                {
+                    Debug.LogWarning("지역변수 3");
+                    UIManager.instance.SeedButtons[0].interactable = true;
+                    UIManager.instance.SeedButtons[1].interactable = true;
+                    UIManager.instance.SeedButtons[2].interactable = true;
+                    UIManager.instance.SeedButtons[39].interactable = true;
+                }
+
+                // 원래는 하나의 if문에 Exists에 && 연산자로 한 번에 검사했는데 자라는 속도가 빨라서 빠르게 설치하지 않으면 플레이어가 수확해서 삭제되어 넘어갈 수 없게됨
+                // 그래서 순차적으로 점검함
+                // 아스파라거스가 설치되면
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Asparagus_10(Clone)")
+                {
+                    Debug.LogWarning("아스파라거스 설치됨");
+                    OBJPlacer.placedObjectIndex = 0;
+                    created = 1;
+                }
+
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "BalloonFlower_11(Clone)")
+                {
+                    Debug.LogWarning("도라지 설치됨");
+                    OBJPlacer.placedObjectIndex = 0;
+                    created = 2;
+                }
+
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Mandrake_48(Clone)")
+                {
+                    Debug.LogWarning("맨드레이크 설치됨");
+                    OBJPlacer.placedObjectIndex = 0;
+                    UIManager.instance.SeedButtons[0].interactable = true;
+                    UIManager.instance.SeedButtons[1].interactable = true;
+                    UIManager.instance.SeedButtons[2].interactable = true;
+                    UIManager.instance.SeedButtons[39].interactable = true;
+                    created = 3;
+
+                    NextPanel();
+                    placementSystem.StopPlacement();
+                }
+            }
+            else if (index == 13)
             {
                 if (mainCamera != null)
                 {
@@ -138,7 +229,67 @@ public class TutorialUI : MonoBehaviour
             }
             else if (index == 15)
             {
-                if (AchievementsDatabase.GetAchievementByID(6).Progress > keyboardCount + 3)
+                if (StoragePanel.activeSelf)
+                {
+                    NextPanel();
+                }
+            }
+            else if (index == 19)
+            {
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Pot(Clone)")     // 솥 설치
+                {
+                    NextPanel();
+                    placementSystem.StopPlacement();
+                }
+            }
+            else if (index == 20)
+            {
+                if (PotionPanel.activeSelf)
+                {
+                    // 다음 패널의 설명 보기 전까지는 인터렉션 불가능 상태
+                    potionUIManager.magic.interactable = false;
+                    potionUIManager.material1.interactable = false;
+                    potionUIManager.material2.interactable = false;
+                    potionUIManager.material3.interactable = false;
+                    NextPanel();
+                }
+            }
+            else if (index == 22)
+            {
+                // 작물을 모두 넣어서 준비 상태가 되면 다음으로 넘김
+                if (potionUIManager.currentPot.currentState == PotState.ReadyToStart)
+                {
+                    potionUIManager.startButton.interactable = false;   // 바로 시작 버튼 못 누르게
+                    NextPanel();
+                }
+            }
+            else if (index == 24)
+            {
+                // 시작 버튼을 눌러서 제작중 상태가 되면
+                if (potionUIManager.currentPot.currentState == PotState.Crafting)
+                {
+                    NextPanel();
+                }
+            }
+            else if (index == 26)
+            {
+                if (AchievementsDatabase.GetAchievementByID(6).Progress > keyboardCount + 6)
+                {
+                    NextPanel();
+                }
+            }
+            else if (index == 28)
+            {
+                // 포션 제작 완료 상태가 되면
+                if (potionUIManager.currentPot.currentState == PotState.Completed)
+                {
+                    NextPanel();
+                }
+            }
+            else if (index == 29)
+            {
+                // 포션 판매 눌러서 솥 상태가 Emtpy가 되면
+                if (potionUIManager.currentPot.currentState == PotState.Empty)
                 {
                     NextPanel();
                 }
@@ -152,7 +303,6 @@ public class TutorialUI : MonoBehaviour
 
     public void TutorialStart()     // 튜토리얼을 보여주기 시작하는 함수
     {
-        Debug.LogWarning("튜토리얼 스타트 호출됨");
         index = 0;
         tutorialCanvas.transform.GetChild(index).gameObject.SetActive(true);
         GameObject txtOBJ = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(1).gameObject;   // 패널의 하위
@@ -164,7 +314,7 @@ public class TutorialUI : MonoBehaviour
     // 패널을 넘기는 메서드
     public void NextPanel()
     {
-        if (index < 20)
+        if (index < 34)
         {
             tutorialCanvas.transform.GetChild(index).gameObject.SetActive(false);   // 현재 패널을 끄고
             index++;
@@ -175,18 +325,14 @@ public class TutorialUI : MonoBehaviour
             effectOBJ = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(1).gameObject;
             effectsobj = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(2).gameObject;
 
-            if (index == 12 || index == 16)
+            if (index == 13 || index == 23 || index == 27)
             {
                 effectOBJs = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(3).gameObject;
-            }
-            else if (index == 17)
-            {
-                GameManager.AddCoins(2500);
             }
 
             StartCoroutine(FloatingTextEffect(effectOBJ, 0));
         }
-        else if (index == 20)
+        else if (index == 34)
         {
             index = -1;
             PlayerPrefs.SetInt("TutorialDone", 1);
@@ -194,27 +340,27 @@ public class TutorialUI : MonoBehaviour
             tutorialCanvas.SetActive(false);    // 마지막 패널이면 튜토리얼 캔버스를 끔
         }
 
-        if (index == 3 || index == 4 || index == 7 || index == 9)
+        if (index == 3 || index == 4 || index == 9 || index == 17 || index == 18 || index == 22 || index == 24 || index == 29)
         {
             // 오른쪽부터 좌우
             StartCoroutine(FloatingTextEffect(effectsobj, 2));
         }
-        else if (index == 5 || index == 10 || index == 14)
+        else if (index == 5 || index == 7 || index == 10 || index == 15 || index == 19)
         {
             // 왼쪽부터 좌우
             StartCoroutine(FloatingTextEffect(effectsobj, 1));
         }
-        else if (index == 16)
+        else if (index == 23 || index == 27)
         {
-            StartCoroutine(FloatingTextEffect(effectsobj, 1));
+            StartCoroutine(FloatingTextEffect(effectsobj, 2));
             StartCoroutine(FloatingTextEffect(effectOBJs, 3));
         }
-        else if (index == 12)   // 카메라 이동 패널
+        else if (index == 13)   // 카메라 이동 패널
         {
             StartCoroutine(FloatingTextEffect(effectsobj, 1));
             StartCoroutine(FloatingTextEffect(effectOBJs, 2));
         }
-        else if (index != 20)
+        else if (index != 34)
         {
             if (tutorialCanvas.activeSelf)
             {

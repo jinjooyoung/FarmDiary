@@ -14,6 +14,7 @@ public class OBJPlacer : MonoBehaviour
     public List<GameObject> placedGameObjects = new(); // 설치된 오브젝트들
 
     public int potCount = 0;
+    public int placedObjectIndex = 0;  // 튜토리얼에서만 쓰임
 
     // 실제 설치 구현
     public int PlaceObject(GameObject prefab, Vector3 position)     // 설치할 오브젝트 프리팹과 설치할 그리드 위치를 받아옴
@@ -34,6 +35,7 @@ public class OBJPlacer : MonoBehaviour
                 placedGameObjects[i] = newObject;
                 SpriteRenderer objectRenderer = newObject.GetComponentInChildren<SpriteRenderer>();
                 preview.SetAlpha(objectRenderer, 1.0f);  // 오브젝트의 투명도를 다시 1로 설정
+                placedObjectIndex = i;
                 return i;  // null 자리의 인덱스를 리턴
             }
         }
@@ -43,6 +45,7 @@ public class OBJPlacer : MonoBehaviour
         SpriteRenderer newObjectRenderer = newObject.GetComponentInChildren<SpriteRenderer>();
         preview.SetAlpha(newObjectRenderer, 1.0f);      // 오브젝트의 투명도를 다시 1로 
 
+        placedObjectIndex = placedGameObjects.Count - 1;
         return placedGameObjects.Count - 1;             // 설치하여 증가한 placedGameObjects 리스트의 마지막 오브젝트의 인덱스를 리턴
     }
 
@@ -56,7 +59,7 @@ public class OBJPlacer : MonoBehaviour
 
         string objName = placedGameObjects[gameObjectIndex].name;   // 삭제될 오브젝트의 이름
 
-        if (objName == "Pot(Clone)")    // 삭제할 오브젝트가 밭이라면
+        /*if (objName == "Pot(Clone)")    // 삭제할 오브젝트가 밭이라면
         {
             potCount--;
             PotionManager.instance.RemovePot(placedGameObjects[gameObjectIndex]);
@@ -64,7 +67,7 @@ public class OBJPlacer : MonoBehaviour
             UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
         }
 
-        /*// 오브젝트의 이름을 보고 밭 오브젝트라면 해당 밭 가격을 감소시킴
+        // 오브젝트의 이름을 보고 밭 오브젝트라면 해당 밭 가격을 감소시킴
         switch (objName)
         {
             case "1x1_Field(Clone)":

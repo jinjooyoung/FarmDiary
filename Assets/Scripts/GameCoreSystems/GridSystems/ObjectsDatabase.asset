@@ -59,7 +59,7 @@ MonoBehaviour:
     - 0
   - <Name>k__BackingField: Pot
     <ID>k__BackingField: 4
-    <BuyPrice>k__BackingField: 0
+    <BuyPrice>k__BackingField: 50000
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 5030730579419075711, guid: abbdce9b1f434eb429e1ad4dbc7d32b2, type: 3}
     <IsCrop>k__BackingField: 0

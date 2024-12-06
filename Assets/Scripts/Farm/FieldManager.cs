@@ -10,7 +10,7 @@ public class FieldManager : MonoBehaviour
     // 필드 ID와 해금 비용을 관리하는 Dictionary
     private Dictionary<int, int> fieldUnlockCosts = new Dictionary<int, int>();
     // 필드 ID와 해금 상태를 관리하는 Dictionary
-    private Dictionary<int, bool> unlockedFields = new Dictionary<int, bool>();
+    public Dictionary<int, bool> unlockedFields = new Dictionary<int, bool>();
 
     private List<Vector3Int> unlockedAreas; // 해금된 지역 목록
 
@@ -25,7 +25,6 @@ public class FieldManager : MonoBehaviour
         // 처음에 중앙 필드는 해금된 상태로 설정
         unlockedFields[0] = true;
         InitializeFieldAreas();         // 해금 범위 설정
-        InitializeUnlockedFields();     // 해금 초기화 (테스트용 코드, 나중에 삭제해야함)
         LoadUnlockedFields();           // 해금 정보 불러오기
     }
 
@@ -196,16 +195,18 @@ public class FieldManager : MonoBehaviour
     }
 
     // 해금을 초기화 시키는 메서드
-    private void InitializeUnlockedFields()
+    public void InitializeUnlockedFields()
     {
         for (int i = -11; i <= -1; i++)
         {
             PlayerPrefs.SetInt($"UnlockedFieldID_{i}", 0);
+            unlockedFields[i] = false;
         }
 
         for (int i = 1; i <= 11; i++)
         {
             PlayerPrefs.SetInt($"UnlockedFieldID_{i}", 0);
+            unlockedFields[i] = false;
         }
     }
 }

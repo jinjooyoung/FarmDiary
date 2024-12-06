@@ -71,14 +71,14 @@ public class PlacementState : IBuildingState
 
         GameManager.SubtractCoins(database.objectsData[selectedObjectIndex].BuyPrice);
 
-        if (ID == 4 && objectPlacer.potCount < 5)       // 솥을 설치할 때 솥이 5개 이하라면 설치 로직 이후 솥 개수 증가, 가격 증가
+        /*if (ID == 4 && objectPlacer.potCount < 5)       // 솥을 설치할 때 솥이 5개 이하라면 설치 로직 이후 솥 개수 증가, 가격 증가
         {
             objectPlacer.potCount++;
             ObjectsDatabase.PriceIncrease(4);
             UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
         }
 
-        /*// 오브젝트의 ID를 보고 밭 오브젝트라면 해당 밭 가격을 증가시킴
+        // 오브젝트의 ID를 보고 밭 오브젝트라면 해당 밭 가격을 증가시킴
         switch (ID)
         {
             case 0:

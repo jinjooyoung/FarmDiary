@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     public static int currentGem = 0;
 
     [SerializeField] private Transform playerTransform;
+
+    [SerializeField] private FieldManager fieldManager;
 
     [SerializeField] private PlacementSystem placementSystem;
 
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
         }
 
         SaveSystem.Init();
-        InitializePlayerPrefs();
+        InitializeSaveData();
     }
 
     public GameObject GetSeedPrefabById(int id)
@@ -117,6 +120,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        //InitializePlayerPrefs();    // 테스트할때만 주석 풀기, 나중에 삭제
+
         // 자동 저장 타이머 초기화
         autoSaveTimer = autoSaveInterval;
 
@@ -128,7 +133,7 @@ public class GameManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
         {
-            currentCoin = 210;
+            currentCoin = 150160;
         }
 
         // 씬에 배치된 Crop과 Field 추가
@@ -187,7 +192,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void InitializePlayerPrefs()
+    private void InitializeSaveData()
     {
         string saveString = SaveSystem.Load("GameData.json");
         if (string.IsNullOrEmpty(saveString))
@@ -202,7 +207,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetCropKeys()
+    public void InitializePlayerPrefs()
     {
         int totalCrops = 61; // 작물의 마지막 ID
 
@@ -211,9 +216,14 @@ public class GameManager : MonoBehaviour
             string cropKey = "CropUnlocked_" + i; // 각 작물의 해금 상태 키
             PlayerPrefs.DeleteKey(cropKey); // 해당 키 삭제하여 초기화
         }
+        PlayerPrefs.SetInt("TutorialKeyboard", 0);
+        PlayerPrefs.SetInt("KeyboardAllClear", 0);
+        PlayerPrefs.SetInt("TutorialDone", 0);
+
+        fieldManager.InitializeUnlockedFields();
 
         // 전체 해금 인덱스도 초기화 (Optional)
-        PlayerPrefs.SetInt("UnlockPlant", 0); // UnlockPlant도 초기화
+        PlayerPrefs.SetInt("UnlockPlant", 2); // UnlockPlant도 초기화
         PlayerPrefs.Save(); // 변경사항 저장
     }
 

@@ -76,7 +76,7 @@ public class KeyboardHookManager : MonoBehaviour
             {
                 if (PlayerPrefs.GetInt("TutorialKeyboard", 0) == 1)     // 튜토리얼이 끝났으면
                 {
-                    if (PlayerPrefs.GetInt("KetboardAllClear", 0) == 0)
+                    if (PlayerPrefs.GetInt("KeyboardAllClear", 0) == 0)
                     {
                         keyPressCount++; // 키 입력 횟수 증가
 
@@ -90,7 +90,7 @@ public class KeyboardHookManager : MonoBehaviour
                         }
                         else if (AchievementsDatabase.GetCleared(8))
                         {
-                            PlayerPrefs.SetInt("KetboardAllClear", 1);      // 키보드 관련 업적을 다 클리어 해서 1로 변경.
+                            PlayerPrefs.SetInt("KeyboardAllClear", 1);      // 키보드 관련 업적을 다 클리어 해서 1로 변경.
                         }
                     }
                     GameManager.AddCoins(1);

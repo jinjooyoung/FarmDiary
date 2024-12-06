@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     public Button DecoButton;
     public Button settingButton;
 
-    [SerializeField] private Button[] SeedButtons;        // 작물 선택 버튼 배열 (수확한 갯수에 따라서 해금할거라서)
+    [SerializeField] public Button[] SeedButtons;        // 작물 선택 버튼 배열 (수확한 갯수에 따라서 해금할거라서)
 
     [Header("Field Price Text")]
     public Text one;
@@ -66,7 +66,6 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.instance.ResetCropKeys();
         UpdateButtons();
 
         UIPanel.transform.position = new Vector3(0, 0.3778f, 0);
@@ -146,7 +145,7 @@ public class UIManager : MonoBehaviour
     // 모든 씨앗 버튼의 이미지를 설정하는 메서드
     private void ButtonSetting()
     {
-        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 0);       // 기본값은 0 (첫 번째 작물만 해금)
+        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 기본값은 2 (세 번째 작물까지 해금)
 
         for (int i = 0; i < SeedButtons.Length; i++)
         {
@@ -175,11 +174,11 @@ public class UIManager : MonoBehaviour
     // 모든 씨앗 버튼의 상태를 업데이트하는 메서드
     private void UpdateButtons()
     {
-        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 0);       // 기본값은 0 (첫 번째 작물만 해금)
+        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 기본값은 2 (세 번째 작물까지 해금)
 
         for (int i = 0; i < SeedButtons.Length; i++)
         {
-            if (i == 39)
+            if (i == 39)    // 맨드레이크는 항사 true
             {
                 SeedButtons[i].interactable = true;
             }
@@ -195,7 +194,7 @@ public class UIManager : MonoBehaviour
     // 작물이 수확되거나 갯수가 변경될 때 호출되는 메서드
     public void CheckAndUnlockCrops()
     {
-        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 0);       // 현재 해금된 인덱스 불러오기
+        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 현재 해금된 인덱스 불러오기
 
         foreach (var cropStorage in storage.storedCropsByID)
         {

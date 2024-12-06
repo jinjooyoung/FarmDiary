@@ -267,6 +267,9 @@ public static class AchievementsDatabase
         AddProgressToAchievement(2, 1);
         AddProgressToAchievement(3, 1);
         AddProgressToAchievement(4, 1);
+        AddProgressToAchievement(5, 1);
+        AddProgressToAchievement(-4, 1);
+        AddProgressToAchievement(-5, 1);
     }
 
     // 업적 잠금 해제
