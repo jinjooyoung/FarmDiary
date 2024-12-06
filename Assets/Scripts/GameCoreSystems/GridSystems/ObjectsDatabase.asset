@@ -695,3 +695,136 @@ MonoBehaviour:
     - 4200
     - 6300
     - 8400
+  - <Name>k__BackingField: Book1_1x1
+    <ID>k__BackingField: 101
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4851801107997965225, guid: 3e90e462bef9cde4a88f939d73153b03, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Book2_1x1
+    <ID>k__BackingField: 102
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7899743000639477543, guid: a30efdc8072db8243a04b757c0840145, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Book3_1x1
+    <ID>k__BackingField: 103
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4560098408681631324, guid: dfb24cddaff7dc5418009758cdd2b2dc, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Box_1x1
+    <ID>k__BackingField: 104
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1002053506069802003, guid: 674d850816738ad41a2cc78d014009d1, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Broom_1x2
+    <ID>k__BackingField: 105
+    <BuyPrice>k__BackingField: 1000
+    <Size>k__BackingField: {x: 1, y: 2}
+    <Prefab>k__BackingField: {fileID: 2459399467104399521, guid: e67f0efaf121385429014a184a9d391e, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Bucket_1x1
+    <ID>k__BackingField: 106
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3129493720212700781, guid: 0e133b259356561479eb8358706720bc, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Building_01_3x4
+    <ID>k__BackingField: 107
+    <BuyPrice>k__BackingField: 6000
+    <Size>k__BackingField: {x: 3, y: 4}
+    <Prefab>k__BackingField: {fileID: 5709796660003245508, guid: bdbf5bdd8ad15334d9b2fe2f3433a365, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Building_02_4x4
+    <ID>k__BackingField: 108
+    <BuyPrice>k__BackingField: 8000
+    <Size>k__BackingField: {x: 4, y: 4}
+    <Prefab>k__BackingField: {fileID: 2651235729972956589, guid: be7dc577563f84b4382342de8ccee36c, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Building_03_4x3
+    <ID>k__BackingField: 109
+    <BuyPrice>k__BackingField: 6000
+    <Size>k__BackingField: {x: 4, y: 3}
+    <Prefab>k__BackingField: {fileID: 5181631388983007238, guid: ef5bcb921067133449ee563857550b37, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Building_04_4x4
+    <ID>k__BackingField: 110
+    <BuyPrice>k__BackingField: 8000
+    <Size>k__BackingField: {x: 4, y: 4}
+    <Prefab>k__BackingField: {fileID: 1419649460475919981, guid: c4a9642bd7dcba244b6f3d9633e3ab33, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Building_05_4x4
+    <ID>k__BackingField: 111
+    <BuyPrice>k__BackingField: 8000
+    <Size>k__BackingField: {x: 4, y: 4}
+    <Prefab>k__BackingField: {fileID: 3982581826511762817, guid: 4247bb30500445c4998996915d8245b9, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Building_06_4x4
+    <ID>k__BackingField: 112
+    <BuyPrice>k__BackingField: 8000
+    <Size>k__BackingField: {x: 4, y: 4}
+    <Prefab>k__BackingField: {fileID: 4305653917576627131, guid: f2a21f5588289bb469eeef3553b9ecac, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Chicken_1x1
+    <ID>k__BackingField: 113
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7076603992411137854, guid: d178e6a4f2bf30f4ca13eb96c1d9bcc9, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Duck_1x1
+    <ID>k__BackingField: 114
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3630333793940639488, guid: 7b12bc9a2ac3fea4db3e5ce50ea2d7e5, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: house2_1x2
+    <ID>k__BackingField: 115
+    <BuyPrice>k__BackingField: 1000
+    <Size>k__BackingField: {x: 1, y: 2}
+    <Prefab>k__BackingField: {fileID: 52577685374132045, guid: d8a74773ceb6d8b4bb4215e589cb8a07, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: house5 (sale)_1x2
+    <ID>k__BackingField: 116
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 2}
+    <Prefab>k__BackingField: {fileID: 5660030049725805273, guid: db64b204f7f8ac1428d43bc6e6fb30ab, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: letterbox_1x2
+    <ID>k__BackingField: 117
+    <BuyPrice>k__BackingField: 1000
+    <Size>k__BackingField: {x: 1, y: 2}
+    <Prefab>k__BackingField: {fileID: 5660030049725805273, guid: db64b204f7f8ac1428d43bc6e6fb30ab, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Scarecrow_2x2
+    <ID>k__BackingField: 118
+    <BuyPrice>k__BackingField: 2000
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 3459674241430281644, guid: 1c68c9b79aa819647abe1935212efc21, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
+  - <Name>k__BackingField: Skeleton_1x1
+    <ID>k__BackingField: 119
+    <BuyPrice>k__BackingField: 500
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 8812769397453092783, guid: 8db7ee0969722944cbc379b7e33fea71, type: 3}
+    <IsCrop>k__BackingField: 0
+    <GrowthTimes>k__BackingField: []
