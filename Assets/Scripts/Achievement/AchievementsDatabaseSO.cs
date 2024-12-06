@@ -206,7 +206,7 @@ public static class AchievementsDatabase
         AchievementData achievement = GetAchievementByID(id);
         if (achievement.Reward == AchievementData.RewardType.Coin)
         {
-            return achievement.CoinAmount.ToString();
+            return achievement.CoinAmount.ToString("N0");
         }
         else
         {

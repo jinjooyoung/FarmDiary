@@ -55,7 +55,7 @@ public class PotionUIManager : MonoBehaviour
         {
             if (currentPot.currentState == PotState.Crafting)   // 제작중이라면
             {
-                craftingTime.text = "남은 시간 : " + Mathf.FloorToInt(currentPot.remainingTime).ToString() + "초";
+                craftingTime.text = "남은 시간 : " + Mathf.FloorToInt(currentPot.remainingTime).ToString("N0") + "초";
             }
         }
     }

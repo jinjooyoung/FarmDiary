@@ -76,22 +76,29 @@ public class UIManager : MonoBehaviour
         settingButton.onClick.AddListener(() => TogglePanel(settingPanel));
 
         // 시작할 때 가격 초기화
-        one.text = ObjectsDatabase.CurrentPrice(0).ToString();
-        two.text = ObjectsDatabase.CurrentPrice(1).ToString();
-        three.text = ObjectsDatabase.CurrentPrice(2).ToString();
-        four.text = ObjectsDatabase.CurrentPrice(3).ToString();
-        SubC.text = ObjectsDatabase.CurrentPrice(5).ToString();
-        WaterC.text = ObjectsDatabase.CurrentPrice(6).ToString();
-        HarvestC.text = ObjectsDatabase.CurrentPrice(7).ToString();
-        Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
+        one.text = ObjectsDatabase.CurrentPrice(0).ToString("N0");
+        two.text = ObjectsDatabase.CurrentPrice(1).ToString("N0");
+        three.text = ObjectsDatabase.CurrentPrice(2).ToString("N0");
+        four.text = ObjectsDatabase.CurrentPrice(3).ToString("N0");
+        SubC.text = ObjectsDatabase.CurrentPrice(5).ToString("N0");
+        WaterC.text = ObjectsDatabase.CurrentPrice(6).ToString("N0");
+        HarvestC.text = ObjectsDatabase.CurrentPrice(7).ToString("N0");
+        Pot.text = ObjectsDatabase.CurrentPrice(4).ToString("N0");
 
         // ID와 텍스트 필드를 매핑합니다.
         cropTextFields = new Dictionary<int, Text>
         {
-            { 9, beat }, { 10, Blueberry }, { 11, Carrot }, { 12, Corn }, { 13, Cucumber },
-            { 14, Eggplant }, { 15, Garlic }, { 16, Greenonion }, { 17, Melon }, { 18, Onion },
-            { 19, Pea }, { 21, Pimento }, { 22, Pineapple }, { 23, Potato }, { 24, Pumpkin },
-            { 25, Radish }, { 26, Rice }, { 27, Strawberry }, { 28, Tomato }, { 29, Watermelon }
+            { 9, amaranth }, { 10, asparagus }, { 11, balloonFlower }, { 12, beat }, { 13, Blueberry },
+            { 14, bokChoy }, { 15, bracken }, { 16, broccoli }, { 17, cabbage }, { 18, Carrot },
+            { 19, chili }, { 20, Corn }, { 21, cotton }, { 22, Cucumber }, { 23, deodeok },
+            { 24, Eggplant }, { 25, Garlic }, { 26, ginger }, { 27, Greenonion }, { 28, lettuce },
+            { 29, Melon }, { 30, mugwort }, { 31, napaCabbage }, { 32, Onion }, { 33, Pea },
+            { 34, peanut }, { 35, Pimento }, { 36, Pineapple }, { 37, Potato }, { 38, Pumpkin },
+            { 39, Radish }, { 40, Rice }, { 41, sesameLeaf }, { 42, Strawberry }, { 43, sugerCarrot },
+            { 44, sweetPotato }, { 45, swissChard }, { 46, Tomato }, { 47, Watermelon }, { 48, mandrake },
+            { 49, rainbowFlower }, { 50, smileMushroom }, { 51, frostFlower }, { 52, sunFlower }, { 53, bellFruit },
+            { 54, jewelryBush }, { 55, cloudFlower }, { 56, paletteFlower }, { 57, skeletonFruit }, { 58, pearlTree },
+            { 59, scissorsFlower }, { 60, waterPear }, { 61, landCoralReef }, { 62, starFlower }
         };
     }
 
@@ -133,7 +140,7 @@ public class UIManager : MonoBehaviour
         {
             if (cropTextFields.TryGetValue(cropStorage.cropID, out Text cropText))
             {
-                cropText.text = cropStorage.cropCount.ToString(); // 개수만 업데이트
+                cropText.text = cropStorage.cropCount.ToString("N0"); // 개수만 업데이트
             }
         }
     }

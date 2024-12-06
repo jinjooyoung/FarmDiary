@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
         RemoveMissingFields();
         RemoveMissingCrops();
 
-        testText.text = "현재 코인: " + currentCoin;
+        testText.text = currentCoin.ToString("N0");
 
         float currentTime = Time.time;
 

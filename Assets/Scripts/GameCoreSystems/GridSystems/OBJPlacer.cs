@@ -64,7 +64,7 @@ public class OBJPlacer : MonoBehaviour
             potCount--;
             PotionManager.instance.RemovePot(placedGameObjects[gameObjectIndex]);
             ObjectsDatabase.PriceDecrease(4);
-            UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString();
+            UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString("N0");
         }
 
         // 오브젝트의 이름을 보고 밭 오브젝트라면 해당 밭 가격을 감소시킴
@@ -72,19 +72,19 @@ public class OBJPlacer : MonoBehaviour
         {
             case "1x1_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(0);
-                UIManager.instance.one.text = ObjectsDatabase.CurrentPrice(0).ToString();
+                UIManager.instance.one.text = ObjectsDatabase.CurrentPrice(0).ToString("N0");
                 break;
             case "2x2_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(1);
-                UIManager.instance.two.text = ObjectsDatabase.CurrentPrice(1).ToString();
+                UIManager.instance.two.text = ObjectsDatabase.CurrentPrice(1).ToString("N0");
                 break;
             case "3x3_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(2);
-                UIManager.instance.three.text = ObjectsDatabase.CurrentPrice(2).ToString();
+                UIManager.instance.three.text = ObjectsDatabase.CurrentPrice(2).ToString("N0");
                 break;
             case "4x4_Field(Clone)":
                 ObjectsDatabase.PriceDecrease(3);
-                UIManager.instance.four.text = ObjectsDatabase.CurrentPrice(3).ToString();
+                UIManager.instance.four.text = ObjectsDatabase.CurrentPrice(3).ToString("N0");
                 break;
         }*/
 
