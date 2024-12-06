@@ -8,8 +8,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    public GameObject UIPanel;
-
     public GameObject StoragePanel;
     public GameObject seedPanel;
     public GameObject FieldPanel;
@@ -67,8 +65,6 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         UpdateButtons();
-
-        UIPanel.transform.position = new Vector3(0, 0.3778f, 0);
 
         // 버튼에 클릭 이벤트 추가
         StorageButton.onClick.AddListener(() => TogglePanel(StoragePanel));

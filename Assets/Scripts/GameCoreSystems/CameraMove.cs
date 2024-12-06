@@ -129,17 +129,17 @@ public class CameraMove : MonoBehaviour
         {
             case 0: // 줌 레벨 3
                 cam.transform.position = new Vector3(cam.transform.position.x, -2f, cam.transform.position.z);
-                uiPanel.anchoredPosition = new Vector2(-291f, 158f);
+                uiPanel.anchoredPosition = new Vector2(-291f, 190f);
                 uiPanel.localScale = Vector3.one * 77.75435f;  // 스케일을 적절히 조정
                 break;
             case 1: // 줌 레벨 4
                 cam.transform.position = new Vector3(cam.transform.position.x, -1f, cam.transform.position.z);
-                uiPanel.anchoredPosition = new Vector2(-115f, 62f);
+                uiPanel.anchoredPosition = new Vector2(-115f, 85.8f);
                 uiPanel.localScale = Vector3.one * 58.06974f;
                 break;
             case 2: // 줌 레벨 5 - 기본 상태로 복귀
                 cam.transform.position = new Vector3(cam.transform.position.x, 0f, cam.transform.position.z);  // 기본 위치로 설정
-                uiPanel.anchoredPosition = new Vector2(0, 0);  // 기본 위치
+                uiPanel.anchoredPosition = new Vector2(0, 17f);  // 기본 위치
                 uiPanel.localScale = Vector3.one * 45f;  // 기본 스케일
                 break;
         }
