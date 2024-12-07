@@ -18,6 +18,15 @@ public class TutorialUI : MonoBehaviour
     private GameObject effectOBJs;
     private GameObject panelOBJ;
 
+    [SerializeField] private UnityEngine.UI.Button FieldButton4;
+    [SerializeField] private UnityEngine.UI.Button FieldButton3;
+    [SerializeField] private UnityEngine.UI.Button FieldButton2;
+    [SerializeField] private UnityEngine.UI.Button FieldButton1;
+    [SerializeField] private UnityEngine.UI.Button Button1;
+    [SerializeField] private UnityEngine.UI.Button Button2;
+    [SerializeField] private UnityEngine.UI.Button Button3;
+    [SerializeField] private UnityEngine.UI.Button Button4;
+
     [SerializeField] private PlacementSystem placementSystem;
     [SerializeField] private PotionUIManager potionUIManager;
     [SerializeField] private OBJPlacer OBJPlacer;
@@ -58,6 +67,14 @@ public class TutorialUI : MonoBehaviour
             TutorialStart();
             effectOBJ = tutorialCanvas.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
             effectsobj = tutorialCanvas.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject;
+        }
+        else
+        {
+            ObjectsDatabase.InitializeTutorialGrowthTimes(9);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(10);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(11);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(48);
+            PotionDatabase.TutorialEndCraftingTime(48);
         }
     }
 
@@ -109,11 +126,19 @@ public class TutorialUI : MonoBehaviour
                 // 그리드 뷰 on
                 if (GridVisualization.activeSelf)
                 {
+                    if (index == 18)
+                    {
+                        Button4.interactable = false;
+                    }
                     NextPanel();
                 }
             }
             else if (index == 3 || index == 17)
             {
+                if (index == 17)
+                {
+                    Button4.interactable = true;
+                }
                 // 설치 탭 on
                 if (DecoPanel.activeSelf)
                 {
@@ -137,6 +162,7 @@ public class TutorialUI : MonoBehaviour
                 if (OBJPlacer.placedGameObjects.Count > 0 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "2x2_Field(Clone)")     // 밭 설치
                 {
                     NextPanel();
+                    FieldButton2.interactable = false;
                     placementSystem.StopPlacement();
                 }
             }
@@ -179,10 +205,10 @@ public class TutorialUI : MonoBehaviour
                 else if (created == 3)
                 {
                     Debug.LogWarning("지역변수 3");
-                    UIManager.instance.SeedButtons[0].interactable = true;
-                    UIManager.instance.SeedButtons[1].interactable = true;
-                    UIManager.instance.SeedButtons[2].interactable = true;
-                    UIManager.instance.SeedButtons[39].interactable = true;
+                    UIManager.instance.SeedButtons[0].interactable = false;
+                    UIManager.instance.SeedButtons[1].interactable = false;
+                    UIManager.instance.SeedButtons[2].interactable = false;
+                    UIManager.instance.SeedButtons[39].interactable = false;
                 }
 
                 // 원래는 하나의 if문에 Exists에 && 연산자로 한 번에 검사했는데 자라는 속도가 빨라서 빠르게 설치하지 않으면 플레이어가 수확해서 삭제되어 넘어갈 수 없게됨
@@ -206,10 +232,10 @@ public class TutorialUI : MonoBehaviour
                 {
                     Debug.LogWarning("맨드레이크 설치됨");
                     OBJPlacer.placedObjectIndex = 0;
-                    UIManager.instance.SeedButtons[0].interactable = true;
-                    UIManager.instance.SeedButtons[1].interactable = true;
-                    UIManager.instance.SeedButtons[2].interactable = true;
-                    UIManager.instance.SeedButtons[39].interactable = true;
+                    UIManager.instance.SeedButtons[0].interactable = false;
+                    UIManager.instance.SeedButtons[1].interactable = false;
+                    UIManager.instance.SeedButtons[2].interactable = false;
+                    UIManager.instance.SeedButtons[39].interactable = false;
                     created = 3;
 
                     NextPanel();
@@ -303,6 +329,21 @@ public class TutorialUI : MonoBehaviour
 
     public void TutorialStart()     // 튜토리얼을 보여주기 시작하는 함수
     {
+        ObjectsDatabase.SetTutorialGrowthTimes(9);
+        ObjectsDatabase.SetTutorialGrowthTimes(10);
+        ObjectsDatabase.SetTutorialGrowthTimes(11);
+        ObjectsDatabase.SetTutorialGrowthTimes(48);
+        PotionDatabase.TutorialCraftingTime(48);
+
+        FieldButton1.interactable = false;
+        FieldButton2.interactable = true;
+        FieldButton3.interactable = false;
+        FieldButton4.interactable = false;
+        Button1.interactable = false;
+        Button2.interactable = false;
+        Button3.interactable = false;
+        Button4.interactable = false;
+
         index = 0;
         tutorialCanvas.transform.GetChild(index).gameObject.SetActive(true);
         GameObject txtOBJ = tutorialCanvas.transform.GetChild(index).gameObject.transform.GetChild(1).gameObject;   // 패널의 하위
@@ -337,6 +378,27 @@ public class TutorialUI : MonoBehaviour
             index = -1;
             PlayerPrefs.SetInt("TutorialDone", 1);
             AchievementsDatabase.TutorialAchievement();
+
+            ObjectsDatabase.InitializeTutorialGrowthTimes(9);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(10);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(11);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(48);
+            PotionDatabase.TutorialEndCraftingTime(48);
+
+            FieldButton1.interactable = true;
+            FieldButton2.interactable = true;
+            FieldButton3.interactable = true;
+            FieldButton4.interactable = true;
+            Button1.interactable = true;
+            Button2.interactable = true;
+            Button3.interactable = true;
+            Button4.interactable = true;
+
+            UIManager.instance.SeedButtons[0].interactable = true;
+            UIManager.instance.SeedButtons[1].interactable = true;
+            UIManager.instance.SeedButtons[2].interactable = true;
+            UIManager.instance.SeedButtons[39].interactable = true;
+
             tutorialCanvas.SetActive(false);    // 마지막 패널이면 튜토리얼 캔버스를 끔
         }
 

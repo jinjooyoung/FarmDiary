@@ -37,6 +37,22 @@ public class ObjectData
     public float[] GrowthTimes { get; private set; } = new float[4]; // 작물의 단계별 성장 시간
 
 
+    public void DecreaseGrowthTimes()
+    {
+        GrowthTimes[0] = 2;
+        GrowthTimes[1] = 4;
+        GrowthTimes[2] = 6;
+        GrowthTimes[3] = 8;
+    }
+
+    public void InitializeGrowthTimes(int i)
+    {
+        GrowthTimes[0] = i * 8;
+        GrowthTimes[1] = i * 8 * 2;
+        GrowthTimes[2] = i * 8 * 3;
+        GrowthTimes[3] = i * 8 * 4;
+    }
+
     public void Twice(int price, int i)
     {
         if (ID < 9)
@@ -90,5 +106,27 @@ public static class ObjectsDatabase
     {
         ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
         return objectData.BuyPrice;
+    }
+
+    // 튜토리얼 진행할때 작물 성장시간을 줄이는 메서드
+    public static void SetTutorialGrowthTimes(int id)
+    {
+        ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
+        objectData.DecreaseGrowthTimes();
+    }
+
+    // 튜토리얼끝난 뒤 원래 값을 다시 설정하는 메서드
+    public static void InitializeTutorialGrowthTimes(int id)
+    {
+        ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
+        
+        if (id == 48)
+        {
+            objectData.InitializeGrowthTimes(168);
+        }
+        else
+        {
+            objectData.InitializeGrowthTimes(id - 8);
+        }
     }
 }

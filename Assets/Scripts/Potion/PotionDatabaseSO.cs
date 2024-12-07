@@ -22,6 +22,18 @@ public class PotionData
 
     [field: SerializeField]
     public int price { get; private set; }            // 가격
+
+    public void InitializecraftingTime(int i)
+    {
+        if (i == 0)
+        {
+            craftingTime = 15;
+        }
+        else
+        {
+            craftingTime = 10800;
+        }
+    }
 }
 
 public static class PotionDatabase
@@ -59,5 +71,19 @@ public static class PotionDatabase
     {
         PotionData potion = GetPotionID(id);
         return potion.price;
+    }
+
+    // 포션 제작 시간 짧게
+    public static void TutorialCraftingTime(int id)
+    {
+        PotionData potion = GetPotionID(id);
+        potion.InitializecraftingTime(0);
+    }
+
+    // 포션 제작 시간 다시 길게
+    public static void TutorialEndCraftingTime(int id)
+    {
+        PotionData potion = GetPotionID(id);
+        potion.InitializecraftingTime(1);
     }
 }

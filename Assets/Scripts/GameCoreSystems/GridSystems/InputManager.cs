@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
         {
             OnClicked?.Invoke();        // OnClicked가 null이 아닐 경우에만 Invoke() 메서드를 호출
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(3) || Input.GetMouseButtonDown(4))
         {
             OnExit?.Invoke();       // OnExit가 null이 아닐 때만 Invoke()를 호출
         }

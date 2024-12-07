@@ -177,13 +177,10 @@ public class AIStateManager : MonoBehaviour
         {
             if (!IsHarvesting)
             {
-                Debug.LogError($"수확위치 : {currentCrop.seedPosition}");
-
                 if (this.data.placedCrops.ContainsKey(currentCrop.seedPosition))
                 {
                     //this.data.placedCrops.Remove(currentCrop.seedPosition);
                     this.data.RemoveCropAt(currentCrop.seedPosition);
-                    Debug.LogError("작물 정보 삭제가 성공하였습니다.");
                 }
                 else
                 {
