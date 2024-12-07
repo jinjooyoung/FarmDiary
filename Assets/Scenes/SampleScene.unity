@@ -6722,6 +6722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8f464786fecbb4c88d77729e796d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crops: []
+  cropsPos: []
 --- !u!1 &163048868
 GameObject:
   m_ObjectHideFlags: 0
@@ -28455,6 +28457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellIndicator: {fileID: 14947131}
+  grid: {fileID: 734627762}
 --- !u!1 &743735988
 GameObject:
   m_ObjectHideFlags: 0

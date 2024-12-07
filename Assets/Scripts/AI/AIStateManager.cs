@@ -43,8 +43,8 @@ public class AIStateManager : MonoBehaviour
 
         currentWaterAmount = maxWaterAmount;
 
-        Crop[] crops = FindObjectsOfType<Crop>();
-        crop.AddRange(crops);
+        //Crop[] crops = FindObjectsOfType<Crop>();
+        //crop.AddRange(crops);
     }
 
     private void Start()
@@ -61,7 +61,7 @@ public class AIStateManager : MonoBehaviour
         _animator.SetFloat("Move", IsMove ? 1 : 0); // Move 파라미터 업데이트
 
         // currentCrop이 삭제되었는지 확인하여 다음 작물로 이동
-        if (currentCrop == null || !crop.Contains(currentCrop))
+        if (currentCrop == null || !CropGrowthManager.Instance.crops.Contains(currentCrop))
         {
             // 현재 작물이 유효하지 않다면 다음 작물을 선택하거나 행동을 멈춤
             currentCrop = GetNextCrop();
@@ -106,7 +106,7 @@ public class AIStateManager : MonoBehaviour
     public void CheckSeed()
     {
         // 작물 목록에서 다음 심어진 씨앗을 찾습니다.
-        Crop nextCrop = crop.Find(crops => crops.IsSeedPlanted() && !crops.isPreview);
+        Crop nextCrop = CropGrowthManager.Instance.crops.Find(crops => crops.IsSeedPlanted() && !crops.isPreview);
 
         if (nextCrop != null)
         {
@@ -214,7 +214,8 @@ public class AIStateManager : MonoBehaviour
         {
             // 작물을 수확한 후에만 리스트에서 제거
             currentCrop.Harvest();
-            crop.Remove(currentCrop);
+            CropGrowthManager.Instance.crops.Remove(currentCrop);
+            CropGrowthManager.Instance.cropsPos.Remove(currentCrop.seedPosition);
         }
 
         RemoveMissingCrops(); // 누락된 작물 제거
@@ -275,18 +276,19 @@ public class AIStateManager : MonoBehaviour
 
     public void RemoveMissingCrops()
     {
-        crop.RemoveAll(c => c == null);
+        CropGrowthManager.Instance.crops.RemoveAll(c => c == null);
+        CropGrowthManager.Instance.cropsPos.RemoveWhere(c => c == null);
     }
 
     public Crop GetNextCrop()
     {
         // 작물 목록을 순회하여 다음 작물 찾기
-        for (int i = currentSeedIndex; i < crop.Count; i++)
+        for (int i = currentSeedIndex; i < CropGrowthManager.Instance.crops.Count; i++)
         {
-            if (crop[i] != null && crop[i].IsSeedPlanted())
+            if (CropGrowthManager.Instance.crops[i] != null && CropGrowthManager.Instance.crops[i].IsSeedPlanted())
             {
                 currentSeedIndex = i + 1; // 다음 인덱스 설정
-                return crop[i]; // 심어진 씨앗 반환
+                return CropGrowthManager.Instance.crops[i]; // 심어진 씨앗 반환
             }
         }
 

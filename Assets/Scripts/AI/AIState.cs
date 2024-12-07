@@ -24,14 +24,14 @@ public abstract class AIState
     protected void CheckTransitions()
     {
         // 유효하지 않은 currentCrop이 있다면 null로 설정하고 다음 상태로 이동
-        if (aiStateManager.currentCrop == null || !aiStateManager.crop.Contains(aiStateManager.currentCrop))
+        if (aiStateManager.currentCrop == null || !CropGrowthManager.Instance.crops.Contains(aiStateManager.currentCrop))
         {
             aiStateManager.currentCrop = null;  // 현재 작물 초기화
             aiStateMachine.TransitionToState(new IdleState(aiStateMachine));
             return;
         }
 
-        foreach (Crop crops in aiStateManager.crop)
+        foreach (Crop crops in CropGrowthManager.Instance.crops)
         {
             if (crops.IsSeedPlanted())
             {

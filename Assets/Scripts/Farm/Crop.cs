@@ -49,7 +49,7 @@ public class Crop : MonoBehaviour
 
         if (aiStateManager != null)
         {
-            aiStateManager.AddSeed(this);
+            //aiStateManager.AddSeed(this);
         }
 
         gameManager = FindObjectOfType<GameManager>();

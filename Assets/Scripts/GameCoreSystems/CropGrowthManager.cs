@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CropGrowthManager : MonoBehaviour
 {
     public static CropGrowthManager Instance;
 
-    private List<Crop> crops = new List<Crop>();    // 심어진 작물들을 저장할 리스트
+    public List<Crop> crops = new List<Crop>();    // 심어진 작물들을 저장할 리스트
+    //public List<Vector3Int> cropsPos = new List<Vector3Int>();
+    public HashSet<Vector3Int> cropsPos = new HashSet<Vector3Int>();
 
     private void Awake()
     {
@@ -27,18 +30,11 @@ public class CropGrowthManager : MonoBehaviour
     }
 
     // 리스트에 작물을 추가하는 메서드
-    public void RegisterCrop(Crop crop)
+    public void RegisterCrop(Crop crop, Vector3Int gridPos)
     {
-        for (int i = 0; i < crops.Count; i++)
-        {
-            if (crops[i] == null)
-            {
-                crops[i] = crop;
-                return;
-            }
-        }
-
+        Debug.LogError("=======리스트에 작물 추가됨=======");
         crops.Add(crop);
+        cropsPos.Add(gridPos);
     }
 
     // 1초마다 모든 작물의 성장 정도를 체크하는 루틴
@@ -58,6 +54,20 @@ public class CropGrowthManager : MonoBehaviour
                 else
                 {
                     crop.CheckGrowth(currentTime); // 성장 여부 체크
+                }
+            }
+
+            // 아래는 삭제되지 않은 GridData의 placedCrops 정보를 다시 한 번 체크해서 삭제하는 로직
+            // placedCrops의 키를 복사해서 List로 변환
+            HashSet<Vector3Int> keysToCheck = new HashSet<Vector3Int>(PlacementSystem.Instance.placedOBJData.placedCrops.Keys);
+
+            // HashSet으로 순회하며 삭제
+            foreach (var key in keysToCheck)
+            {
+                if (!cropsPos.Contains(key))  // 빠른 존재 여부 확인
+                {
+                    PlacementSystem.Instance.placedOBJData.placedCrops.Remove(key);
+                    Debug.LogError($"미처 삭제되지 않은 작물 정보 {key} 삭제");
                 }
             }
         }

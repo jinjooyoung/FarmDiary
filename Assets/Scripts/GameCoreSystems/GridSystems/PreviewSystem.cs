@@ -9,6 +9,8 @@ public class PreviewSystem : MonoBehaviour
     private GameObject cellIndicator;               // 그리드 커서
     private GameObject previewObject;               // 미리보기 오브젝트
 
+    public Grid grid;
+
     private AIStateManager aiStateManager;
     private GameManager gameManager;
 
@@ -39,7 +41,8 @@ public class PreviewSystem : MonoBehaviour
         {
             crop.isPreview = true;
             crop.seedPlantedState = Crop.SeedPlantedState.No;
-            aiStateManager.crop.Remove(crop);
+            CropGrowthManager.Instance.crops.Remove(crop);
+            CropGrowthManager.Instance.cropsPos.Remove(grid.WorldToCell(previewObject.transform.position));
         }
 
         FarmField farmField = previewObject.GetComponent<FarmField>();

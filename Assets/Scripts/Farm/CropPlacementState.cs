@@ -83,7 +83,7 @@ public class CropPlacementState : IBuildingState
             cropScript.PlantSeed();
 
             // CropGrowthManager¿¡ µî·Ï
-            CropGrowthManager.Instance.RegisterCrop(cropScript);
+            CropGrowthManager.Instance.RegisterCrop(cropScript, gridPosition);
         }
 
         placedCropData.AddCropAt(gridPosition, database.objectsData[selectedCropIndex].Size,
