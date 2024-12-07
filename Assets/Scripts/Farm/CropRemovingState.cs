@@ -39,7 +39,7 @@ public class CropRemovingState : IBuildingState
         }
         else
         {
-            gameObjectIndex = selectedData.GetRepresentationIndex(gridPosition);
+            gameObjectIndex = selectedData.GetRepresentationIndexCrop(gridPosition);
         }
 
         if (gameObjectIndex == -1)

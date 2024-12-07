@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using static Crop;
+using static UnityEditor.PlayerSettings;
 
 [System.Serializable]
 public class GridData
@@ -181,6 +182,19 @@ public class GridData
         
     }
 
+    // 선택한 그리드 위치를 통해 그곳에 설치된 작물의 인덱스를 반환하는 메서드
+    internal int GetRepresentationIndexCrop(Vector3Int gridPosition)
+    {
+        if (!placedCrops.ContainsKey(gridPosition))       // 아무것도 설치되어 있지 않은 칸이라면 -1 리턴
+        {
+            return -1;
+        }
+
+        currentDictionary = 3;
+        return placedCrops[gridPosition].PlacedObjectIndex;
+
+    }
+
     internal void RemoveObjectAt(Vector3Int gridPosition)
     {
         if (currentDictionary == 0)
@@ -205,18 +219,16 @@ public class GridData
                 placedFacilities.Remove(pos);
             }
         }
-        else if (currentDictionary == 3)
-        {
-            foreach (var pos in placedCrops[gridPosition].occupiedPositions)
-            {
-                placedCrops.Remove(pos);
-            }
-        }
 
     }
 
     internal void RemoveCropAt(Vector3Int gridPosition)
     {
+        if (!placedCrops.ContainsKey(gridPosition))
+        {
+            return;
+        }
+
         foreach (var pos in placedCrops[gridPosition].occupiedPositions)
         {
             placedCrops.Remove(pos);

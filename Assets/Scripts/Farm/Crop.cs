@@ -28,7 +28,7 @@ public class Crop : MonoBehaviour
     public CropState cropState;
     public SeedPlantedState seedPlantedState;
 
-    public Vector2 seedPosition;
+    public Vector3Int seedPosition;
 
     public Grid grid;
 
@@ -79,10 +79,7 @@ public class Crop : MonoBehaviour
     // 그리드 위치 설정 메서드
     public void SetFieldPosition(Vector3 worldPosition)
     {
-        Vector3Int gridPosition = grid.WorldToCell(worldPosition);
-
-        // Vector3Int에서 x와 y 값을 추출하여 Vector2로 변환
-        seedPosition = new Vector2(gridPosition.x, gridPosition.y);
+        seedPosition = grid.WorldToCell(worldPosition);
         Debug.Log($"밭 위치 설정됨: {seedPosition}");
     }
 

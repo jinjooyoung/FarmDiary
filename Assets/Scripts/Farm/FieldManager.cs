@@ -36,17 +36,15 @@ public class FieldManager : MonoBehaviour
         fieldAreas[centralFieldID] = (new Vector3Int(-18, -10, 0), new Vector3Int(17, -7, 0));
 
         // 잠겨 있는 땅들을 설정 (왼쪽)
-        fieldAreas[-1] = (new Vector3Int(-27, -10, 0), new Vector3Int(-19, -7, 0)); // ID -1: -27부터 -19까지 (9칸)
-        for (int i = 2; i <= 11; i++)
+        for (int i = 1; i <= 11; i++)
         {
             fieldAreas[-i] = (new Vector3Int(-18 - (i * 10), -10, 0), new Vector3Int(-9 - (i * 10), -7, 0));
         }
 
         // 잠겨 있는 땅들을 설정 (오른쪽)
-        fieldAreas[1] = (new Vector3Int(18, -10, 0), new Vector3Int(26, -7, 0)); // ID +1: 18부터 26까지 (9칸)
-        for (int i = 2; i <= 11; i++)
+        for (int i = 1; i <= 11; i++)
         {
-            fieldAreas[i] = (new Vector3Int(7 + (i * 10), -10, 0), new Vector3Int(16 + (i * 10), -7, 0));
+            fieldAreas[i] = (new Vector3Int(8 + (i * 10), -10, 0), new Vector3Int(17 + (i * 10), -7, 0));
         }
     }
 
@@ -173,6 +171,10 @@ public class FieldManager : MonoBehaviour
             // PlayerPrefs에서 해금 상태를 가져옴 (기본값: false)
             bool isUnlocked = PlayerPrefs.GetInt($"UnlockedFieldID_{i}", 0) == 1;
             unlockedFields[i] = isUnlocked;
+            if (isUnlocked)
+            {
+                DisableFieldObject(i);
+            }
         }
 
         for (int i = 1; i <= 11; i++)
@@ -180,6 +182,10 @@ public class FieldManager : MonoBehaviour
             // PlayerPrefs에서 해금 상태를 가져옴 (기본값: false)
             bool isUnlocked = PlayerPrefs.GetInt($"UnlockedFieldID_{i}", 0) == 1;
             unlockedFields[i] = isUnlocked;
+            if (isUnlocked)
+            {
+                DisableFieldObject(i);
+            }
         }
     }
 

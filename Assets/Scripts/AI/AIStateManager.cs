@@ -177,15 +177,17 @@ public class AIStateManager : MonoBehaviour
         {
             if (!IsHarvesting)
             {
-                Vector3Int pos = ConvertToVector3Int(currentCrop.seedPosition);
-                if (this.data.placedCrops.ContainsKey(pos))
+                Debug.LogError($"수확위치 : {currentCrop.seedPosition}");
+
+                if (this.data.placedCrops.ContainsKey(currentCrop.seedPosition))
                 {
-                    this.data.placedCrops.Remove(pos);
-                    Debug.Log("작물 정보 삭제가 성공하였습니다.");
+                    //this.data.placedCrops.Remove(currentCrop.seedPosition);
+                    this.data.RemoveCropAt(currentCrop.seedPosition);
+                    Debug.LogError("작물 정보 삭제가 성공하였습니다.");
                 }
                 else
                 {
-                    Debug.Log("작물 정보 삭제가 실패하였습니다.");
+                    Debug.LogError("작물 정보 삭제가 실패하였습니다.");
                 }
                 totalHarvestedCount++;
                 StartCoroutine(HarvestRoutine());
@@ -197,10 +199,10 @@ public class AIStateManager : MonoBehaviour
         }
     }
 
-    private Vector3Int ConvertToVector3Int(Vector2 position)
+    /*private Vector3Int ConvertToVector3Int(Vector2 position)
     {
-        return new Vector3Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), 0);
-    }
+        return new Vector3Int(position.x, position.y, 0);
+    }*/
 
     public IEnumerator HarvestRoutine()
     {

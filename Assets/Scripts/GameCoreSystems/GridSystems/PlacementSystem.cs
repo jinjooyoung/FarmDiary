@@ -83,6 +83,7 @@ public class PlacementSystem : MonoBehaviour
         StopPlacement();
         isDeleteMode = true;
         gridVisualization.SetActive(true);
+        this.ID = 0;
         buildingState = new RemovingState(grid, preview, placedOBJData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;       // 삭제 중일때 항상 입력을 받을 수 있도록 이벤트에 할당
         inputManager.OnExit += StopPlacement;
@@ -92,6 +93,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);              // 전체 그리드 UI
+        this.ID = ID;
         buildingState = new CropPlacementState(ID,
                                            grid,
                                            preview,
@@ -106,6 +108,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);
+        this.ID = 0;
         buildingState = new CropRemovingState(grid, preview, placedOBJData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;       // 삭제 중일때 항상 입력을 받을 수 있도록 이벤트에 할당
         inputManager.OnExit += StopPlacement;
