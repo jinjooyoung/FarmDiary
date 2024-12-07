@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using static Crop;
-using static UnityEditor.PlayerSettings;
 
 [System.Serializable]
 public class GridData

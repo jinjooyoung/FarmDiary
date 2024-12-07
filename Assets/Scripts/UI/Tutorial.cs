@@ -37,7 +37,7 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] private GameObject StoragePanel;
     [SerializeField] private GameObject PotionPanel;
 
-    HashSet<int> values = new HashSet<int> { 0, 1, 2, 6, 8, 11, 14, 16, 21, 23, 25, 27, 30, 31, 32, 33, 34 };
+    HashSet<int> values = new HashSet<int> { 0, 1, 2, 6, 8, 11, 14, 16, 21, 23, 25, 27, 30, 31, 32, 33, 34, 35 };
 
     private void Awake()
     {
@@ -355,7 +355,7 @@ public class TutorialUI : MonoBehaviour
     // 패널을 넘기는 메서드
     public void NextPanel()
     {
-        if (index < 34)
+        if (index < 35)
         {
             tutorialCanvas.transform.GetChild(index).gameObject.SetActive(false);   // 현재 패널을 끄고
             index++;
@@ -373,7 +373,7 @@ public class TutorialUI : MonoBehaviour
 
             StartCoroutine(FloatingTextEffect(effectOBJ, 0));
         }
-        else if (index == 34)
+        else if (index == 35)
         {
             index = -1;
             PlayerPrefs.SetInt("TutorialDone", 1);
@@ -422,7 +422,7 @@ public class TutorialUI : MonoBehaviour
             StartCoroutine(FloatingTextEffect(effectsobj, 1));
             StartCoroutine(FloatingTextEffect(effectOBJs, 2));
         }
-        else if (index != 34)
+        else if (index != 35)
         {
             if (tutorialCanvas.activeSelf)
             {
