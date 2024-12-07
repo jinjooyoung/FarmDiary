@@ -214,8 +214,8 @@ public class AIStateManager : MonoBehaviour
         {
             // 작물을 수확한 후에만 리스트에서 제거
             currentCrop.Harvest();
-            CropGrowthManager.Instance.crops.Remove(currentCrop);
-            CropGrowthManager.Instance.cropsPos.Remove(currentCrop.seedPosition);
+            //CropGrowthManager.Instance.crops.Remove(currentCrop);
+            //CropGrowthManager.Instance.cropsPos.Remove(currentCrop.seedPosition);
         }
 
         RemoveMissingCrops(); // 누락된 작물 제거

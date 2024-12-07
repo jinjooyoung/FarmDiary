@@ -6723,7 +6723,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crops: []
-  cropsPos: []
 --- !u!1 &163048868
 GameObject:
   m_ObjectHideFlags: 0

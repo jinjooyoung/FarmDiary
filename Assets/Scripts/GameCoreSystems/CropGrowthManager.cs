@@ -72,4 +72,25 @@ public class CropGrowthManager : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator TrackCrops()
+    {
+        while (true)
+        {
+            // 씬 내 모든 Crop 오브젝트를 찾기
+            Crop[] allCrops = FindObjectsOfType<Crop>();
+
+            foreach (var crop in allCrops)
+            {
+                // crops 리스트에 없으면 추가
+                if (!crops.Contains(crop))
+                {
+                    crops.Add(crop);
+                }
+            }
+
+            // 5초 대기
+            yield return new WaitForSeconds(5f);
+        }
+    }
 }

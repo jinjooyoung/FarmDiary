@@ -238,6 +238,12 @@ public class Crop : MonoBehaviour
         }
     }
 
+    private void OnDestroy()    // 수확하여 파괴되면 호출
+    {
+        CropGrowthManager.Instance.crops.Remove(this);
+        CropGrowthManager.Instance.cropsPos.Remove(seedPosition);
+    }
+
     // 작물의 상태를 업데이트
     public void UpdateCropVisual()
     {
