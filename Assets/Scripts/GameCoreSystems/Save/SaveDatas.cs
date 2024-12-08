@@ -71,6 +71,20 @@ public static class SaveDatas
         Debug.Log($"GameObjects saved to {fileName}");
     }
 
+    // ObjectDatabase의 구매가격을 저장하는 로직 (ObjectDatabase의 다른 요소들은 게임이 진행되어도 변경사항이 없어서)
+    public static void SaveObjectDatabase(ObjectsDatabaseSO objectsDatabase)
+    {
+        List<int> buyPrices = new List<int>();
+        foreach (var objectData in objectsDatabase.objectsData)
+        {
+            buyPrices.Add(objectData.BuyPrice); // 구매 가격만 저장
+        }
+
+        // 예시: 구매 가격을 JSON으로 저장
+        string saveString = JsonUtility.ToJson(buyPrices);
+        SaveSystem.Save(saveString, "ObjectDatabasePrice");  // 구매 가격만 저장된 데이터
+    }
+
     //=========================로드 로직=========================
 
     // 저장된 GameObject 데이터를 로드하는 로직

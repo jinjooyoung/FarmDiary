@@ -414,8 +414,8 @@ public class TutorialUI : MonoBehaviour
         }
         else if (index == 23 || index == 27)
         {
-            StartCoroutine(FloatingTextEffect(effectsobj, 2));
-            StartCoroutine(FloatingTextEffect(effectOBJs, 3));
+            StartCoroutine(FloatingTextEffect(effectsobj, 3));
+            StartCoroutine(FloatingTextEffect(effectOBJs, 2));
         }
         else if (index == 13)   // 카메라 이동 패널
         {
