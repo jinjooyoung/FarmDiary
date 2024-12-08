@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] private List<PrefabData> seedPrefabs; // ¾¾¾Ñ ÇÁ¸®ÆÕ ¸®½ºÆ®
-    [SerializeField] private List<PrefabData> fieldPrefabs; // ¹ç ÇÁ¸®ÆÕ ¸®½ºÆ®
+    [SerializeField] private List<SaveDatas.PrefabData> seedPrefabs; // ¾¾¾Ñ ÇÁ¸®ÆÕ ¸®½ºÆ®
+    [SerializeField] private List<SaveDatas.PrefabData> fieldPrefabs; // ¹ç ÇÁ¸®ÆÕ ¸®½ºÆ®
 
     private Dictionary<int, GameObject> seedDictionary; // ¾¾¾Ñ ID-ÇÁ¸®ÆÕ ¸ÅÇÎ
     private Dictionary<int, GameObject> fieldDictionary; // ¹ç ID-ÇÁ¸®ÆÕ ¸ÅÇÎ
