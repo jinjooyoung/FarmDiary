@@ -156,9 +156,9 @@ public class Crop : MonoBehaviour
         {
             Debug.Log("작물을 수확했습니다.");
             cropState = CropState.Harvested;
+            aiStateManager.AddToInventory(ID);
             Destroy(gameObject);
             GameManager.AddCoins(sellPrice);
-            aiStateManager.AddToInventory(this);
         }
         else
         {

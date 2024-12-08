@@ -6,7 +6,7 @@ public class AIStateManager : MonoBehaviour
 {
     public AIStateMachine aiStateMachine;
 
-    public List<Crop> harvestedCrops = new List<Crop>();
+    public List<int> harvestedCrops = new List<int>();
     public Crop currentCrop;
 
     public int currentSeedIndex = 0;
@@ -288,9 +288,11 @@ public class AIStateManager : MonoBehaviour
         return null;
     }
 
-    public void AddToInventory(Crop harvestedCrop)
+    public void AddToInventory(int harvestedCrop)
     {
-        if (harvestedCrop.cropState == Crop.CropState.Harvested)
+        harvestedCrops.Add(harvestedCrop);
+
+        /*if (harvestedCrop.cropState == Crop.CropState.Harvested)
         {
             harvestedCrops.Add(harvestedCrop);
             Debug.Log($"수확된 작물이 인벤토리에 추가되었습니다: {harvestedCrop.name}");
@@ -298,6 +300,6 @@ public class AIStateManager : MonoBehaviour
         else
         {
             Debug.Log("추가할 수 없습니다: 작물이 수확 상태가 아닙니다.");
-        }
+        }*/
     }
 }

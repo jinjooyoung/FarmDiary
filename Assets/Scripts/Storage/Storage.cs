@@ -39,24 +39,24 @@ public class Storage : MonoBehaviour
         }
     }
 
-    private void AddCropToHouse(Crop crop)
+    private void AddCropToHouse(int crop)
     {
         // 해당 ID의 CropStorage 찾기
-        CropStorage storage = storedCropsByID.Find(s => s.cropID == crop.ID);
+        CropStorage storage = storedCropsByID.Find(s => s.cropID == crop);
 
         // 없다면 새로 생성하여 추가
         if (storage == null)
         {
-            storage = new CropStorage { cropID = crop.ID, cropCount = 0 };
+            storage = new CropStorage { cropID = crop, cropCount = 0 };
             storedCropsByID.Add(storage);
         }
 
         // 작물 개수 추가
         storage.cropCount++;
-        Debug.Log($"ID {crop.ID}인 작물이 추가되었습니다. 현재 개수: {storage.cropCount}");
+        Debug.Log($"ID {crop}인 작물이 추가되었습니다. 현재 개수: {storage.cropCount}");
 
         // 업적 및 UI 갱신 호출
-        AchievementsDatabase.AddProgressToAchievement(crop.ID, 1);
+        AchievementsDatabase.AddProgressToAchievement(crop, 1);
         UIManager.CheckAndUnlockCrops();
     }
 }
