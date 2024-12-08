@@ -114,9 +114,24 @@ public class CameraMove : MonoBehaviour
             ZoomInOutUIPanel();
         }
 
-        // 카메라의 Y 좌표를 고정하여 바닥 위치 유지
-        float bottomFixedY = cam.orthographicSize - 5f;  // 바닥 위치를 고정할 Y 값
-        base.transform.position = new Vector3(base.transform.position.x, bottomFixedY, base.transform.position.z);
+        switch (currentZoomLevel)
+        {
+            case 0: // 줌 레벨 3
+                    // 카메라의 Y 좌표를 고정하여 바닥 위치 유지
+                float bottomFixedY1 = cam.orthographicSize - 4.837f;  // 바닥 위치를 고정할 Y 값
+                base.transform.position = new Vector3(base.transform.position.x, bottomFixedY1, base.transform.position.z);
+                break;
+            case 1: // 줌 레벨 4
+                    // 카메라의 Y 좌표를 고정하여 바닥 위치 유지
+                float bottomFixedY2 = cam.orthographicSize - 4.915f;  // 바닥 위치를 고정할 Y 값
+                base.transform.position = new Vector3(base.transform.position.x, bottomFixedY2, base.transform.position.z);
+                break;
+            case 2: // 줌 레벨 5 - 기본 상태로 복귀
+                    // 카메라의 Y 좌표를 고정하여 바닥 위치 유지
+                float bottomFixedY = cam.orthographicSize - 5f;  // 바닥 위치를 고정할 Y 값
+                base.transform.position = new Vector3(base.transform.position.x, bottomFixedY, base.transform.position.z);
+                break;
+        }
     }
 
     // 줌 레벨에 맞게 UI 패널의 위치와 크기를 조정하는 함수
@@ -128,19 +143,19 @@ public class CameraMove : MonoBehaviour
         switch (currentZoomLevel)
         {
             case 0: // 줌 레벨 3
-                cam.transform.position = new Vector3(cam.transform.position.x, -2f, cam.transform.position.z);
-                uiPanel.anchoredPosition = new Vector2(-291f, 190f);
-                uiPanel.localScale = Vector3.one * 77.75435f;  // 스케일을 적절히 조정
+                cam.transform.position = new Vector3(cam.transform.position.x, 0f, cam.transform.position.z);
+                uiPanel.anchoredPosition = new Vector2(-877f, 217f);
+                uiPanel.localScale = Vector3.one * 98.63184f;  // 스케일을 적절히 조정
                 break;
             case 1: // 줌 레벨 4
-                cam.transform.position = new Vector3(cam.transform.position.x, -1f, cam.transform.position.z);
-                uiPanel.anchoredPosition = new Vector2(-115f, 85.8f);
-                uiPanel.localScale = Vector3.one * 58.06974f;
+                cam.transform.position = new Vector3(cam.transform.position.x, 0f, cam.transform.position.z);
+                uiPanel.anchoredPosition = new Vector2(-651.8f, 91.9f);
+                uiPanel.localScale = Vector3.one * 73.46822f;
                 break;
             case 2: // 줌 레벨 5 - 기본 상태로 복귀
                 cam.transform.position = new Vector3(cam.transform.position.x, 0f, cam.transform.position.z);  // 기본 위치로 설정
-                uiPanel.anchoredPosition = new Vector2(0, 17f);  // 기본 위치
-                uiPanel.localScale = Vector3.one * 45f;  // 기본 스케일
+                uiPanel.anchoredPosition = new Vector2(-524.4f, 19.2f);  // 기본 위치
+                uiPanel.localScale = Vector3.one * 59.0375f;  // 기본 스케일
                 break;
         }
     }
