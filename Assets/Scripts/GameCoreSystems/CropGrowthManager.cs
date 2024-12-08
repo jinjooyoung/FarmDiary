@@ -32,7 +32,6 @@ public class CropGrowthManager : MonoBehaviour
     // 리스트에 작물을 추가하는 메서드
     public void RegisterCrop(Crop crop, Vector3Int gridPos)
     {
-        Debug.LogError("=======리스트에 작물 추가됨=======");
         crops.Add(crop);
         cropsPos.Add(gridPos);
     }

@@ -26,6 +26,7 @@ public class FieldManager : MonoBehaviour
         unlockedFields[0] = true;
         InitializeFieldAreas();         // 해금 범위 설정
         LoadUnlockedFields();           // 해금 정보 불러오기
+        LoadFieldObjects();
     }
 
     // 해금 범위를 설정하는 메서드
@@ -187,6 +188,49 @@ public class FieldManager : MonoBehaviour
                 DisableFieldObject(i);
             }
         }
+    }
+
+    private void LoadFieldObjects()
+    {
+        for (int i = -11; i <= -1; i++)
+        {
+            // PlayerPrefs에서 해금 상태를 가져옴 (기본값: false)
+            bool isUnlocked = PlayerPrefs.GetInt($"UnlockedFieldID_{i}", 0) == 1;
+
+            // 필드 ID에 맞는 인덱스를 계산
+            int index = i + 11; // 음수 ID는 11을 더해 배열 인덱스 계산
+
+            if (fieldObjects[index] != null)
+            {
+                fieldObjects[index].SetActive(!isUnlocked); // 해금되었으면 비활성화
+            }
+
+            if (buttons[index] != null)
+            {
+                buttons[index].SetActive(!isUnlocked); // 해금되었으면 버튼도 비활성화
+            }
+        }
+
+        for (int i = 1; i <= 11; i++)
+        {
+            // PlayerPrefs에서 해금 상태를 가져옴 (기본값: false)
+            bool isUnlocked = PlayerPrefs.GetInt($"UnlockedFieldID_{i}", 0) == 1;
+
+            // 필드 ID에 맞는 인덱스를 계산
+            int index = i + 10; // 양수 ID는 10을 더해 배열 인덱스 계산
+
+            if (fieldObjects[index] != null)
+            {
+                fieldObjects[index].SetActive(!isUnlocked); // 해금되었으면 비활성화
+            }
+
+            if (buttons[index] != null)
+            {
+                buttons[index].SetActive(!isUnlocked); // 해금되었으면 버튼도 비활성화
+            }
+        }
+
+        Debug.Log("필드 오브젝트와 버튼 상태 초기화 완료.");
     }
 
     // 해금을 저장하는 메서드
