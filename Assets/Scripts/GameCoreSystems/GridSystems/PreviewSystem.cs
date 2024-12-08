@@ -45,12 +45,12 @@ public class PreviewSystem : MonoBehaviour
             CropGrowthManager.Instance.cropsPos.Remove(grid.WorldToCell(previewObject.transform.position));
         }
 
-        FarmField farmField = previewObject.GetComponent<FarmField>();
+        /*FarmField farmField = previewObject.GetComponent<FarmField>();
         if (farmField != null)
         {
             farmField.isPreview = true;
             gameManager.field.Remove(farmField);
-        }
+        }*/
 
         PrepareCursor(size);                        // 커서의 사이즈를 선택한 오브젝트 크기에 맞게 조절
         SetAlpha(renderer, 0.2f);                   // 프리뷰 상태에서 반투명하게 보이도록 알파값 변경

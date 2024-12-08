@@ -60,10 +60,10 @@ public class CameraMove : MonoBehaviour
     
         base.transform.position -= new Vector3(vector.x, 0f, 0f);  // 카메라의 X 좌표 이동
     
-        ClampCamera();  // 카메라의 위치를 제한하는 함수 호출
+        //ClampCamera();  // 카메라의 위치를 제한하는 함수 호출
     }
     
-    // 카메라의 위치를 제한하는 함수
+    /*// 카메라의 위치를 제한하는 함수
     private void ClampCamera()
     {
         if (SaveData.instance.verticalMode)
@@ -71,7 +71,7 @@ public class CameraMove : MonoBehaviour
             // 카메라 위치를 X축 기준으로 제한
             base.transform.position = new Vector3(Mathf.Clamp(base.transform.position.x, -81f, 81f), base.transform.position.y, base.transform.position.z);
         }
-    }
+    }*/
 
     void OrthographicSize()
     {

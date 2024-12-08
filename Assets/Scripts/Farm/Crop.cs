@@ -41,23 +41,9 @@ public class Crop : MonoBehaviour
 
     private AIStateManager aiStateManager;
 
-    private GameManager gameManager;
-
     private void Awake()
     {
         aiStateManager = FindObjectOfType<AIStateManager>();
-
-        if (aiStateManager != null)
-        {
-            //aiStateManager.AddSeed(this);
-        }
-
-        gameManager = FindObjectOfType<GameManager>();
-
-        if (gameManager != null)
-        {
-            gameManager.AddSeed(this);
-        }
     }
 
     private void Start()
@@ -278,15 +264,5 @@ public class Crop : MonoBehaviour
     private int CalculateSortingOrder()
     {
         return (int)(transform.position.y * -10); // Y값을 음수로 변환하여 정렬
-    }
-
-    public void LoadPlacementData(PlacementData placementData)
-    {
-        Debug.Log($"로드된 ID: {placementData.ID}, 위치: {placementData.occupiedPositions}");
-        this.ID = placementData.ID;
-        this.PlacedObjectIndex = placementData.PlacedObjectIndex;
-        this.cropState = placementData.cropState;
-        this.seedPlantedState = placementData.seedPlantedState;
-        this.occupiedPositions = placementData.occupiedPositions;
     }
 }

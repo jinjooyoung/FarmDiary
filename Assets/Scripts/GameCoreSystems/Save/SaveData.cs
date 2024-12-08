@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class SaveData : MonoBehaviour
 {
@@ -58,4 +58,4 @@ public class SaveData : MonoBehaviour
         // GridData를 저장하기 위한 JSON 문자열 필드
         public string gridDataJson;
     }
-}
+}*/

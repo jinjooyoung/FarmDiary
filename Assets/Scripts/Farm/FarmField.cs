@@ -1,4 +1,4 @@
-using static Crop;
+/*using static Crop;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -90,4 +90,4 @@ public class FarmField : MonoBehaviour
         this.seedPlantedState = placementData.seedPlantedState;
         this.occupiedPositions = placementData.occupiedPositions;
     }
-}
+}*/
