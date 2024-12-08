@@ -8,7 +8,7 @@ public class CameraMove : MonoBehaviour
     
     private int scale = 2;  // 카메라의 스케일을 결정하는 변수
     
-    private float[] zoomLevels = { 3f, 4f, 5f };  // 카메라 줌 단계
+    private float[] zoomLevels = { 3f, 4f, 5f, 10f };  // 카메라 줌 단계
     private int currentZoomLevel;  // 현재 줌 단계 인덱스
     
     private Vector2 mouseClickPos;  // 마우스 클릭 시의 위치를 저장할 변수
@@ -131,6 +131,11 @@ public class CameraMove : MonoBehaviour
                 float bottomFixedY = cam.orthographicSize - 5f;  // 바닥 위치를 고정할 Y 값
                 base.transform.position = new Vector3(base.transform.position.x, bottomFixedY, base.transform.position.z);
                 break;
+            case 3: // 줌 레벨 10 - 가장 작은 레벨
+                    // 카메라의 Y 좌표를 고정하여 바닥 위치 유지
+                float bottomFixedY3 = cam.orthographicSize - 5.41f;  // 바닥 위치를 고정할 Y 값
+                base.transform.position = new Vector3(base.transform.position.x, bottomFixedY3, base.transform.position.z);
+                break;
         }
     }
 
@@ -153,6 +158,17 @@ public class CameraMove : MonoBehaviour
                 uiPanel.localScale = Vector3.one * 73.46822f;
                 break;
             case 2: // 줌 레벨 5 - 기본 상태로 복귀
+                cam.transform.position = new Vector3(cam.transform.position.x, 0f, cam.transform.position.z);  // 기본 위치로 설정
+                uiPanel.anchoredPosition = new Vector2(-524.4f, 19.2f);  // 기본 위치
+                uiPanel.localScale = Vector3.one * 59.0375f;  // 기본 스케일
+                break;
+            /*case 3: // 줌 레벨 10 - 가장 작은 레벨
+                cam.transform.position = new Vector3(cam.transform.position.x, 0f, cam.transform.position.z);  // 기본 위치로 설정
+                uiPanel.anchoredPosition = new Vector2(-267.5f, -125f);  // 기본 위치
+                uiPanel.localScale = Vector3.one * 30.13809f;  // 기본 스케일
+                break;*/
+            case 3: // 줌 레벨 10 - 캔버스까지 줄이니까 글씨가 너무 작아짐
+                // 이제와서 TMPro로 바꾸고 이것저것 하기엔 시간이 없음
                 cam.transform.position = new Vector3(cam.transform.position.x, 0f, cam.transform.position.z);  // 기본 위치로 설정
                 uiPanel.anchoredPosition = new Vector2(-524.4f, 19.2f);  // 기본 위치
                 uiPanel.localScale = Vector3.one * 59.0375f;  // 기본 스케일

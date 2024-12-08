@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        InitializePlayerPrefs();    // 테스트할때만 주석 풀기, 나중에 삭제
+        //InitializePlayerPrefs();    // 테스트할때만 주석 풀기, 나중에 삭제
 
         // 자동 저장 타이머 초기화
         autoSaveTimer = autoSaveInterval;
