@@ -384,7 +384,7 @@ public class PotionUIManager : MonoBehaviour
         }
         magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID-1}");
 
-        craftingTime.text = "남은 시간 : " + Mathf.FloorToInt(currentPot.remainingTime).ToString();
+        craftingTime.text = "남은 시간 : " + Mathf.FloorToInt(currentPot.remainingTime).ToString("N0") + "초";
 
         material1.image.sprite = LoadIcon(currentPot.basicMaterial[0]);
         material2.image.sprite = LoadIcon(currentPot.basicMaterial[1]);
@@ -545,7 +545,7 @@ public class PotionUIManager : MonoBehaviour
             }
             magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID-1}");
             currentPot.totalCraftingTime = PotionDatabase.GetCraftingTime(currentPot.magicID);
-            craftingTime.text = "제작 시간 : " + PotionDatabase.GetCraftingTime(currentPot.magicID).ToString();
+            craftingTime.text = "제작 시간 : " + PotionDatabase.GetCraftingTime(currentPot.magicID).ToString("N0") + "초";
         }
         else    // 마법작물 선택 안 됨
         {
