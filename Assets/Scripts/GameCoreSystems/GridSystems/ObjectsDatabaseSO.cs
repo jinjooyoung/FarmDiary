@@ -108,6 +108,28 @@ public static class ObjectsDatabase
         return objectData.BuyPrice;
     }
 
+    // 성장 시간 간격을 리턴하는 메서드
+    public static float[] GetCropGrowthTimes(int id)
+    {
+        ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
+        return objectData.GrowthTimes;
+    }
+
+    // 프리팹 게임오브젝트를 리턴하는 메서드
+    public static GameObject GetPrefabByID(int id)
+    {
+        ObjectData objectData = GetObjectByID(id);      // 해당 ID의 오브젝트 데이터를 얻어옴
+        if (objectData == null)
+        {
+            Debug.LogError($"{id}에 해당하는 데이터 찾지 못함");
+            return null;
+        }
+        else
+        {
+            return objectData.Prefab;
+        }
+    }
+
     // 튜토리얼 진행할때 작물 성장시간을 줄이는 메서드
     public static void SetTutorialGrowthTimes(int id)
     {

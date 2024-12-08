@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Crop;
 
-public static class SaveDatas
+public class SaveDatas : MonoBehaviour
 {
     //=========================직렬화 클래스=========================
 
@@ -23,10 +24,21 @@ public static class SaveDatas
     }
 
     [System.Serializable]
-    public class PrefabData
+    public class CropData
     {
-        public int id; // 인스펙터에서 설정할 ID
-        public GameObject prefab; // 실제 프리팹
+        public int cropId;                // 고유 ID
+        public Vector3Int seedPosition;   // 작물 심어진 위치
+        public SeedPlantedState seedPlantedState;
+        public CropState cropState;       // 작물 상태 (Enum)
+
+        public SerializableHashSet<Vector3Int> cropsPos = new SerializableHashSet<Vector3Int>();  // 직렬화 가능한 HashSet
+    }
+
+    [System.Serializable]
+    public class PrefabObjectdata
+    {
+        public Vector3 position; // 오브젝트의 위치
+        public int prefabID;     // 해당 오브젝트의 프리팹 ID
     }
 
     [System.Serializable]
@@ -45,7 +57,7 @@ public static class SaveDatas
     //=========================세이브 로직=========================
 
     // GameObject 리스트를 저장하는 로직
-    public static void SaveGameObjects(string fileName, List<GameObject> gameObjects)
+    public void SaveGameObjects(string fileName, List<GameObject> gameObjects)
     {
         List<GameObjectData> dataList = new List<GameObjectData>();
 
@@ -71,8 +83,47 @@ public static class SaveDatas
         Debug.Log($"GameObjects saved to {fileName}");
     }
 
+    // Crop 오브젝트(껍데기)를 저장하는 메서드
+    public void SaveCrops(List<GameObject> gameOBJ)
+    {
+        List<GameObject> safeGameOBJ = new List<GameObject>(gameOBJ);
+
+        List<PrefabObjectdata> savedObjects = new List<PrefabObjectdata>();  // 저장할 오브젝트 직렬화 리스트
+        Debug.LogError("CropOBJ 저장 호출됨");
+
+        foreach (GameObject obj in safeGameOBJ)  // 생성된 모든 오브젝트를 돌면서
+        {
+            if (obj != null)
+            {
+                Debug.LogError("CropOBJ 설치된 오브젝트 반복 검사 중");
+                // Crop 컴포넌트가 붙어 있는지 확인
+                Crop crop = obj.GetComponent<Crop>();
+                if (crop != null) // Crop이 있는 오브젝트만 저장
+                {
+                    Debug.LogError("CropOBJ 설치된 오브젝트 Crop 찾음!!!");
+                    // 오브젝트의 ID와 위치를 저장
+                    PrefabObjectdata savedObject = new PrefabObjectdata
+                    {
+                        position = obj.transform.position,
+                        prefabID = crop.ID  // Crop의 ID 저장
+                    };
+                    Debug.LogError($"CropOBJ 저장!! 위치 : {obj.transform.position}, ID : {crop.ID}");
+
+                    savedObjects.Add(savedObject);  // 리스트에 추가
+                }
+            }
+        }
+
+        // 저장된 데이터를 파일이나 PlayerPrefs에 저장할 수 있음
+        // 예시로 PlayerPrefs에 저장
+        string json = JsonUtility.ToJson(new Wrapper<PrefabObjectdata> { list = savedObjects }, true);
+        Debug.LogError($"CropOBJ 저장완료! {json}");
+        // SaveSystem을 사용하여 저장
+        SaveSystem.Save(json, "CropOBJ");
+    }
+
     // ObjectDatabase의 구매가격을 저장하는 로직 (ObjectDatabase의 다른 요소들은 게임이 진행되어도 변경사항이 없어서)
-    public static void SaveObjectDatabase(ObjectsDatabaseSO objectsDatabase)
+    public void SaveObjectDatabase(ObjectsDatabaseSO objectsDatabase)
     {
         List<int> buyPrices = new List<int>();
         foreach (var objectData in objectsDatabase.objectsData)
@@ -88,7 +139,7 @@ public static class SaveDatas
     //=========================로드 로직=========================
 
     // 저장된 GameObject 데이터를 로드하는 로직
-    public static List<GameObjectData> LoadGameObjects(string fileName)
+    public List<GameObjectData> LoadGameObjects(string fileName)
     {
         string json = SaveSystem.Load(fileName);
 
@@ -104,9 +155,43 @@ public static class SaveDatas
         return wrapper.list;
     }
 
+    // Crop 오브젝트를 로드하는 메서드
+    public void LoadCrops()
+    {
+        // 저장된 데이터를 파일이나 PlayerPrefs에서 불러옴
+        string json = SaveSystem.Load("CropOBJ");  // SaveSystem을 사용하여 저장된 데이터를 불러옴
+        Debug.LogError("CropOBJ 로드 호출됨");
+
+        // 데이터가 있을 경우
+        if (!string.IsNullOrEmpty(json))
+        {
+            Debug.LogError("CropOBJ 데이터 존재함");
+            // JSON을 PrefabObjectdata 리스트로 변환
+            List<PrefabObjectdata> savedObjects = JsonUtility.FromJson<Wrapper<PrefabObjectdata>>(json).list;
+
+            // 저장된 오브젝트들을 씬에 다시 생성
+            foreach (PrefabObjectdata savedObject in savedObjects)
+            {
+                Debug.LogError("CropOBJ 직렬화 리스트 반복 중");
+                // ID로 해당 프리팹을 찾아 생성
+                GameObject prefab = Resources.Load<GameObject>($"Prefabs/{savedObject.prefabID}");
+                if (prefab != null)
+                {
+                    Debug.LogError("CropOBJ 프리팹 찾아서 생성 완료");
+                    // 프리팹을 저장된 위치에 생성
+                    Instantiate(prefab, savedObject.position, Quaternion.identity);
+                }
+                else
+                {
+                    Debug.LogError("CropOBJ 프리팹 못찾음!! 생성 실패!!!");
+                }
+            }
+        }
+    }
+
     //======================변환 및 복원 로직========================
 
-    public static PotData ToPotData(Pot pot)
+    public PotData ToPotData(Pot pot)
     {
         return new PotData
         {
@@ -121,7 +206,7 @@ public static class SaveDatas
         };
     }
 
-    public static Pot FromPotData(PotData data, GameObject potPrefab, Transform parent = null)
+    public Pot FromPotData(PotData data, GameObject potPrefab, Transform parent = null)
     {
         GameObject potObject = GameObject.Instantiate(potPrefab, data.position, Quaternion.Euler(data.rotation), parent);
         Pot pot = potObject.GetComponent<Pot>();
@@ -134,5 +219,51 @@ public static class SaveDatas
         pot.remainingTime = data.remainingTime;
 
         return pot;
+    }
+}
+
+[System.Serializable]
+public class SerializableHashSet<T> where T : IEquatable<T>
+{
+    [SerializeField]
+    private List<T> list = new List<T>();  // 직렬화 가능한 List로 저장
+
+    // HashSet에 값을 추가
+    public void Add(T item)
+    {
+        if (!list.Contains(item))
+        {
+            list.Add(item);
+        }
+    }
+
+    // HashSet에서 값을 제거
+    public void Remove(T item)
+    {
+        list.Remove(item);
+    }
+
+    // HashSet에 값이 있는지 확인
+    public bool Contains(T item)
+    {
+        return list.Contains(item);
+    }
+
+    // 직렬화된 List를 반환
+    public List<T> GetList()
+    {
+        return list;
+    }
+
+    // List를 HashSet으로 변환
+    public HashSet<T> ToHashSet()
+    {
+        return new HashSet<T>(list);
+    }
+
+    // List를 HashSet으로 초기화
+    public void FromList(List<T> list)
+    {
+        this.list = list;
     }
 }

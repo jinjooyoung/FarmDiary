@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
         if (autoSaveTimer <= 0)
         {
-            //SaveGameData();
+            SaveManager.Instance.SaveGameData();
             Debug.Log("자동 저장 완료!");
             autoSaveTimer = autoSaveInterval; // 타이머 리셋
         }
@@ -78,15 +78,14 @@ public class GameManager : MonoBehaviour
 
     private void InitializeSaveData()
     {
-        string saveString = SaveSystem.Load("GameData.json");
-        if (string.IsNullOrEmpty(saveString))
+        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0) // 첫 실행이면 = 세이브 데이터가 없으면
         {
             currentCoin = DefaultCoin;
-            //SaveGameData();
+            SaveManager.Instance.SaveGameData();
         }
         else
         {
-            //LoadGameData();
+            SaveManager.Instance.LoadGameData();
         }
     }
 

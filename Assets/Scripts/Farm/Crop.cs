@@ -20,8 +20,6 @@ public class Crop : MonoBehaviour
     }
 
     public int ID = -1;
-    public int PlacedObjectIndex; // 오브젝트의 인덱스
-    public List<Vector3Int> occupiedPositions; // 이 작물이 차지하는 그리드 좌표
 
     public int sellPrice = 0;
 
@@ -44,12 +42,11 @@ public class Crop : MonoBehaviour
     private void Awake()
     {
         aiStateManager = FindObjectOfType<AIStateManager>();
+        UpdateSortingLayer();
     }
 
     private void Start()
     {
-        occupiedPositions = new List<Vector3Int>(); // 빈 리스트로 초기화
-
         grid = FindObjectOfType<Grid>();
 
         if (grid == null)
@@ -173,18 +170,18 @@ public class Crop : MonoBehaviour
         growthStartTime = Time.time;  // 성장이 시작된 시간을 저장
         currentStage = 0;             // 초기 성장 단계 설정
 
-        UpdateSortingLayer();          // 초기 소팅 레이어 업데이트
+        //UpdateSortingLayer();          // 초기 소팅 레이어 업데이트
         UpdateCropVisual();            // 초기 상태 업데이트
-        growthStages[5].SetActive(false);   // 물 텍스쳐 처음에는 꺼짐
+        //growthStages[5].SetActive(false);   // 물 텍스쳐 처음에는 꺼짐
     }
 
     // 각 단계별로 성장을 체크하고 성장 상태를 업데이트
     // CropGrowthManager 스크립트에서 호출됨
     public void CheckGrowth(float currentTime)
     {
-        if (currentStage >= growthTimes.Length)
+        if (currentStage >= growthTimes.Length)     // growthTimes 할당 안 되어 있다면
         {
-            Debug.LogWarning($"currentStage ({currentStage})가 growthTimes 배열 크기 ({growthTimes.Length})를 초과했습니다. 초기화가 필요합니다.");
+            growthTimes = ObjectsDatabase.GetCropGrowthTimes(ID);
             return; // 배열 범위를 벗어나면 함수 종료
         }
 
@@ -202,7 +199,7 @@ public class Crop : MonoBehaviour
         // 성장 단계가 0이고 `Watered` 상태가 아닐 경우 성장을 멈추도록 설정
         if (currentStage == 0 && cropState != CropState.Watered)
         {
-            Debug.Log("0단계에서 물이 필요합니다. 물을 줄 때까지 성장을 멈춥니다.");
+            //Debug.Log("0단계에서 물이 필요합니다. 물을 줄 때까지 성장을 멈춥니다.");
             return; // 물을 줄 때까지 성장 멈춤
         }
 
@@ -212,14 +209,14 @@ public class Crop : MonoBehaviour
             currentStage++;
             UpdateCropVisual();
 
-            Debug.Log($"현재 성장 단계: {currentStage}");
+            //Debug.Log($"현재 성장 단계: {currentStage}");
 
             // 마지막 단계일 경우 ReadyToHarvest로 설정
             if (currentStage >= growthTimes.Length - 1)
             {
                 currentStage = growthTimes.Length - 1; // 안전하게 마지막 단계로 고정
                 cropState = CropState.ReadyToHarvest;
-                Debug.Log("작물이 다 자라서 수확할 준비가 되었습니다.");
+                //Debug.Log("작물이 다 자라서 수확할 준비가 되었습니다.");
             }
         }
     }

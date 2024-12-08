@@ -10,6 +10,11 @@ public class SaveManager : MonoBehaviour
     // 저장이 필요한 변수들이 존재하는 스크립트들 참조 또는 선언
     [Header("플레이어 위치")]
     [SerializeField] private Transform playerPos;
+    [Header("OBJ Placer")]
+    [SerializeField] private OBJPlacer objPlacer;
+    [Header("직렬화 클래스, 세이브 로직")]
+    [SerializeField] private SaveDatas saveDatas;
+
 
     private void Awake()
     {
@@ -27,7 +32,7 @@ public class SaveManager : MonoBehaviour
     public void SaveGameData()
     {
         // 각각의 저장해야 할 데이터들을 SaveDatas에서 처리
-        //SaveDatas.SaveGridData();
+        saveDatas.SaveCrops(objPlacer.placedGameObjects);
         //SaveDatas.SavePotData();
         //SaveDatas.SaveFieldData();
         // 필요에 따라 더 많은 저장 메서드를 추가
@@ -37,7 +42,7 @@ public class SaveManager : MonoBehaviour
     public void LoadGameData()
     {
         // 각각의 데이터를 로드하는 메서드를 호출
-        //SaveDatas.LoadGridData();
+        saveDatas.LoadCrops();
         //SaveDatas.LoadPotData();
         //SaveDatas.LoadFieldData();
         // 필요에 따라 더 많은 로드 메서드를 추가
