@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     public Button settingButton;
 
     [SerializeField] public Button[] SeedButtons;        // 작물 선택 버튼 배열 (수확한 갯수에 따라서 해금할거라서)
+    [SerializeField] public Image[] StorageImages;      // 창고 식물 이미지 배열
 
     [Header("Field Price Text")]
     public Text one;
@@ -161,10 +162,12 @@ public class UIManager : MonoBehaviour
                 if (unlockedIndex >= i)     // 해금되었을 때
                 {
                     iconImage.color = new Color(255, 255, 255, 255);
+                    StorageImages[i].color = new Color(255, 255, 255, 255);
                 }
                 else                        // 해금되지 않았을 때
                 {
                     iconImage.color = new Color(0, 0, 0, 0.5f);
+                    StorageImages[i].color = new Color(0, 0, 0, 0.5f);
                 }
             }
         }
@@ -172,6 +175,7 @@ public class UIManager : MonoBehaviour
         Transform magic = SeedButtons[39].transform.GetChild(0);        // 마법 작물 첫 번째
         Image magicImage = magic.GetComponent<Image>();
         magicImage.color = new Color(255, 255, 255, 255);
+        StorageImages[39].color = new Color(255, 255, 255, 255);
     }
 
     // 모든 씨앗 버튼의 상태를 업데이트하는 메서드
