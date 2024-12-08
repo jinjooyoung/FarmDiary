@@ -10,7 +10,7 @@ using static UnityEngine.Rendering.DebugUI;
 public class TutorialUI : MonoBehaviour
 {
     private GameObject tutorialCanvas;
-    private int index = -1;
+    public int index = -1;
     private int created = 0;
     private int keyboardCount = 0;
     private GameObject effectOBJ;
