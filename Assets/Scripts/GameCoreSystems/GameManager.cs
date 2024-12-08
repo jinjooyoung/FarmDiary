@@ -124,6 +124,15 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
+    // 게임 종료 시 호출되는 메서드
+    void OnApplicationQuit()
+    {
+        // 게임 종료 시에 저장할 작업을 여기에 작성
+        Debug.Log("게임이 종료됩니다. 저장 작업을 수행합니다.");
+
+        // 저장 메서드 호출
+    }
+
     // 코인 추가 메서드
     public static void AddCoins(int amount)
     {

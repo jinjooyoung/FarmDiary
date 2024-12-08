@@ -6,11 +6,10 @@ public class AIStateManager : MonoBehaviour
 {
     public AIStateMachine aiStateMachine;
 
-    public List<Crop> crop = new List<Crop>();
     public List<Crop> harvestedCrops = new List<Crop>();
     public Crop currentCrop;
 
-    private int currentSeedIndex = 0;
+    public int currentSeedIndex = 0;
     public Transform waterPosition;
     public Transform homePosition;
     public Animator _animator;
@@ -264,11 +263,6 @@ public class AIStateManager : MonoBehaviour
 
         _animator.SetBool("IsWaterChargeing", false);
         IsWaterChargeing = false;
-    }
-
-    public void AddSeed(Crop newCrop)
-    {
-        crop.Add(newCrop);
     }
 
     public void RemoveMissingCrops()
