@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            currentCoin = PlayerPrefs.GetInt(CoinKey, currentCoin);
             SaveManager.Instance.LoadGameData();
         }
     }
