@@ -15,61 +15,61 @@ MonoBehaviour:
   potionData:
   - <ID>k__BackingField: 48
     <Name>k__BackingField: "\uBE44\uBA85\uC758 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 10
+    <craftingTime>k__BackingField: 30
     <price>k__BackingField: 110000
   - <ID>k__BackingField: 49
     <Name>k__BackingField: "\uBB34\uC9C0\uAC1C \uD3EC\uC158"
-    <craftingTime>k__BackingField: 12600
+    <craftingTime>k__BackingField: 50
     <price>k__BackingField: 131500
   - <ID>k__BackingField: 50
     <Name>k__BackingField: "\uAE54\uAE54 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 14400
+    <craftingTime>k__BackingField: 100
     <price>k__BackingField: 153000
   - <ID>k__BackingField: 51
     <Name>k__BackingField: "\uB0C9\uAE30\uC758 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 16200
+    <craftingTime>k__BackingField: 195
     <price>k__BackingField: 174500
   - <ID>k__BackingField: 52
     <Name>k__BackingField: "\uC774\uAE00\uC774\uAE00 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 18000
+    <craftingTime>k__BackingField: 320
     <price>k__BackingField: 196000
   - <ID>k__BackingField: 53
     <Name>k__BackingField: "\uB538\uB791\uB538\uB791 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 19800
+    <craftingTime>k__BackingField: 485
     <price>k__BackingField: 217500
   - <ID>k__BackingField: 54
     <Name>k__BackingField: "\uBC18\uC9DD\uBC18\uC9DD \uD3EC\uC158"
-    <craftingTime>k__BackingField: 21600
+    <craftingTime>k__BackingField: 685
     <price>k__BackingField: 249000
   - <ID>k__BackingField: 55
     <Name>k__BackingField: "\uBB49\uAC8C\uBB49\uAC8C \uD3EC\uC158"
-    <craftingTime>k__BackingField: 23400
+    <craftingTime>k__BackingField: 920
     <price>k__BackingField: 281000
   - <ID>k__BackingField: 56
     <Name>k__BackingField: "\uC54C\uB85D\uB2EC\uB85D \uD3EC\uC158"
-    <craftingTime>k__BackingField: 25200
+    <craftingTime>k__BackingField: 1200
     <price>k__BackingField: 303000
   - <ID>k__BackingField: 57
     <Name>k__BackingField: "\uD574\uACE8\uBB3C \uD3EC\uC158"
-    <craftingTime>k__BackingField: 27000
+    <craftingTime>k__BackingField: 1505
     <price>k__BackingField: 335000
   - <ID>k__BackingField: 58
     <Name>k__BackingField: "\uC778\uC5B4\uC758 \uB208\uBB3C \uD3EC\uC158"
-    <craftingTime>k__BackingField: 28800
+    <craftingTime>k__BackingField: 1850
     <price>k__BackingField: 367000
   - <ID>k__BackingField: 59
     <Name>k__BackingField: "\uBA54\uD0C8 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 30600
+    <craftingTime>k__BackingField: 2235
     <price>k__BackingField: 419000
   - <ID>k__BackingField: 60
     <Name>k__BackingField: "\uC218\uC6D0\uC758 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 32400
+    <craftingTime>k__BackingField: 2655
     <price>k__BackingField: 461000
   - <ID>k__BackingField: 61
     <Name>k__BackingField: "\uD638\uD761\uC758 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 34200
+    <craftingTime>k__BackingField: 3110
     <price>k__BackingField: 503000
   - <ID>k__BackingField: 62
     <Name>k__BackingField: "\uBE45\uBC45\uC758 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 36000
+    <craftingTime>k__BackingField: 3600
     <price>k__BackingField: 540000

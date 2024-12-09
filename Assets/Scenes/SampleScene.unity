@@ -30588,6 +30588,7 @@ MonoBehaviour:
   objPlacer: {fileID: 1085527971}
   gridData:
     currentDictionary: -1
+  objectsdatabase: {fileID: 11400000, guid: 786b265f2c369f040bdb8a9f6a5ae16e, type: 2}
 --- !u!1 &740913344
 GameObject:
   m_ObjectHideFlags: 0

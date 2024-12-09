@@ -39,16 +39,21 @@ public class GameManager : MonoBehaviour
         }
 
         SaveSystem.Init();
-        InitializeSaveData();
+        
     }
 
     void Start()
     {
-        //InitializePlayerPrefs();    // 테스트할때만 주석 풀기, 나중에 삭제
+        //static 선언된 스크립트들을 받아와서 호출해야하므로 안전하게 start에서 호출
+        InitializeSaveData();
 
-        //테스트 한다고 시작할때 코인 많게 해둠 나중에 삭제해야함
-        currentCoin = 2147483647;
-        Debug.LogWarning("테스트 코인 할당 진행됨");
+        if (PlayerPrefs.GetInt(CoinKey, currentCoin) < 0)
+        {
+            Debug.LogWarning("코인이 음수가 되어 초기화 되었습니다!");
+            currentCoin = 150160;
+            PlayerPrefs.SetInt(CoinKey, currentCoin);
+            PlayerPrefs.Save();
+        }
 
         // 자동 저장 타이머 초기화
         autoSaveTimer = autoSaveInterval;
@@ -138,7 +143,18 @@ public class GameManager : MonoBehaviour
     {
         if (amount < 0)
             return;
-        currentCoin += amount;
+
+        if (currentCoin <= int.MaxValue - amount)
+        {
+            currentCoin += amount;
+        }
+        else
+        {
+            // 오버플로우가 발생할 경우 처리할 로직
+            currentCoin = int.MaxValue; // 최대값으로 설정하거나 다른 처리를 할 수 있음
+            Debug.LogWarning("오버플로우 방지로 코인 최댓값 고정됨");
+        }
+
         AchievementsDatabase.CoinProgress(currentCoin);
         PlayerPrefs.SetInt(CoinKey, currentCoin);
         PlayerPrefs.Save();
@@ -149,18 +165,29 @@ public class GameManager : MonoBehaviour
     {
         if (amount < 0)
             return;
+
+        // 현재 코인에서 amount를 빼는 것이 int의 최솟값을 넘지 않도록 체크
+        // 애초에 충분한 코인이 있을때만 - 되기 때문에 차감에서는 오버플로우가 일어나지 않긴 하지만 혹시 모르니까 작성해둠
+        if (currentCoin - amount < int.MinValue)
+        {
+            currentCoin = 0;
+            Debug.LogWarning("코인 감소로 인한 오버플로우 발생!");
+            return;
+        }
+
+        // 충분한 코인이 있는지 체크
         if (currentCoin - amount < 0)
         {
+            currentCoin = 0;
             Debug.Log("코인이 충분하지 않습니다.");
             return;
         }
-        else
-        {
-            currentCoin -= amount;
-            AchievementsDatabase.CoinProgress(currentCoin);
-            PlayerPrefs.SetInt(CoinKey, currentCoin);
-            PlayerPrefs.Save();
-        }
+
+        // 코인 차감
+        currentCoin -= amount;
+        AchievementsDatabase.CoinProgress(currentCoin);
+        PlayerPrefs.SetInt(CoinKey, currentCoin);
+        PlayerPrefs.Save();
     }
 }
 
