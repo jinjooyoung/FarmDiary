@@ -31,7 +31,7 @@ public class PotionData
         }
         else
         {
-            craftingTime = 10800;
+            craftingTime = 30;
         }
     }
 }
