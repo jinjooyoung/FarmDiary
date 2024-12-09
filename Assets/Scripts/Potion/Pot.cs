@@ -21,6 +21,8 @@ public class Pot : MonoBehaviour
     [Header("현재 솥의 상태")]
     public PotState currentState = PotState.Empty; // 현재 상태
 
+    public bool check = true;
+
     [Header("선택된 작물")]
     public int magicID = -1;    // 선택한 마법 작물 ID
     public List<int> basicMaterial = new List<int>(new int[3]);     // 선택한 일반 작물 ID 배열
@@ -29,6 +31,13 @@ public class Pot : MonoBehaviour
     public float totalCraftingTime; // 포션 제작에 걸리는 총 시간
     [Header("남은 시간")]
     public float remainingTime; // 남은 제작 시간
+
+    public Animator animator;
+
+    private void Awake()
+    {
+        animator.SetBool("IsCrafting", false);
+    }
 
     // ID를 설정하는 메서드
     public void SetID(int newID)
@@ -59,6 +68,11 @@ public class Pot : MonoBehaviour
             {
                 remainingTime = 0; // 남은 시간을 0으로 설정
                 ChangeState(PotState.Completed);
+                if (check)
+                {
+                    animator.SetBool("IsCrafting", false);
+                    check = false;
+                }
             }
         }
     }

@@ -51,8 +51,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 10
-  PlacedObjectIndex: 0
-  occupiedPositions: []
   sellPrice: 53
   cropState: 0
   seedPlantedState: 0

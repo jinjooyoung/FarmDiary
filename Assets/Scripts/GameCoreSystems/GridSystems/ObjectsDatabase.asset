@@ -108,10 +108,10 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 8079772286492726215, guid: fdffee076140e6847b38380dc0378a8e, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 2
-    - 4
-    - 6
     - 8
+    - 16
+    - 24
+    - 32
   - <Name>k__BackingField: Asparagus
     <ID>k__BackingField: 10
     <BuyPrice>k__BackingField: 50
@@ -119,10 +119,10 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 476576493316736336, guid: 3959011b7e6b76740ad45acf9020d43d, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
-    - 2
-    - 4
-    - 6
-    - 8
+    - 16
+    - 32
+    - 48
+    - 64
   - <Name>k__BackingField: BalloonFlower
     <ID>k__BackingField: 11
     <BuyPrice>k__BackingField: 100
@@ -130,10 +130,10 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 4289110117530462444, guid: e7f704a141c077c40bb5fc6212a22490, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
+    - 1
     - 2
+    - 3
     - 4
-    - 6
-    - 8
   - <Name>k__BackingField: Beet
     <ID>k__BackingField: 12
     <BuyPrice>k__BackingField: 200
@@ -537,10 +537,10 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 3929104931381424947, guid: b6b6c52831f9df5439105b01ee903647, type: 3}
     <IsCrop>k__BackingField: 1
     <GrowthTimes>k__BackingField:
+    - 1
     - 2
+    - 3
     - 4
-    - 6
-    - 8
   - <Name>k__BackingField: RainbowFlower
     <ID>k__BackingField: 49
     <BuyPrice>k__BackingField: 120000

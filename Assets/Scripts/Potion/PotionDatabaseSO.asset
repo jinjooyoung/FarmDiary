@@ -15,7 +15,7 @@ MonoBehaviour:
   potionData:
   - <ID>k__BackingField: 48
     <Name>k__BackingField: "\uBE44\uBA85\uC758 \uD3EC\uC158"
-    <craftingTime>k__BackingField: 30
+    <craftingTime>k__BackingField: 10
     <price>k__BackingField: 110000
   - <ID>k__BackingField: 49
     <Name>k__BackingField: "\uBB34\uC9C0\uAC1C \uD3EC\uC158"

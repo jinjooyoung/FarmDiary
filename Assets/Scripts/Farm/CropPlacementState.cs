@@ -87,7 +87,7 @@ public class CropPlacementState : IBuildingState
         }
 
         placedCropData.AddCropAt(gridPosition, database.objectsData[selectedCropIndex].Size,
-            database.objectsData[selectedCropIndex].ID, index, CropState.NeedsWater, SeedPlantedState.Yes);
+            database.objectsData[selectedCropIndex].ID, index);
 
         previewSystem.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), false);
     }

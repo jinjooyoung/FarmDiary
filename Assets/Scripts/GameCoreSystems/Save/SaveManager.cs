@@ -13,7 +13,8 @@ public class SaveManager : MonoBehaviour
     [Header("OBJ Placer")]
     [SerializeField] private OBJPlacer objPlacer;
     [Header("직렬화 클래스, 세이브 로직")]
-    [SerializeField] private SaveDatas saveDatas;
+    [SerializeField] private NewSaveData newSaveData;
+    /*[SerializeField] private SaveDatas saveDatas;*/
 
 
     private void Awake()
@@ -32,19 +33,16 @@ public class SaveManager : MonoBehaviour
     public void SaveGameData()
     {
         // 각각의 저장해야 할 데이터들을 SaveDatas에서 처리
-        saveDatas.SaveCrops(objPlacer.placedGameObjects);
-        //SaveDatas.SavePotData();
-        //SaveDatas.SaveFieldData();
-        // 필요에 따라 더 많은 저장 메서드를 추가
+        //saveDatas.SaveCrops(objPlacer.placedGameObjects);
+
+        // 일단 솥부터
+        //newSaveData.SaveOBJs();
     }
 
     // 모든 데이터를 한번에 로드하는 메서드
     public void LoadGameData()
     {
         // 각각의 데이터를 로드하는 메서드를 호출
-        saveDatas.LoadCrops();
-        //SaveDatas.LoadPotData();
-        //SaveDatas.LoadFieldData();
-        // 필요에 따라 더 많은 로드 메서드를 추가
+        //saveDatas.LoadCrops();
     }
 }

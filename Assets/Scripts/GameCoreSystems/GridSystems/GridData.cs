@@ -95,9 +95,7 @@ public class GridData
     public void AddCropAt(Vector3Int gridPosition,
                             Vector2Int objectSize,
                             int ID,
-                            int placedObjectIndex, 
-                            CropState cropState, 
-                            SeedPlantedState seedPlantedState)
+                            int placedObjectIndex)
     {
         // 설치할 위치의 그리드 포지션을 받아와서 리스트에 저장
         List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
@@ -234,7 +232,7 @@ public class GridData
         }
     }
 
-    public string SaveFieldsAndCrops()
+    /*public string SaveFieldsAndCrops()
     {
         GridDataSave saveData = new GridDataSave();
 
@@ -344,7 +342,7 @@ public class GridData
 
         Debug.Log($"Loaded Field Positions: {string.Join(", ", placedFields.Keys)}");
         Debug.Log($"Loaded Crop Positions: {string.Join(", ", placedCrops.Keys)}");
-    }
+    }*/
 
 }
 
@@ -356,29 +354,24 @@ public class PlacementData      // 오브젝트의 정보 클래스
     public int ID { get; set; }                 // ObjectsDataBase Scriptable Object 에서 사용되는 오브젝트의 고유 ID
     public int PlacedObjectIndex { get; private set; }  // ObjectsDataBase Scriptable Object 에서 오브젝트의 인덱스
 
-    // 작물 상태 추가
+    /*// 작물 상태 추가
     public CropState cropState;
-    public SeedPlantedState seedPlantedState;
+    public SeedPlantedState seedPlantedState;*/
 
     public float alpha;
 
-    public PlacementData(List<Vector3Int> occupiedPositions, int iD, int placedObjectIndex,
-                        CropState cropState = CropState.NeedsWater, SeedPlantedState seedPlantedState = SeedPlantedState.No,
-                        float alpha = 1.0f)
+    public PlacementData(List<Vector3Int> occupiedPositions, int iD, int placedObjectIndex)
     {
         this.occupiedPositions = occupiedPositions;
         ID = iD;
         PlacedObjectIndex = placedObjectIndex;
-        this.cropState = cropState;
-        this.seedPlantedState = seedPlantedState;
-        this.alpha = alpha;
     }
 
     // JSON 저장을 위해 기본 생성자 추가
     public PlacementData() { }
 }
 
-[System.Serializable]
+/*[System.Serializable]
 public class GridDataSave
 {
     public List<GridCropSave> crops = new();
@@ -403,4 +396,4 @@ public class GridCropSave
     public Crop.CropState cropState; // 작물 상태 추가
     public float growthStartTime; // 성장 시작 시간 추가
     public float[] growthTimes;
-}
+}*/

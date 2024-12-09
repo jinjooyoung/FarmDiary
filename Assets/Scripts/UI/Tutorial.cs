@@ -75,6 +75,11 @@ public class TutorialUI : MonoBehaviour
             ObjectsDatabase.InitializeTutorialGrowthTimes(11);
             ObjectsDatabase.InitializeTutorialGrowthTimes(48);
             PotionDatabase.TutorialEndCraftingTime(48);
+
+            // 추가 AI 기능 안 나와서 버튼 클릭 못하게 해둠
+            Button1.interactable = false;
+            Button2.interactable = false;
+            Button3.interactable = false;
         }
     }
 
@@ -159,7 +164,7 @@ public class TutorialUI : MonoBehaviour
             else if (index == 5)
             {
                 // 최근에 설치한 오브젝트의 이름이 저거라면
-                if (OBJPlacer.placedGameObjects.Count > 0 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "2x2_Field(Clone)")     // 밭 설치
+                if (OBJPlacer.placedGameObjects.Count > 0 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "1(Clone)")     // 밭 설치
                 {
                     NextPanel();
                     FieldButton2.interactable = false;
@@ -168,7 +173,7 @@ public class TutorialUI : MonoBehaviour
             }
             else if (index == 10)
             {
-                if (OBJPlacer.placedGameObjects.Count > 1 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Amaranth_9(Clone)")     // 아마란스 설치
+                if (OBJPlacer.placedGameObjects.Count > 1 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "9(Clone)")     // 아마란스 설치
                 {
                     NextPanel();
                     placementSystem.StopPlacement();
@@ -214,21 +219,21 @@ public class TutorialUI : MonoBehaviour
                 // 원래는 하나의 if문에 Exists에 && 연산자로 한 번에 검사했는데 자라는 속도가 빨라서 빠르게 설치하지 않으면 플레이어가 수확해서 삭제되어 넘어갈 수 없게됨
                 // 그래서 순차적으로 점검함
                 // 아스파라거스가 설치되면
-                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Asparagus_10(Clone)")
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "10(Clone)")
                 {
                     Debug.LogWarning("아스파라거스 설치됨");
                     OBJPlacer.placedObjectIndex = 0;
                     created = 1;
                 }
 
-                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "BalloonFlower_11(Clone)")
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "11(Clone)")
                 {
                     Debug.LogWarning("도라지 설치됨");
                     OBJPlacer.placedObjectIndex = 0;
                     created = 2;
                 }
 
-                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Mandrake_48(Clone)")
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "48(Clone)")
                 {
                     Debug.LogWarning("맨드레이크 설치됨");
                     OBJPlacer.placedObjectIndex = 0;
@@ -262,7 +267,7 @@ public class TutorialUI : MonoBehaviour
             }
             else if (index == 19)
             {
-                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "Pot(Clone)")     // 솥 설치
+                if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "4(Clone)")     // 솥 설치
                 {
                     NextPanel();
                     placementSystem.StopPlacement();
@@ -389,9 +394,9 @@ public class TutorialUI : MonoBehaviour
             FieldButton2.interactable = true;
             FieldButton3.interactable = true;
             FieldButton4.interactable = true;
-            Button1.interactable = true;
-            Button2.interactable = true;
-            Button3.interactable = true;
+            Button1.interactable = false;
+            Button2.interactable = false;
+            Button3.interactable = false;
             Button4.interactable = true;
 
             UIManager.instance.SeedButtons[0].interactable = true;

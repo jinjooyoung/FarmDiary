@@ -2,13 +2,36 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Crop;
 
 public class SaveDatas : MonoBehaviour
 {
+    [SerializeField]
+    public Grid grid;
+
+    [SerializeField]
+    public PlacementSystem placementSystem;
+
+    [SerializeField]
+    public GridData gridData;
+
+    // 생성된 모든 오브젝트의 ID와 위치(gridPos), 설치 순서 (index)를 저장
+    [System.Serializable]
+    public class OBJData
+    {
+        public int ID;                  // 고유 ID
+        public Vector3Int seedPosition; // 설치 그리드 위치
+        public int Index;               // 설치 순서
+    }
+
+    // ID를 받아서 프리팹 오브젝트를 리턴받는 함수
+    public GameObject GetPrefabFromResourcesByID(int id)
+    {
+        return Resources.Load<GameObject>($"Prefabs/{id}");
+    }
+
     //=========================직렬화 클래스=========================
 
-    [System.Serializable]
+    /*[System.Serializable]
     public class Wrapper<T>
     {
         public List<T> list;
@@ -265,5 +288,5 @@ public class SerializableHashSet<T> where T : IEquatable<T>
     public void FromList(List<T> list)
     {
         this.list = list;
-    }
+    }*/
 }

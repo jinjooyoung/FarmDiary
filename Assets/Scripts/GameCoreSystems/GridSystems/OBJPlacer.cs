@@ -59,7 +59,7 @@ public class OBJPlacer : MonoBehaviour
 
         string objName = placedGameObjects[gameObjectIndex].name;   // 삭제될 오브젝트의 이름
 
-        /*if (objName == "Pot(Clone)")    // 삭제할 오브젝트가 밭이라면
+        /*if (objName == "4(Clone)")    // 삭제할 오브젝트가 밭이라면
         {
             potCount--;
             PotionManager.instance.RemovePot(placedGameObjects[gameObjectIndex]);
@@ -70,19 +70,19 @@ public class OBJPlacer : MonoBehaviour
         // 오브젝트의 이름을 보고 밭 오브젝트라면 해당 밭 가격을 감소시킴
         switch (objName)
         {
-            case "1x1_Field(Clone)":
+            case "0(Clone)":
                 ObjectsDatabase.PriceDecrease(0);
                 UIManager.instance.one.text = ObjectsDatabase.CurrentPrice(0).ToString("N0");
                 break;
-            case "2x2_Field(Clone)":
+            case "1(Clone)":
                 ObjectsDatabase.PriceDecrease(1);
                 UIManager.instance.two.text = ObjectsDatabase.CurrentPrice(1).ToString("N0");
                 break;
-            case "3x3_Field(Clone)":
+            case "2(Clone)":
                 ObjectsDatabase.PriceDecrease(2);
                 UIManager.instance.three.text = ObjectsDatabase.CurrentPrice(2).ToString("N0");
                 break;
-            case "4x4_Field(Clone)":
+            case "3(Clone)":
                 ObjectsDatabase.PriceDecrease(3);
                 UIManager.instance.four.text = ObjectsDatabase.CurrentPrice(3).ToString("N0");
                 break;

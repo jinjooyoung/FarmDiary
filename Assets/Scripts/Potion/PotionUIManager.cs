@@ -264,6 +264,8 @@ public class PotionUIManager : MonoBehaviour
         SubtractCrop(currentPot.basicMaterial[2]);
 
         currentPot.ChangeState(PotState.Crafting);
+        currentPot.animator.SetBool("IsCrafting", true);
+        currentPot.check = true;
     }
 
     // 종료=수확 버튼에 붙이는 함수
@@ -316,6 +318,12 @@ public class PotionUIManager : MonoBehaviour
 
         SelectedMagic();
 
+        if (currentPot.magicID != -1)
+        {
+            magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID - 1}");
+            magic.image.color = Color.white;
+        }
+
         material1.image.color = new Color(1f, 1f, 1f, 0f);
         material2.image.color = new Color(1f, 1f, 1f, 0f);
         material3.image.color = new Color(1f, 1f, 1f, 0f);
@@ -354,10 +362,12 @@ public class PotionUIManager : MonoBehaviour
         material3.interactable = true;
         SelectedMagic();
 
+        magic.image.color = Color.white;
         material1.image.color = Color.white;
         material2.image.color = Color.white;
         material3.image.color = Color.white;
 
+        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID - 1}");
         material1.image.sprite = LoadIcon(currentPot.basicMaterial[0]);
         material2.image.sprite = LoadIcon(currentPot.basicMaterial[1]);
         material3.image.sprite = LoadIcon(currentPot.basicMaterial[2]);
