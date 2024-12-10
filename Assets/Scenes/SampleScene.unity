@@ -7369,6 +7369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crops: []
+  current: {fileID: 0}
+  load: {fileID: 0}
   currentTime: 0
   loadTime: 0
 --- !u!1 &163048868

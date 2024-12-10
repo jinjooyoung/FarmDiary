@@ -133,7 +133,7 @@ public class Crop : MonoBehaviour
         {
             cropState = CropState.Watered;  // 물을 준 상태로 변경
             growthStages[5].SetActive(true);
-            growthStartTime = Time.time;     // 물을 준 순간부터 성장을 시작하도록 설정
+            growthStartTime = CropGrowthManager.Instance.currentTime;     // 물을 준 순간부터 성장을 시작하도록 설정
             Debug.Log("물을 주었습니다. 성장을 재개합니다.");
         }
         else if (IsSeedPlanted() && cropState == CropState.Watered)
@@ -167,7 +167,7 @@ public class Crop : MonoBehaviour
     public void Initialize(float[] cropGrowthTimes)
     {
         growthTimes = cropGrowthTimes;
-        growthStartTime = Time.time;  // 성장이 시작된 시간을 저장
+        growthStartTime = CropGrowthManager.Instance.currentTime;  // 성장이 시작된 시간을 저장
         //currentStage = 0;             // 초기 성장 단계 설정
 
         //UpdateSortingLayer();          // 초기 소팅 레이어 업데이트
