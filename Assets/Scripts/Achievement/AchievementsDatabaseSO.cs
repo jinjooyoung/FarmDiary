@@ -156,6 +156,8 @@ public static class AchievementsDatabase
             UnlockAchievement(-i);
         }
         UnlockAchievement(9);
+        UnlockAchievement(10);
+        UnlockAchievement(11);
         UnlockAchievement(48);
         UnlockAchievement(62);
     }

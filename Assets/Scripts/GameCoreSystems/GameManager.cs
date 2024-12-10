@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
@@ -84,9 +85,10 @@ public class GameManager : MonoBehaviour
 
     private void InitializeSaveData()
     {
-        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0) // 첫 실행이면 = 세이브 데이터가 없으면
+        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0 || !Directory.Exists(Application.dataPath + "/Saves/")) // 첫 실행이면 = 세이브 데이터가 없으면
         {
             currentCoin = DefaultCoin;
+            InitializePlayerPrefs();
             SaveGameDatasAsync();
         }
         else
