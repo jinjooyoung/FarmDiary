@@ -449,6 +449,11 @@ public class NewSaveData : MonoBehaviour
                     cropScript.currentStage = objData.cropData.currentStageData;
                     cropScript.growthStartTime = objData.cropData.growthStartTime;
 
+                    if (cropScript.cropState != CropState.NeedsWater)
+                    {
+                        cropScript.growthStages[5].SetActive(true);
+                    }    
+
                     cropScript.UpdateCropVisual();
                 }
 
