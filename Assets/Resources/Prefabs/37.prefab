@@ -51,10 +51,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 37
-  sellPrice: 62000
+  sellPrice: 30000
   cropState: 0
   seedPlantedState: 0
-  seedPosition: {x: 0, y: 0}
+  seedPosition: {x: 0, y: 0, z: 0}
   grid: {fileID: 0}
   isPreview: 0
   growthStages:
@@ -64,7 +64,9 @@ MonoBehaviour:
   - {fileID: 1724507144535442169}
   - {fileID: 1372958255999058849}
   - {fileID: 8949797322503965835}
+  growthTimes: []
   currentStage: 0
+  growthStartTime: 0
 --- !u!1 &1372958255999058849
 GameObject:
   m_ObjectHideFlags: 0

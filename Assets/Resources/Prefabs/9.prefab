@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 9
-  sellPrice: 6
+  sellPrice: 5
   cropState: 0
   seedPlantedState: 0
   seedPosition: {x: 0, y: 0, z: 0}
