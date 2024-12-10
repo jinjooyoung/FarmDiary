@@ -65,6 +65,8 @@ public class PlacementState : IBuildingState
             else
             {
                 objectPlacer.potCount++;
+                ObjectsDatabase.PriceIncrease(4);
+                UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString("N0");
             }
         }
 
@@ -77,13 +79,6 @@ public class PlacementState : IBuildingState
             database.objectsData[selectedObjectIndex].ID, index);
 
         GameManager.SubtractCoins(database.objectsData[selectedObjectIndex].BuyPrice);
-
-        /*if (ID == 4 && objectPlacer.potCount < 5)       // 솥을 설치할 때 솥이 5개 이하라면 설치 로직 이후 솥 개수 증가, 가격 증가
-        {
-            objectPlacer.potCount++;
-            ObjectsDatabase.PriceIncrease(4);
-            UIManager.instance.Pot.text = ObjectsDatabase.CurrentPrice(4).ToString("N0");
-        }
 
         // 오브젝트의 ID를 보고 밭 오브젝트라면 해당 밭 가격을 증가시킴
         switch (ID)
@@ -104,7 +99,7 @@ public class PlacementState : IBuildingState
                 ObjectsDatabase.PriceIncrease(3);
                 UIManager.instance.four.text = ObjectsDatabase.CurrentPrice(3).ToString("N0");
                 break;
-        }*/
+        }
 
         // 프리뷰 업데이트 (위 PlaceObject 메서드 호출과정에서 오브젝트를 설치했으므로 이제 설치 불가능.
         // 따라서 false로 커서 UI를 빨간색으로 업데이트)

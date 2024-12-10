@@ -12,7 +12,10 @@ public class NewSaveData : MonoBehaviour
     public PlacementSystem placementSystem;
     public OBJPlacer objPlacer;
     public GridData gridData;
-    public ObjectsDatabaseSO objectsdatabase;
+
+    [Header("데이터 베이스 SO를 위한 참조")]
+    public ObjectsDatabaseSO objectsdatabaseSO;
+    public AchievementsDatabaseSO achievementsDatabaseSO;
 
     [Header("AI 데이터 및 현재 시간 체크를 위한 참조")]
     public Transform playerPos;
@@ -74,6 +77,22 @@ public class NewSaveData : MonoBehaviour
         public int magicIDData;             // 선택한 마법 작물    선택 안 했다면 기본 값 -1
         public List<int> selectedCropData;  // 선택한 일반 작물 리스트
         public float remainingTimeData;     // 남은 제작 시간
+    }
+
+    // 업적 SO 데이터
+    [System.Serializable]
+    public class AchievementsSOData
+    {
+        public int progressData;        // 업적 진행도
+        public bool IsUnlockedData;     // 업적 해금 유무
+        public bool IsClearData;        // 업적 클리어 유무
+    }
+
+    // 오브젝트 구매 가격 SO 데이터
+    [System.Serializable]
+    public class OBJSOData
+    {
+        public int BuyPriceData;        // 오브젝트 구매 가격
     }
 
     //========================================================================
@@ -214,6 +233,63 @@ public class NewSaveData : MonoBehaviour
         Debug.Log("저장 완료: StoredCrops");
     }
 
+    // 업적에서 변경되는 값만 따로 저장
+    public void SaveAchievements()
+    {
+        // 업적 데이터 리스트에서 Progress, IsUnlocked, Clear 값만 저장
+        List<AchievementsSOData> achievementsToSave = new List<AchievementsSOData>();
+
+        foreach (var achievement in achievementsDatabaseSO.achievementsData)
+        {
+            // 필요한 데이터만 저장
+            AchievementsSOData saveData = new AchievementsSOData
+            {
+                progressData = achievement.Progress,
+                IsUnlockedData = achievement.IsUnlocked,
+                IsClearData = achievement.Clear
+            };
+
+            achievementsToSave.Add(saveData);
+        }
+
+        // AchievementData 리스트를 DataListWrapper로 감싸기
+        DataListWrapper<AchievementsSOData> achievementWrapper = new DataListWrapper<AchievementsSOData>
+        {
+            DataList = achievementsToSave
+        };
+
+        // JSON 직렬화
+        string json = JsonUtility.ToJson(achievementWrapper);
+
+        // 파일에 저장
+        SaveSystem.Save(json, "Achievements");
+        Debug.Log("저장 완료: Achievements");
+    }
+
+    // 변동되는 구매 가격 따로 저장
+    public void SaveBuyPrice()
+    {
+        List<OBJSOData> buyPriceList = new List<OBJSOData>();
+
+        // objectsData에서 0번부터 7번까지 BuyPrice만 가져와서 OBJSOData 리스트에 저장
+        // 다른 오브젝트 데이터는 구매 가격 변동이 없음
+        for (int i = 0; i < 8 && i < objectsdatabaseSO.objectsData.Count; i++)
+        {
+            OBJSOData data = new OBJSOData
+            {
+                BuyPriceData = objectsdatabaseSO.objectsData[i].BuyPrice
+            };
+            buyPriceList.Add(data);
+        }
+
+        // OBJSOData 리스트를 JSON 형식으로 직렬화
+        string json = JsonUtility.ToJson(new DataListWrapper<OBJSOData> { DataList = buyPriceList });
+
+        // SaveSystem을 사용해 데이터를 저장
+        SaveSystem.Save(json, "ObjectsBuyPrice");
+        Debug.Log("저장 완료: ObjectsBuyPrice");
+    }
+
     //-------------------------------------------------------------------
 
     // 저장한 모든 오브젝트 다시 생성, 데이터 생성 으로 로드
@@ -252,7 +328,7 @@ public class NewSaveData : MonoBehaviour
         // 로드한 OBJData 리스트를 설치했던 순서대로 순회하며 오브젝트를 복원
         foreach (OBJData objData in sortedObjDataList)
         {
-            int selectedCropIndex = objectsdatabase.objectsData.FindIndex(data => data.ID == objData.ID);
+            int selectedCropIndex = objectsdatabaseSO.objectsData.FindIndex(data => data.ID == objData.ID);
 
             GameObject prefab = GetPrefabFromResourcesByID(objData.ID);     // ID로 프리팹 받아옴
 
@@ -281,7 +357,7 @@ public class NewSaveData : MonoBehaviour
             newObjectRenderer.color = color;
 
             // 오브젝트가 차지하는 모든 그리드 포지션 리스트
-            List<Vector3Int> positionToOccupy = CalculatePositions(objData.objPosition, objectsdatabase.objectsData[selectedCropIndex].Size);
+            List<Vector3Int> positionToOccupy = CalculatePositions(objData.objPosition, objectsdatabaseSO.objectsData[selectedCropIndex].Size);
             PlacementData data = new PlacementData(positionToOccupy, objData.ID, currentForeachIndex);
             
             if (objData.ID < 4)     // 밭 오브젝트라면
@@ -325,7 +401,7 @@ public class NewSaveData : MonoBehaviour
                 if (cropScript != null)
                 {
                     // 작물의 초기화 및 성장 상태 반영
-                    cropScript.Initialize(objectsdatabase.objectsData[selectedCropIndex].GrowthTimes);
+                    cropScript.Initialize(objectsdatabaseSO.objectsData[selectedCropIndex].GrowthTimes);
 
                     // 초기화 이후 씨앗을 심어 상태를 설정
                     cropScript.PlantSeed();
@@ -416,6 +492,74 @@ public class NewSaveData : MonoBehaviour
         // 저장된 데이터로 Storage의 storedCropsByID 덮어쓰기
         storage.storedCropsByID = new List<CropStorage>(cropWrapper.DataList);
         Debug.Log("로드 완료: StoredCrops");
+    }
+
+    // 업적 데이터 로드
+    public void LoadAchievements()
+    {
+        // 저장된 JSON 데이터를 읽어옴
+        string json = SaveSystem.Load("Achievements");
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("저장된 Achievements 데이터가 없습니다.");
+            return;
+        }
+
+        // JSON 데이터를 DataListWrapper로 변환
+        DataListWrapper<AchievementsSOData> achievementWrapper = JsonUtility.FromJson<DataListWrapper<AchievementsSOData>>(json);
+
+        // 업적 데이터 복원
+        for (int i = 0; i < achievementWrapper.DataList.Count; i++)
+        {
+            // 저장된 값으로 해당 업적을 업데이트
+            AchievementsSOData savedAchievementData = achievementWrapper.DataList[i];
+            AchievementData achievement = achievementsDatabaseSO.achievementsData[i];
+
+            achievement.SetProgress(savedAchievementData.progressData);
+
+            if (savedAchievementData.IsUnlockedData)
+            {
+                achievement.Unlock();
+            }
+            
+            if (savedAchievementData.IsClearData)
+            {
+                achievement.SetClear();
+            }
+        }
+
+        Debug.Log("로드 완료: Achievements");
+    }
+
+    // 오브젝트 구매가격 로드
+    public void LoadBuyPrice()
+    {
+        // 저장된 JSON 데이터 불러오기
+        string json = SaveSystem.Load("ObjectsBuyPrice");
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("저장된 구매 가격 데이터가 없습니다!");
+            return;
+        }
+
+        // JSON을 OBJSOData 리스트로 디시리얼라이즈
+        DataListWrapper<OBJSOData> buyPriceDataWrapper = JsonUtility.FromJson<DataListWrapper<OBJSOData>>(json);
+
+        if (buyPriceDataWrapper == null || buyPriceDataWrapper.DataList == null || buyPriceDataWrapper.DataList.Count == 0)
+        {
+            Debug.LogWarning("불러올 구매 가격 데이터가 없습니다!");
+            return;
+        }
+
+        // objectsData의 0번부터 7번까지의 ID에 맞는 BuyPrice를 복원
+        for (int i = 0; i < buyPriceDataWrapper.DataList.Count && i < objectsdatabaseSO.objectsData.Count; i++)
+        {
+            objectsdatabaseSO.objectsData[i].SetBuyPrice(buyPriceDataWrapper.DataList[i].BuyPriceData);
+        }
+
+        Debug.Log("오브젝트 구매 가격 로드 완료!");
     }
 
     //========================================================

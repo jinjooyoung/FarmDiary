@@ -33,6 +33,10 @@ public class SaveManager : MonoBehaviour
         newSaveData.SaveAIData();
         // 창고 저장
         newSaveData.SaveStorage();
+        // 업적 데이터 저장
+        newSaveData.SaveAchievements();
+        // 구매 가격 저장
+        newSaveData.SaveBuyPrice();
     }
 
     // 모든 데이터를 한번에 로드하는 메서드
@@ -47,5 +51,9 @@ public class SaveManager : MonoBehaviour
         newSaveData.LoadAIData();
         // 창고 데이터 로드
         newSaveData.LoadStorage();
+        // 업적 데이터 로드
+        newSaveData.LoadAchievements();
+        // 구매 가격 로드
+        newSaveData.LoadBuyPrice();
     }
 }

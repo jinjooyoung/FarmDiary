@@ -78,11 +78,6 @@ public class GameManager : MonoBehaviour
             autoSaveTimer = autoSaveInterval; // 타이머 리셋
         }
 
-        if (Input.GetKeyDown(KeyCode.Equals))       // 테스트 코드
-        {   
-            AddCoins(1000000);
-        }
-
         testText.text = currentCoin.ToString("N0");
     }
 
@@ -137,10 +132,7 @@ public class GameManager : MonoBehaviour
     // 게임 종료 시 호출되는 메서드
     void OnApplicationQuit()
     {
-        // 게임 종료 시에 저장할 작업을 여기에 작성
-        Debug.Log("게임이 종료됩니다. 저장 작업을 수행합니다.");
-
-        // 저장 메서드 호출
+        SaveManager.Instance.SaveGameData();
     }
 
     // 코인 추가 메서드

@@ -122,6 +122,15 @@ public class AchievementData
         }
     }
 
+    // 업적 클리어
+    public void SetClear()
+    {
+        if (!Clear)
+        {
+            Clear = true;
+        }
+    }
+
     // 업적 잠금 해제
     public void Unlock()
     {
@@ -280,4 +289,6 @@ public static class AchievementsDatabase
             achievement.Unlock(); // 업적 잠금 해제
         }
     }
+
+
 }

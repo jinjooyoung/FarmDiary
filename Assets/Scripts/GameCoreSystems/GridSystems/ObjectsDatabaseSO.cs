@@ -67,6 +67,11 @@ public class ObjectData
             }
         }
     }
+
+    public void SetBuyPrice(int amount)
+    {
+        BuyPrice = amount;
+    }
 }
 
 public static class ObjectsDatabase
