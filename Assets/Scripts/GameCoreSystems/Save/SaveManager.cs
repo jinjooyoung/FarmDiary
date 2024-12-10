@@ -70,6 +70,7 @@ public class SaveManager : MonoBehaviour
     // UI 업데이트 메서드 (메인 스레드에서 실행)
     private void UpdateUIAfterSaveLoad()
     {
+        AchievementManager.Instance.InitializeAchievementUIs();
         loadingIcon.SetActive(false);
         Debug.LogWarning("비동기 처리 완료 되어 UI 업데이트 호출됨!");
     }
