@@ -204,6 +204,7 @@ public class NewSaveData : MonoBehaviour
             if (potComponent != null)
             {
                 PotionManager.instance.AddPot(newObject);
+                objPlacer.potCount++;
             }
 
             objPlacer.placedGameObjects.Add(newObject);               // 설치된 오브젝트 리스트에 저장

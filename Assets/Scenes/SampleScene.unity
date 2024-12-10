@@ -35526,6 +35526,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   potionsDatabase: {fileID: 11400000, guid: 642cb2dc28638e249b510d94a70b3a86, type: 2}
 --- !u!114 &852380380
 MonoBehaviour:

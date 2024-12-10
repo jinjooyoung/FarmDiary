@@ -56,9 +56,16 @@ public class PlacementState : IBuildingState
             return;
         }
 
-        if (ID == 4 && objectPlacer.potCount >= 5)      // 솥을 설치할 때 이미 솥이 5개 이상 있다면 설치 불가능
+        if (ID == 4)      // 솥을 설치할 때 
         {
-            return;
+            if (objectPlacer.potCount >= 15)     // 이미 솥이 5개 이상 있다면 설치 불가능
+            {
+                return;
+            }
+            else
+            {
+                objectPlacer.potCount++;
+            }
         }
 
         // 마지막으로 설치된 오브젝트의 인덱스(데이터 인덱스 말고)

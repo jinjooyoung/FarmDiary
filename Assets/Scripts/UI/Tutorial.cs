@@ -50,10 +50,6 @@ public class TutorialUI : MonoBehaviour
             tutorialCanvas.transform.GetChild(i).gameObject.SetActive(false);
         }
 
-        // 이 아래는 테스트용으로 나중에 삭제해야함
-        //PlayerPrefs.DeleteKey("TutorialDone");      // 테스트용. 항상 튜토리얼을 처음보는 상태로 만듦. 다 개발되면 삭제해야함
-        //PlayerPrefs.DeleteKey("TutorialKeyboard");
-        OBJPlacer.potCount = 0;
         mainCamera = Camera.main;
     }
 
@@ -63,6 +59,7 @@ public class TutorialUI : MonoBehaviour
         {
             // 튜토리얼을 보지 않았다면 아래 코드 실행
             index = 0;
+            OBJPlacer.potCount = 0;
             GameManager.instance.InitializePlayerPrefs();   // PlayerPrefs로 저장하는 모든 것들 초기화
             TutorialStart();
             effectOBJ = tutorialCanvas.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;

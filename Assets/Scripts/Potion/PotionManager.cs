@@ -6,7 +6,7 @@ public class PotionManager : MonoBehaviour
 {
     public static PotionManager instance;
 
-    public List<GameObject> potList = new List<GameObject>(new GameObject[5]);
+    public List<GameObject> potList = new List<GameObject>(new GameObject[15]);
     [SerializeField] private PotionDatabaseSO potionsDatabase; // 포션 데이터베이스
 
     private void Awake()
@@ -70,7 +70,7 @@ public class PotionManager : MonoBehaviour
     private int GetAvailableID()
     {
         // potList에서 null인 인덱스를 찾아 반환
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 15; i++)
         {
             if (potList[i] == null)
             {

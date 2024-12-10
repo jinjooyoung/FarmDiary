@@ -78,6 +78,11 @@ public class GameManager : MonoBehaviour
             autoSaveTimer = autoSaveInterval; // 타이머 리셋
         }
 
+        if (Input.GetKeyDown(KeyCode.Equals))       // 테스트 코드
+        {   
+            AddCoins(1000000);
+        }
+
         testText.text = currentCoin.ToString("N0");
     }
 
