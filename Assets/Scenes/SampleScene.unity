@@ -30568,8 +30568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f5ff346bac57d4584f9c179019f71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPos: {fileID: 1726576883}
-  objPlacer: {fileID: 1085527971}
   newSaveData: {fileID: 740160398}
 --- !u!114 &740160398
 MonoBehaviour:
@@ -30589,6 +30587,9 @@ MonoBehaviour:
   gridData:
     currentDictionary: -1
   objectsdatabase: {fileID: 11400000, guid: 786b265f2c369f040bdb8a9f6a5ae16e, type: 2}
+  playerPos: {fileID: 1726576883}
+  aIStateManager: {fileID: 1726576885}
+  storage: {fileID: 1642072208}
 --- !u!1 &740913344
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,11 +5,19 @@ using UnityEngine;
 
 public class NewSaveData : MonoBehaviour
 {
+    [Header("설치 오브젝트 데이터를 위한 참조")]
     public Grid grid;
     public PlacementSystem placementSystem;
     public OBJPlacer objPlacer;
     public GridData gridData;
     public ObjectsDatabaseSO objectsdatabase;
+
+    [Header("AI 데이터를 위한 참조")]
+    public Transform playerPos;
+    public AIStateManager aIStateManager;
+
+    [Header("창고 데이터를 위한 참조")]
+    public Storage storage;
 
     // 저장할 데이터 리스트
     private List<OBJData> objDataList = new List<OBJData>();
@@ -20,20 +28,31 @@ public class NewSaveData : MonoBehaviour
         gridData = placementSystem.placedOBJData;
     }
 
+    // AI 데이터 저장
+    [System.Serializable]
+    public class AIData
+    {
+        //public int currentCropIndexByCropGrowthManagerList;
+        public Vector3 playerPosition;
+        public List<int> harvestedCropByID;
+        public int waterAmount;
+        //public string stateName;
+    }
+
     // 생성된 모든 오브젝트의 ID와 위치(gridPos), 설치 순서 (index)를 저장
     [System.Serializable]
     public class OBJData
     {
         public int ID;                  // 고유 ID
-        public Vector3Int objPosition; // 설치 그리드 위치
+        public Vector3Int objPosition;  // 설치 그리드 위치
         public int Index;               // 설치 순서
     }
 
     // OBJData 리스트를 담을 래퍼 클래스
     [System.Serializable]
-    public class OBJDataListWrapper
+    public class DataListWrapper<T>
     {
-        public List<OBJData> objDataList;
+        public List<T> DataList;
     }
 
     // ID를 받아서 프리팹 오브젝트를 리턴받는 함수    로드에서 사용
@@ -44,6 +63,7 @@ public class NewSaveData : MonoBehaviour
 
     //===================================
 
+    // 설치된 모든 오브젝트 ID, 그리드 위치, 설치 순서 3가지 저장
     public void SaveOBJs()
     {
         objDataList.Clear();  // 리스트 초기화
@@ -75,15 +95,63 @@ public class NewSaveData : MonoBehaviour
         }
 
         // OBJData 리스트를 JSON으로 변환하여 저장
-        string json = JsonUtility.ToJson(new OBJDataListWrapper { objDataList = objDataList });
+        string json = JsonUtility.ToJson(new DataListWrapper<OBJData> { DataList = objDataList });
 
         // SaveSystem의 Save 메서드를 사용하여 파일에 저장
         SaveSystem.Save(json, "PlacedObjects");
-        Debug.Log("오브젝트 저장 완료");
+        Debug.Log("저장 완료: 오브젝트");
+    }
+
+    // AI 데이터 저장 (AI 위치, 수확해서 AI가 갖고 있는 작물 개수, AI가 갖고있는 물 개수)
+    public void SaveAIData()
+    {
+        // AIData 객체 생성 및 데이터 할당
+        AIData aiData = new AIData
+        {
+            // 플레이어의 현재 위치 저장
+            playerPosition = playerPos.position,
+
+            // AIStateManager의 수확된 작물 ID 리스트 저장
+            harvestedCropByID = new List<int>(aIStateManager.harvestedCrops),
+
+            // AIStateManager의 현재 물의 양 저장
+            waterAmount = aIStateManager.currentWaterAmount
+        };
+
+        // JSON 직렬화
+        string json = JsonUtility.ToJson(aiData);
+
+        // SaveSystem의 Save 메서드로 파일 저장
+        SaveSystem.Save(json, "AIData");
+        Debug.Log("저장 완료: AI 데이터");
+    }
+
+    // 창고에 존재하는 작물의 양을 저장
+    public void SaveStorage()
+    {
+        if (storage == null || storage.storedCropsByID == null)
+        {
+            Debug.LogWarning("Storage 또는 저장할 데이터가 없습니다!");
+            return;
+        }
+
+        // CropStorage 데이터를 DataListWrapper로 감싸기
+        DataListWrapper<CropStorage> cropWrapper = new DataListWrapper<CropStorage>
+        {
+            DataList = storage.storedCropsByID
+        };
+
+        // JSON 직렬화
+        string json = JsonUtility.ToJson(cropWrapper);
+
+        // 파일에 저장
+        SaveSystem.Save(json, "StoredCrops");
+        Debug.Log("저장 완료: StoredCrops");
     }
 
     //-------------------------------------------------------------------
 
+    // 저장한 모든 오브젝트 다시 생성, 데이터 생성 으로 로드
     public void LoadOBJs()
     {
         // SaveSystem의 Load 메서드를 사용하여 JSON 데이터를 파일에서 읽어오기
@@ -96,11 +164,11 @@ public class NewSaveData : MonoBehaviour
         }
 
         // JSON 데이터를 OBJData 리스트로 디시리얼라이즈
-        OBJDataListWrapper dataWrapper = JsonUtility.FromJson<OBJDataListWrapper>(json);
+        DataListWrapper<OBJData> dataWrapper = JsonUtility.FromJson<DataListWrapper<OBJData>>(json);
 
-        if (dataWrapper == null || dataWrapper.objDataList == null || dataWrapper.objDataList.Count == 0)
+        if (dataWrapper == null || dataWrapper.DataList == null || dataWrapper.DataList.Count == 0)
         {
-            Debug.LogWarning("로드할 데이터가 없습니다!");
+            Debug.LogWarning("로드할 오브젝트 데이터가 없습니다!");
             return;
         }
 
@@ -112,7 +180,7 @@ public class NewSaveData : MonoBehaviour
         objPlacer.placedGameObjects.Clear(); // 리스트 초기화
 
         // OBJData 리스트를 Index 값 = 설치된 순서 기준으로 정렬
-        var sortedObjDataList = dataWrapper.objDataList.OrderBy(objData => objData.Index).ToList();
+        var sortedObjDataList = dataWrapper.DataList.OrderBy(objData => objData.Index).ToList();
 
         int currentForeachIndex = 0;
 
@@ -200,7 +268,63 @@ public class NewSaveData : MonoBehaviour
             currentForeachIndex++;
         }
 
-        Debug.Log("오브젝트 로드 완료");
+        Debug.Log("로드 완료: 오브젝트");
+    }
+
+    // AI 데이터 로드해서 할당
+    public void LoadAIData()
+    {
+        // SaveSystem의 Load 메서드를 사용하여 JSON 데이터를 로드
+        string json = SaveSystem.Load("AIData");
+
+        // 저장된 파일이 없는 경우 처리
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("저장된 AI 데이터가 없습니다!");
+            return;
+        }
+
+        // JSON 데이터를 AIData 객체로 디시리얼라이즈
+        AIData aiData = JsonUtility.FromJson<AIData>(json);
+
+        if (aiData == null)
+        {
+            Debug.LogWarning("AI 데이터를 로드하는 데 실패했습니다!");
+            return;
+        }
+
+        // 로드된 데이터를 각 변수에 다시 할당
+        playerPos.position = aiData.playerPosition; // 플레이어 위치 복원
+        aIStateManager.harvestedCrops = new List<int>(aiData.harvestedCropByID); // 수확된 작물 ID 리스트 복원
+        aIStateManager.currentWaterAmount = aiData.waterAmount; // 물의 양 복원
+
+        Debug.Log("로드 완료: AI 데이터");
+    }
+
+    // 창고 데이터 로드
+    public void LoadStorage()
+    {
+        // 저장된 JSON 데이터 읽어오기
+        string json = SaveSystem.Load("StoredCrops");
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("저장된 파일이 없습니다!");
+            return;
+        }
+
+        // JSON 역직렬화
+        DataListWrapper<CropStorage> cropWrapper = JsonUtility.FromJson<DataListWrapper<CropStorage>>(json);
+
+        if (cropWrapper == null || cropWrapper.DataList == null)
+        {
+            Debug.LogWarning("로드할 데이터가 없습니다!");
+            return;
+        }
+
+        // 저장된 데이터로 Storage의 storedCropsByID 덮어쓰기
+        storage.storedCropsByID = new List<CropStorage>(cropWrapper.DataList);
+        Debug.Log("로드 완료: StoredCrops");
     }
 
     //========================================================
