@@ -24,6 +24,8 @@ public class TransparentWindow : MonoBehaviour
 
     // 창이 최상위 상태인지 여부를 저장하는 변수
     public bool isTopmost = false;
+    public Button toggleButton;
+    public bool check = true;
 
     // Windows API 호출을 위한 함수 선언
     [DllImport("user32.dll", SetLastError = true)]
@@ -72,6 +74,19 @@ public class TransparentWindow : MonoBehaviour
     {
         SetClickThrough(); // 클릭을 통해서만 창이 투명하게 보이도록 설정
         //UpdatePointerStatusText(); // UI 텍스트 업데이트
+
+        if (check)
+        {
+            if (isTopmost)
+            {
+                toggleButton.image.color = new Color(202f/255f, 160f/255f, 131f/255f, 1.0f);
+            }
+            else
+            {
+                toggleButton.image.color = new Color(145f / 255f, 113f / 255f, 90f / 255f, 1.0f);
+            }
+            check = false;
+        }
     }
 
     // 현재 마우스 포인터가 UI 요소 위에 있는지 확인
@@ -138,6 +153,7 @@ public class TransparentWindow : MonoBehaviour
     public void ToggleTopmost()
     {
         isTopmost = !isTopmost; // 현재 상태를 반전
+        check = true;
         UpdateTopmost(); // 상태에 따라 윈도우 업데이트
     }
 

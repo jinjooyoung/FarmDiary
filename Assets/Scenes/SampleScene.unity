@@ -10067,7 +10067,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1675917832}
   m_HandleRect: {fileID: 1675917831}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 1.0000001
   m_Size: 0.3523136
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -14283,6 +14283,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTopmost: 0
+  toggleButton: {fileID: 862683797}
+  check: 0
 --- !u!4 &319758564
 Transform:
   m_ObjectHideFlags: 0
@@ -36122,7 +36124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7924528, g: 0.62661266, b: 0.5121039, a: 1}
+  m_Color: {r: 0.5686275, g: 0.44313726, b: 0.3529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -62618,7 +62620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1451227081
 RectTransform:
   m_ObjectHideFlags: 0
@@ -79407,8 +79409,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 89.34}
+  m_AnchoredPosition: {x: 2, y: -2.6}
+  m_SizeDelta: {x: 263.82, y: 89.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1791401016
 MonoBehaviour:
@@ -79443,7 +79445,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\uB9C8\uBC95\uC9C4 \uBC84\uD2BC\uC744\n\uD074\uB9AD\uD558\uC138\uC694."
+  m_Text: "\uC1A5 \uB610\uB294 \uB9C8\uBC95\uC9C4 \uBC84\uD2BC\uC744\n\uD074\uB9AD\uD558\uC138\uC694."
 --- !u!222 &1791401017
 CanvasRenderer:
   m_ObjectHideFlags: 0
