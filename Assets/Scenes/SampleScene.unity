@@ -7369,6 +7369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crops: []
+  currentTime: 0
+  loadTime: 0
 --- !u!1 &163048868
 GameObject:
   m_ObjectHideFlags: 0
@@ -30589,6 +30591,7 @@ MonoBehaviour:
   objectsdatabase: {fileID: 11400000, guid: 786b265f2c369f040bdb8a9f6a5ae16e, type: 2}
   playerPos: {fileID: 1726576883}
   aIStateManager: {fileID: 1726576885}
+  cropGrowthManager: {fileID: 161320347}
   storage: {fileID: 1642072208}
 --- !u!1 &740913344
 GameObject:

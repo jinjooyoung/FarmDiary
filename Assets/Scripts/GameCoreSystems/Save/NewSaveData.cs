@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static Crop;
+using static Pot;
 
 public class NewSaveData : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class NewSaveData : MonoBehaviour
         public Vector3Int objPosition;  // 설치 그리드 위치
         public int Index;               // 설치 순서
         public CropData cropData;
+        public PotData potData;
     }
 
     // 작물 데이터
@@ -62,6 +64,16 @@ public class NewSaveData : MonoBehaviour
         public CropState cropStateData;     // 현재 작물 상태
         public int currentStageData;        // 작물 성장 단계
         public float growthStartTime;       // 작물 성장 시작 시간
+    }
+
+    // 솥 데이터
+    [System.Serializable]
+    public class PotData
+    {
+        public PotState potStateData;       // 현재 솥의 상태
+        public int magicIDData;             // 선택한 마법 작물    선택 안 했다면 기본 값 -1
+        public List<int> selectedCropData;  // 선택한 일반 작물 리스트
+        public float remainingTimeData;     // 남은 제작 시간
     }
 
     //========================================================================
@@ -108,8 +120,8 @@ public class NewSaveData : MonoBehaviour
                     Index = i
                 };
 
+                // 작물이라면
                 Crop crop = placedObj.GetComponent<Crop>();
-
                 if (crop != null)
                 {
                     CropData cropData = new CropData
@@ -121,6 +133,22 @@ public class NewSaveData : MonoBehaviour
 
                     // CropData도 objData에 추가
                     objData.cropData = cropData;
+                }
+
+                // 솥이라면
+                Pot pot = placedObj.GetComponent<Pot>();
+                if (pot != null)
+                {
+                    PotData potData = new PotData
+                    {
+                        potStateData = pot.currentState,
+                        magicIDData = pot.magicID,
+                        selectedCropData = new List<int>(pot.basicMaterial),
+                        remainingTimeData = pot.remainingTime
+                    };
+
+                    // potData도 objData에 추가
+                    objData.potData = potData;
                 }
 
                 // 리스트에 추가
@@ -266,6 +294,21 @@ public class NewSaveData : MonoBehaviour
             }
             else if (objData.ID > 3 && objData.ID < 9)      // 시설 오브젝트라면
             {
+                // 솥이라면
+                Pot potScript = newObject.GetComponent<Pot>();
+                if (potScript != null)
+                {
+                    potScript.currentState = objData.potData.potStateData;
+                    potScript.magicID = objData.potData.magicIDData;
+                    potScript.basicMaterial = objData.potData.selectedCropData;
+                    potScript.remainingTime = objData.potData.remainingTimeData;
+
+                    if (potScript.currentState == PotState.Crafting)
+                    {
+                        potScript.animator.SetBool("IsCrafting", true);
+                    }
+                }
+
                 foreach (var pos in positionToOccupy)
                 {
                     gridData.placedFacilities[pos] = data;  // 딕셔너리에 정보 저장
