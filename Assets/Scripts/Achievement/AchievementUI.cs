@@ -66,7 +66,7 @@ public class AchievementUI : MonoBehaviour
         {
             rewardText.text = rewardCount;
             descText.text = description;
-            progressText.text = $"({progress}/{goal})";
+            progressText.text = $"({goal}/{goal})";
             achievementIcon.color = Color.white;
             rewardIcon.sprite = LoadRewardIcon(ID);
 
@@ -102,31 +102,4 @@ public class AchievementUI : MonoBehaviour
             return Resources.Load<Sprite>($"Achievements/Rewards/Reward_{id}");
         }
     }
-
-    /*// 보상 지급 처리
-    private void GiveReward(int id)
-    {
-        Enum rewardType = AchievementsDatabase.GetRewardType(id);
-        int rewardData = AchievementsDatabase.GetRewardAmount(id);
-
-        // 보상 지급 로직
-        switch (rewardType)
-        {
-            case AchievementData.RewardType.Coin:
-                // 코인 보상 지급
-                GameManager.AddCoins(rewardData);
-                Debug.Log($"업적 {id}: {rewardData}개의 코인을 지급받았습니다.");
-                break;
-
-            case AchievementData.RewardType.NextCrop:
-                // 작물 보상 지급
-                //CropManager.UnlockCrop(rewardData);
-                Debug.Log($"업적 {id}: ID {rewardData}의 작물을 해금했습니다.");
-                break;
-
-            default:
-                Debug.LogError($"업적 {id}: 알 수 없는 보상 타입 {rewardType}입니다.");
-                break;
-        }
-    }*/
 }

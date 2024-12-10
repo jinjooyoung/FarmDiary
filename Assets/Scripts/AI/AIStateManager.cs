@@ -41,9 +41,6 @@ public class AIStateManager : MonoBehaviour
         }
 
         currentWaterAmount = maxWaterAmount;
-
-        //Crop[] crops = FindObjectsOfType<Crop>();
-        //crop.AddRange(crops);
     }
 
     private void Start()
@@ -197,11 +194,6 @@ public class AIStateManager : MonoBehaviour
         }
     }
 
-    /*private Vector3Int ConvertToVector3Int(Vector2 position)
-    {
-        return new Vector3Int(position.x, position.y, 0);
-    }*/
-
     public IEnumerator HarvestRoutine()
     {
         IsHarvesting = true;
@@ -213,8 +205,6 @@ public class AIStateManager : MonoBehaviour
         {
             // 작물을 수확한 후에만 리스트에서 제거
             currentCrop.Harvest();
-            //CropGrowthManager.Instance.crops.Remove(currentCrop);
-            //CropGrowthManager.Instance.cropsPos.Remove(currentCrop.seedPosition);
         }
 
         RemoveMissingCrops(); // 누락된 작물 제거
@@ -297,15 +287,5 @@ public class AIStateManager : MonoBehaviour
     public void AddToInventory(int harvestedCrop)
     {
         harvestedCrops.Add(harvestedCrop);
-
-        /*if (harvestedCrop.cropState == Crop.CropState.Harvested)
-        {
-            harvestedCrops.Add(harvestedCrop);
-            Debug.Log($"수확된 작물이 인벤토리에 추가되었습니다: {harvestedCrop.name}");
-        }
-        else
-        {
-            Debug.Log("추가할 수 없습니다: 작물이 수확 상태가 아닙니다.");
-        }*/
     }
 }

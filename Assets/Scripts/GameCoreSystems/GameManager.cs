@@ -198,15 +198,3 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 }
-
-/*[System.Serializable]
-public class AllSaveData
-{
-    public int coin;
-    public Vector3 playerPosition;
-    public string gridDataJson;
-    public List<Crop> crops;
-    public List<FarmField> fields;
-    public List<CropStorage> storedCropsByID;
-    public int currentWaterAmount;
-}*/

@@ -70,12 +70,6 @@ public class AchievementManager : MonoBehaviour
 
         AchievementData achievement = AchievementsDatabase.GetAchievementByID(achievementID);
 
-        // 업적이 클리어된 상태이면 업데이트하지 않음
-        if (achievement != null && achievement.Clear)
-        {
-            return;  // 클리어된 업적은 UI 갱신을 하지 않음
-        }
-
         AchievementUI achievementUI = achievementUIs[index];
         if (achievementUI != null)
         {
