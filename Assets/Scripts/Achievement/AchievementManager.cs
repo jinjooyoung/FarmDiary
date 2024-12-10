@@ -33,7 +33,7 @@ public class AchievementManager : MonoBehaviour
     }
 
     // 각 업적 UI 초기화
-    private void InitializeAchievementUIs()
+    public void InitializeAchievementUIs()
     {
         for (int a = 1; a <= 5; a++)
         {

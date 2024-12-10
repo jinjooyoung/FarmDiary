@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using static Crop;
 using static Pot;
@@ -114,15 +115,13 @@ public class NewSaveData : MonoBehaviour
 
     // 설치된 모든 오브젝트 ID, 그리드 위치, 설치 순서 3가지 저장이 기본, 만약 Crop 스크립트가 있는 작물 오브젝트라면
     // 추가적으로 작물의 상태, 단계, 시간을 저장함
-    public void SaveOBJs()
+    public async Task SaveOBJs()
     {
         objDataList.Clear();  // 리스트 초기화
 
-        // placedGameObjects에 있는 모든 게임 오브젝트에 대해 처리
-        for (int i = 0; i < objPlacer.placedGameObjects.Count; i++)
+        // placedGameObjects에 있는 모든 게임 오브젝트에 대해 비동기적으로 처리
+        var tasks = objPlacer.placedGameObjects.Select(async placedObj =>
         {
-            GameObject placedObj = objPlacer.placedGameObjects[i];
-
             if (placedObj != null)
             {
                 // 게임 오브젝트 이름에서 ID를 추출 (예: "123(Clone)"에서 123을 추출)
@@ -136,7 +135,7 @@ public class NewSaveData : MonoBehaviour
                 {
                     ID = objectID,
                     objPosition = objPosition,
-                    Index = i
+                    Index = objDataList.Count // 해당 오브젝트가 리스트에서 차지할 인덱스
                 };
 
                 // 작물이라면
@@ -173,14 +172,17 @@ public class NewSaveData : MonoBehaviour
                 // 리스트에 추가
                 objDataList.Add(objData);
             }
-        }
+        });
+
+        // 모든 비동기 작업이 완료될 때까지 기다림
+        await Task.WhenAll(tasks);
 
         // OBJData 리스트를 JSON으로 변환하여 저장
         string json = JsonUtility.ToJson(new DataListWrapper<OBJData> { DataList = objDataList });
 
         // SaveSystem의 Save 메서드를 사용하여 파일에 저장
-        SaveSystem.Save(json, "PlacedObjects");
-        Debug.Log("저장 완료: 오브젝트");
+        await SaveSystem.SaveAsync(json, "PlacedObjects");
+        Debug.LogWarning("저장 완료: 오브젝트");
     }
 
     // AI 데이터 저장 (AI 위치, 수확해서 AI가 갖고 있는 작물 개수, AI가 갖고있는 물 개수)
@@ -207,7 +209,7 @@ public class NewSaveData : MonoBehaviour
 
         // SaveSystem의 Save 메서드로 파일 저장
         SaveSystem.Save(json, "AIData");
-        Debug.Log("저장 완료: AI 데이터");
+        Debug.LogWarning("저장 완료: AI 데이터");
     }
 
     // 창고에 존재하는 작물의 양을 저장
@@ -230,7 +232,7 @@ public class NewSaveData : MonoBehaviour
 
         // 파일에 저장
         SaveSystem.Save(json, "StoredCrops");
-        Debug.Log("저장 완료: StoredCrops");
+        Debug.LogWarning("저장 완료: StoredCrops");
     }
 
     // 업적에서 변경되는 값만 따로 저장
@@ -263,7 +265,7 @@ public class NewSaveData : MonoBehaviour
 
         // 파일에 저장
         SaveSystem.Save(json, "Achievements");
-        Debug.Log("저장 완료: Achievements");
+        Debug.LogWarning("저장 완료: Achievements");
     }
 
     // 변동되는 구매 가격 따로 저장
@@ -287,16 +289,16 @@ public class NewSaveData : MonoBehaviour
 
         // SaveSystem을 사용해 데이터를 저장
         SaveSystem.Save(json, "ObjectsBuyPrice");
-        Debug.Log("저장 완료: ObjectsBuyPrice");
+        Debug.LogWarning("저장 완료: ObjectsBuyPrice");
     }
 
     //-------------------------------------------------------------------
 
     // 저장한 모든 오브젝트 다시 생성, 데이터 생성 으로 로드
-    public void LoadOBJs()
+    public async Task LoadOBJs()
     {
         // SaveSystem의 Load 메서드를 사용하여 JSON 데이터를 파일에서 읽어오기
-        string json = SaveSystem.Load("PlacedObjects");
+        string json = await SaveSystem.LoadAsync("PlacedObjects");
 
         if (string.IsNullOrEmpty(json))
         {
@@ -323,20 +325,56 @@ public class NewSaveData : MonoBehaviour
         // OBJData 리스트를 Index 값 = 설치된 순서 기준으로 정렬
         var sortedObjDataList = dataWrapper.DataList.OrderBy(objData => objData.Index).ToList();
 
-        int currentForeachIndex = 0;
-
-        // 로드한 OBJData 리스트를 설치했던 순서대로 순회하며 오브젝트를 복원
-        foreach (OBJData objData in sortedObjDataList)
+        // 밭 오브젝트 로드
+        var fieldDataList = sortedObjDataList.Where(objData => objData.ID < 4).ToList();
+        var fieldTasks = fieldDataList.Select(async objData =>
         {
             int selectedCropIndex = objectsdatabaseSO.objectsData.FindIndex(data => data.ID == objData.ID);
+            GameObject prefab = GetPrefabFromResourcesByID(objData.ID);
 
-            GameObject prefab = GetPrefabFromResourcesByID(objData.ID);     // ID로 프리팹 받아옴
-
-            if (prefab == null)     // 프리팹이 존재하지 않으면
+            if (prefab == null)
             {
                 Debug.LogWarning($"ID {objData.ID}에 해당하는 프리팹이 Resources 폴더에 없습니다!");
-                continue;
+                return;
             }
+
+            GameObject newObject = Instantiate(prefab);
+            newObject.transform.position = grid.CellToWorld(objData.objPosition);
+
+            objPlacer.placedGameObjects.Add(newObject);
+
+            // 설치 이후 투명도 1.0으로 복구
+            SpriteRenderer newObjectRenderer = newObject.GetComponentInChildren<SpriteRenderer>();
+            Color color = newObjectRenderer.color;
+            color.a = 1.0f;
+            newObjectRenderer.color = color;
+
+            // 오브젝트가 차지하는 모든 그리드 포지션 리스트
+            List<Vector3Int> positionToOccupy = CalculatePositions(objData.objPosition, objectsdatabaseSO.objectsData[selectedCropIndex].Size);
+            PlacementData data = new PlacementData(positionToOccupy, objData.ID, objData.Index);
+
+            foreach (var pos in positionToOccupy)
+            {
+                gridData.placedFields[pos] = data;  // 딕셔너리에 정보 저장
+            }
+        });
+
+        await Task.WhenAll(fieldTasks); // 모든 밭 오브젝트 로드 완료 대기
+
+        var otherDataList = sortedObjDataList.Where(objData => objData.ID >= 4).ToList();
+
+        // 비동기 작업을 위해 Task.Run을 사용
+        var otherTasks = otherDataList.Select(async objData =>
+        {
+            int selectedCropIndex = objectsdatabaseSO.objectsData.FindIndex(data => data.ID == objData.ID);
+            GameObject prefab = GetPrefabFromResourcesByID(objData.ID);     // ID로 프리팹 받아옴
+
+            if (prefab == null)
+            {
+                Debug.LogWarning($"ID {objData.ID}에 해당하는 프리팹이 Resources 폴더에 없습니다!");
+                return;
+            }
+
             GameObject newObject = Instantiate(prefab);                             // 오브젝트 생성
             newObject.transform.position = grid.CellToWorld(objData.objPosition);   // 생성한 OBJ를 그리드 포지션을 월드 포지션으로 바꿔서 이동
 
@@ -358,17 +396,10 @@ public class NewSaveData : MonoBehaviour
 
             // 오브젝트가 차지하는 모든 그리드 포지션 리스트
             List<Vector3Int> positionToOccupy = CalculatePositions(objData.objPosition, objectsdatabaseSO.objectsData[selectedCropIndex].Size);
-            PlacementData data = new PlacementData(positionToOccupy, objData.ID, currentForeachIndex);
-            
-            if (objData.ID < 4)     // 밭 오브젝트라면
-            {
-                foreach (var pos in positionToOccupy)
-                {
-                    // 애초에 존재하는 것을 저장한거기 때문에 그 위치에 다른 정보가 저장되어있는지 확인 불필요
-                    gridData.placedFields[pos] = data;  // 딕셔너리에 정보 저장
-                }
-            }
-            else if (objData.ID > 3 && objData.ID < 9)      // 시설 오브젝트라면
+            PlacementData data = new PlacementData(positionToOccupy, objData.ID, objData.Index);
+
+            // 각 오브젝트 ID에 따른 로직 처리 (시설, 작물, 꾸밈)
+            if (objData.ID > 3 && objData.ID < 9)      // 시설 오브젝트라면
             {
                 // 솥이라면
                 Pot potScript = newObject.GetComponent<Pot>();
@@ -392,24 +423,28 @@ public class NewSaveData : MonoBehaviour
             }
             else if (objData.ID > 8 && objData.ID < 100)    // 작물 오브젝트라면
             {
-                // 그 위치에 존재하는 밭을 받아옴. 밭이 이미 존재하고 그 위치의 밭의 OBJ 인덱스가 현재 작물 OBJ 인덱스보다 작아야함
-                // 근데 항상 밭이 먼저 설치되고 거기에 작물을 설치하니까 정보 받아올 수 있을거임
-                GameObject fieldObject = GetFieldObjectAt(objData.objPosition);
-                newObject.transform.SetParent(fieldObject.transform);   // 작물 오브젝트를 밭 오브젝트의 하위로 보냄
+                
+
+                if (gridData.placedFields.TryGetValue(objData.objPosition, out PlacementData placement))
+                {
+                    int objIndex = placement.PlacedObjectIndex;
+
+                    // 인덱스가 유효한 경우 OBJList에서 오브젝트를 반환
+                    if (objIndex > -1 && objIndex < objPlacer.placedGameObjects.Count)
+                    {
+                        GameObject fieldObject = objPlacer.placedGameObjects[objIndex];
+                        newObject.transform.SetParent(fieldObject.transform);   // 작물 오브젝트를 밭 오브젝트의 하위로 보냄
+                    }
+                }
+                
                 Crop cropScript = newObject.GetComponent<Crop>();              // Crop 스크립트 가져오기
 
                 if (cropScript != null)
                 {
-                    // 작물의 초기화 및 성장 상태 반영
                     cropScript.Initialize(objectsdatabaseSO.objectsData[selectedCropIndex].GrowthTimes);
-
-                    // 초기화 이후 씨앗을 심어 상태를 설정
                     cropScript.PlantSeed();
-
-                    // CropGrowthManager에 등록
                     CropGrowthManager.Instance.RegisterCrop(cropScript, objData.objPosition);
 
-                    // 저장된 cropState, currentStage, growthStartTime 적용
                     cropScript.cropState = objData.cropData.cropStateData;
                     cropScript.currentStage = objData.cropData.currentStageData;
                     cropScript.growthStartTime = objData.cropData.growthStartTime;
@@ -430,10 +465,11 @@ public class NewSaveData : MonoBehaviour
                 }
             }
 
-            currentForeachIndex++;
-        }
+        });
 
-        Debug.Log("로드 완료: 오브젝트");
+        await Task.WhenAll(otherTasks); // 모든 비동기 작업이 완료될 때까지 대기
+
+        Debug.LogWarning("로드 완료: 오브젝트");
     }
 
     // AI 데이터 로드해서 할당
@@ -465,7 +501,7 @@ public class NewSaveData : MonoBehaviour
         cropGrowthManager.loadTime = aiData.savedTime;
         cropGrowthManager.currentTime = aiData.savedTime;
 
-        Debug.Log("로드 완료: AI 데이터");
+        Debug.LogWarning("로드 완료: AI 데이터");
     }
 
     // 창고 데이터 로드
@@ -529,7 +565,7 @@ public class NewSaveData : MonoBehaviour
             }
         }
 
-        Debug.Log("로드 완료: Achievements");
+        Debug.LogWarning("로드 완료: Achievements");
     }
 
     // 오브젝트 구매가격 로드
@@ -559,7 +595,7 @@ public class NewSaveData : MonoBehaviour
             objectsdatabaseSO.objectsData[i].SetBuyPrice(buyPriceDataWrapper.DataList[i].BuyPriceData);
         }
 
-        Debug.Log("오브젝트 구매 가격 로드 완료!");
+        Debug.LogWarning("오브젝트 구매 가격 로드 완료!");
     }
 
     //========================================================
@@ -576,21 +612,5 @@ public class NewSaveData : MonoBehaviour
             }
         }
         return returnVal;
-    }
-
-    private GameObject GetFieldObjectAt(Vector3Int gridPosition)
-    {
-        if (gridData.placedFields.TryGetValue(gridPosition, out PlacementData placement))
-        {
-            int objIndex = placement.PlacedObjectIndex;
-
-            // 인덱스가 유효한 경우 OBJList에서 오브젝트를 반환
-            if (objIndex > -1 && objIndex < objPlacer.placedGameObjects.Count)
-            {
-                return objPlacer.placedGameObjects[objIndex];
-            }
-        }
-
-        return null; // 위치에 밭 오브젝트가 없거나 유효하지 않으면 null 반환
     }
 }

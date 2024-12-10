@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         if (autoSaveTimer <= 0)
         {
-            SaveManager.Instance.SaveGameData();
+            SaveGameDatasAsync();
             Debug.Log("자동 저장 완료!");
             autoSaveTimer = autoSaveInterval; // 타이머 리셋
         }
@@ -86,12 +86,12 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("TutorialDone", 0) == 0) // 첫 실행이면 = 세이브 데이터가 없으면
         {
             currentCoin = DefaultCoin;
-            SaveManager.Instance.SaveGameData();
+            SaveGameDatasAsync();
         }
         else
         {
             currentCoin = PlayerPrefs.GetInt(CoinKey, currentCoin);
-            SaveManager.Instance.LoadGameData();
+            LoadGameDatasAsync();
         }
     }
 
@@ -132,7 +132,17 @@ public class GameManager : MonoBehaviour
     // 게임 종료 시 호출되는 메서드
     void OnApplicationQuit()
     {
-        SaveManager.Instance.SaveGameData();
+        SaveGameDatasAsync();
+    }
+
+    public async void SaveGameDatasAsync()
+    {
+        await SaveManager.Instance.SaveGameData();
+    }
+
+    public async void LoadGameDatasAsync()
+    {
+        await SaveManager.Instance.LoadGameData();
     }
 
     // 코인 추가 메서드

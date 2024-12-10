@@ -135,7 +135,7 @@ public class UIManager : MonoBehaviour
         settingPanel.SetActive(false);
     }
 
-    void UpdateStoragePanel()
+    public void UpdateStoragePanel()
     {
         foreach (var cropStorage in storage.storedCropsByID)
         {
@@ -147,7 +147,7 @@ public class UIManager : MonoBehaviour
     }
 
     // 모든 씨앗 버튼의 이미지를 설정하는 메서드
-    private void ButtonSetting()
+    public void ButtonSetting()
     {
         int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 기본값은 2 (세 번째 작물까지 해금)
 
@@ -179,7 +179,7 @@ public class UIManager : MonoBehaviour
     }
 
     // 모든 씨앗 버튼의 상태를 업데이트하는 메서드
-    private void UpdateButtons()
+    public void UpdateButtons()
     {
         int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 기본값은 2 (세 번째 작물까지 해금)
 
