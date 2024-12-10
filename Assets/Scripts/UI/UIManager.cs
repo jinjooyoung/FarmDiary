@@ -68,13 +68,13 @@ public class UIManager : MonoBehaviour
         UpdateButtons();
 
         // 버튼에 클릭 이벤트 추가
-        StorageButton.onClick.AddListener(() => TogglePanel(StoragePanel));
-        seedButton.onClick.AddListener(() => TogglePanel(seedPanel));
-        FieldButton.onClick.AddListener(() => TogglePanel(FieldPanel));
-        AchievementsButton.onClick.AddListener(() => TogglePanel(AchievementsPanel));
-        PotionButton.onClick.AddListener(() => TogglePanel(PotionPanel));
-        DecoButton.onClick.AddListener(() => TogglePanel(DecoPanel));
-        settingButton.onClick.AddListener(() => TogglePanel(settingPanel));
+        StorageButton.onClick.AddListener(() => TogglePanelWithSound(StoragePanel));
+        seedButton.onClick.AddListener(() => TogglePanelWithSound(seedPanel));
+        FieldButton.onClick.AddListener(() => TogglePanelWithSound(FieldPanel));
+        AchievementsButton.onClick.AddListener(() => TogglePanelWithSound(AchievementsPanel));
+        PotionButton.onClick.AddListener(() => TogglePanelWithSound(PotionPanel));
+        DecoButton.onClick.AddListener(() => TogglePanelWithSound(DecoPanel));
+        settingButton.onClick.AddListener(() => TogglePanelWithSound(settingPanel));
 
         // 시작할 때 가격 초기화
         one.text = ObjectsDatabase.CurrentPrice(0).ToString("N0");
@@ -121,6 +121,13 @@ public class UIManager : MonoBehaviour
 
         // 클릭된 패널만 현재 상태의 반대로 설정
         panel.SetActive(!panel.activeSelf);
+    }
+
+    public void TogglePanelWithSound(GameObject panel)
+    {
+        // 버튼 클릭 사운드 재생
+        SoundManager.instance.PlaySound("button-clicking");
+        TogglePanel(panel);
     }
 
     // 모든 패널을 닫는 메서드

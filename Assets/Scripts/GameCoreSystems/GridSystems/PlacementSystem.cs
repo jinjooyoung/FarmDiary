@@ -146,6 +146,7 @@ public class PlacementSystem : MonoBehaviour
         }
 
         buildingState.OnAction(gridPosition);       // 해당 그리드 위치에 오브젝트 설치 (실제 구현)
+        SoundManager.instance.PlaySound("plant");
     }
 
     private int GetFieldIDFromPosition(Vector3Int position)

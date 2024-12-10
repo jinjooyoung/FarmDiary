@@ -21596,6 +21596,7 @@ Transform:
   m_Children:
   - {fileID: 1903297168}
   - {fileID: 740160396}
+  - {fileID: 1846606474}
   - {fileID: 319758564}
   - {fileID: 1793381980}
   - {fileID: 161320346}
@@ -82142,6 +82143,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ccf4f9d79c2a54885e91f24794549e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1846606472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846606474}
+  - component: {fileID: 1846606473}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1846606473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846606472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a006525253aef4d8d3e4250f736e3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: plant
+    clip: {fileID: 8300000, guid: 0c32b593630c20847af675433c5c322e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    source: {fileID: 0}
+  - name: plant_harvest
+    clip: {fileID: 8300000, guid: c2864095ccfb4944ea3ebdadd9ccb60f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    source: {fileID: 0}
+  - name: put_water
+    clip: {fileID: 8300000, guid: 1eca3ecf90270994496918ea065028e9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    source: {fileID: 0}
+  - name: watering
+    clip: {fileID: 8300000, guid: dd0f38a86ae7fdc47bacc209799edec9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    source: {fileID: 0}
+  - name: button-clicking
+    clip: {fileID: 8300000, guid: 954422a6bd43c4640ab4a43c93816a3b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    source: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+  isSoundOff: 0
+--- !u!4 &1846606474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846606472}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 499937597}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1847348948
 GameObject:
   m_ObjectHideFlags: 0

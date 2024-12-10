@@ -150,6 +150,7 @@ public class AIStateManager : MonoBehaviour
 
         IsWatering = true;
         _animator.SetBool("IsWatering", true);
+        SoundManager.instance.PlaySound("watering");
         yield return new WaitForSeconds(1.5f);
 
         if (currentCrop != null)
@@ -159,6 +160,7 @@ public class AIStateManager : MonoBehaviour
             Debug.Log($"물을 줬습니다. 남은 물: {currentWaterAmount}");
         }
 
+        SoundManager.instance.StopSound("watering");
         _animator.SetBool("IsWatering", false);
         IsWatering = false;
 
@@ -203,6 +205,7 @@ public class AIStateManager : MonoBehaviour
     public IEnumerator HarvestRoutine()
     {
         IsHarvesting = true;
+        SoundManager.instance.PlaySound("plant_harvest");
         _animator.SetBool("IsHarvesting", true); // 수확 애니메이션 시작
         yield return new WaitForSeconds(2f); // 애니메이션 대기 시간 설정
 
@@ -220,6 +223,7 @@ public class AIStateManager : MonoBehaviour
         currentCrop = GetNextCrop();
 
         // 애니메이션 종료 및 상태 초기화
+        SoundManager.instance.StopSound("plant_harvest");
         _animator.SetBool("IsHarvesting", false);
         IsHarvesting = false;
 
@@ -249,6 +253,7 @@ public class AIStateManager : MonoBehaviour
         {
             MoveToPosition(waterPosition);
             IsWaterChargeing = true;
+            SoundManager.instance.PlaySound("put_water");
             _animator.SetBool("IsWaterChargeing", true);
         }
 
@@ -261,6 +266,7 @@ public class AIStateManager : MonoBehaviour
         currentWaterAmount = maxWaterAmount;
         Debug.Log("물을 다시 채웠습니다.");
 
+        SoundManager.instance.StopSound("put_water");
         _animator.SetBool("IsWaterChargeing", false);
         IsWaterChargeing = false;
     }
