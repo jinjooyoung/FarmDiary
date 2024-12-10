@@ -89,4 +89,27 @@ public class SoundManager : MonoBehaviour
             stopSoundToPlay.source.Pause();
         }
     }
+
+    public void ToggleSound()
+    {
+        isSoundOff = !isSoundOff;
+
+        if (isSoundOff)
+        {
+            foreach (Sound sound in sounds)
+            {
+                sound.source.Pause();
+            }
+        }
+        else
+        {
+            foreach (Sound sound in sounds)
+            {
+                if (sound.source.clip != null && sound.source.loop)
+                {
+                    sound.source.Play();
+                }
+            }
+        }
+    }
 }

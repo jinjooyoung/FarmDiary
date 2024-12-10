@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] public Button[] SeedButtons;        // 작물 선택 버튼 배열 (수확한 갯수에 따라서 해금할거라서)
     [SerializeField] public Image[] StorageImages;      // 창고 식물 이미지 배열
+    [SerializeField] public Button soundToggleButton;
 
     [Header("Field Price Text")]
     public Text one;
@@ -66,6 +67,9 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         UpdateButtons();
+
+        // 사운드 토글 버튼 클릭 이벤트 추가
+        soundToggleButton.onClick.AddListener(() => SoundManager.instance.ToggleSound());
 
         // 버튼에 클릭 이벤트 추가
         StorageButton.onClick.AddListener(() => TogglePanelWithSound(StoragePanel));

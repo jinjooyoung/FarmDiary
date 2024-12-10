@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        SoundManager.instance.PlaySound("background");
         //static 선언된 스크립트들을 받아와서 호출해야하므로 안전하게 start에서 호출
         InitializeSaveData();
 

@@ -10067,7 +10067,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1675917832}
   m_HandleRect: {fileID: 1675917831}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1
   m_Size: 0.3523136
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -44146,7 +44146,7 @@ RectTransform:
   m_Father: {fileID: 1870384542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -52402,6 +52402,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208253004}
   m_CullTransparentMesh: 1
+--- !u!1 &1209851139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1209851141}
+  - component: {fileID: 1209851140}
+  m_Layer: 0
+  m_Name: AudioMixerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1209851140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209851139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c1369d94a4616a4c8d5d2e4b37ab2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+  musicMasterSlider: {fileID: 698467722}
+--- !u!4 &1209851141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209851139}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1210566312
 GameObject:
   m_ObjectHideFlags: 0
@@ -63758,7 +63804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1480627040
 RectTransform:
   m_ObjectHideFlags: 0
@@ -82180,34 +82226,41 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
-    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    mixerGroup: {fileID: -740265075807180961, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
     source: {fileID: 0}
   - name: plant_harvest
     clip: {fileID: 8300000, guid: c2864095ccfb4944ea3ebdadd9ccb60f, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    mixerGroup: {fileID: -740265075807180961, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
     source: {fileID: 0}
   - name: put_water
     clip: {fileID: 8300000, guid: 1eca3ecf90270994496918ea065028e9, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    mixerGroup: {fileID: -740265075807180961, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
     source: {fileID: 0}
   - name: watering
     clip: {fileID: 8300000, guid: dd0f38a86ae7fdc47bacc209799edec9, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    mixerGroup: {fileID: -740265075807180961, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
     source: {fileID: 0}
   - name: button-clicking
     clip: {fileID: 8300000, guid: 954422a6bd43c4640ab4a43c93816a3b, type: 3}
     volume: 1
     pitch: 1
     loop: 0
+    mixerGroup: {fileID: -740265075807180961, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
+    source: {fileID: 0}
+  - name: background
+    clip: {fileID: 8300000, guid: 696260f67e76fd4439491454776d3486, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
     mixerGroup: {fileID: 8219979857060290095, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
     source: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: f2150acd595cdf649b144119c4e25e12, type: 2}
@@ -85145,8 +85198,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 592574816}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -85990,6 +86043,7 @@ MonoBehaviour:
   - {fileID: 92135297}
   - {fileID: 152528781}
   - {fileID: 1863301162}
+  soundToggleButton: {fileID: 476668158}
   one: {fileID: 237371824}
   two: {fileID: 714619103}
   three: {fileID: 285116}
@@ -95538,3 +95592,4 @@ SceneRoots:
   - {fileID: 576018183}
   - {fileID: 1036579488}
   - {fileID: 1176961945}
+  - {fileID: 1209851141}
