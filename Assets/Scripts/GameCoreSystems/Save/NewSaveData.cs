@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Crop;
 
 public class NewSaveData : MonoBehaviour
 {
@@ -12,9 +13,10 @@ public class NewSaveData : MonoBehaviour
     public GridData gridData;
     public ObjectsDatabaseSO objectsdatabase;
 
-    [Header("AI 데이터를 위한 참조")]
+    [Header("AI 데이터 및 현재 시간 체크를 위한 참조")]
     public Transform playerPos;
     public AIStateManager aIStateManager;
+    public CropGrowthManager cropGrowthManager;
 
     [Header("창고 데이터를 위한 참조")]
     public Storage storage;
@@ -22,20 +24,24 @@ public class NewSaveData : MonoBehaviour
     // 저장할 데이터 리스트
     private List<OBJData> objDataList = new List<OBJData>();
 
+
     private void Awake()
     {
         // 같은 GridData 인스턴스를 공유
         gridData = placementSystem.placedOBJData;
     }
 
+    //========================================================================
+
     // AI 데이터 저장
     [System.Serializable]
-    public class AIData
+    public class MainData
     {
         //public int currentCropIndexByCropGrowthManagerList;
         public Vector3 playerPosition;
         public List<int> harvestedCropByID;
         public int waterAmount;
+        public float savedTime;
         //public string stateName;
     }
 
@@ -46,7 +52,19 @@ public class NewSaveData : MonoBehaviour
         public int ID;                  // 고유 ID
         public Vector3Int objPosition;  // 설치 그리드 위치
         public int Index;               // 설치 순서
+        public CropData cropData;
     }
+
+    // 작물 데이터
+    [System.Serializable]
+    public class CropData
+    {
+        public CropState cropStateData;     // 현재 작물 상태
+        public int currentStageData;        // 작물 성장 단계
+        public float growthStartTime;       // 작물 성장 시작 시간
+    }
+
+    //========================================================================
 
     // OBJData 리스트를 담을 래퍼 클래스
     [System.Serializable]
@@ -63,7 +81,8 @@ public class NewSaveData : MonoBehaviour
 
     //===================================
 
-    // 설치된 모든 오브젝트 ID, 그리드 위치, 설치 순서 3가지 저장
+    // 설치된 모든 오브젝트 ID, 그리드 위치, 설치 순서 3가지 저장이 기본, 만약 Crop 스크립트가 있는 작물 오브젝트라면
+    // 추가적으로 작물의 상태, 단계, 시간을 저장함
     public void SaveOBJs()
     {
         objDataList.Clear();  // 리스트 초기화
@@ -89,6 +108,21 @@ public class NewSaveData : MonoBehaviour
                     Index = i
                 };
 
+                Crop crop = placedObj.GetComponent<Crop>();
+
+                if (crop != null)
+                {
+                    CropData cropData = new CropData
+                    {
+                        cropStateData = crop.cropState,         // 작물 상태 Enum
+                        currentStageData = crop.currentStage,   // 작물 성장 단계
+                        growthStartTime = crop.growthStartTime  // 작물 성장 시작 시간
+                    };
+
+                    // CropData도 objData에 추가
+                    objData.cropData = cropData;
+                }
+
                 // 리스트에 추가
                 objDataList.Add(objData);
             }
@@ -106,7 +140,7 @@ public class NewSaveData : MonoBehaviour
     public void SaveAIData()
     {
         // AIData 객체 생성 및 데이터 할당
-        AIData aiData = new AIData
+        MainData aiData = new MainData
         {
             // 플레이어의 현재 위치 저장
             playerPosition = playerPos.position,
@@ -115,7 +149,10 @@ public class NewSaveData : MonoBehaviour
             harvestedCropByID = new List<int>(aIStateManager.harvestedCrops),
 
             // AIStateManager의 현재 물의 양 저장
-            waterAmount = aIStateManager.currentWaterAmount
+            waterAmount = aIStateManager.currentWaterAmount,
+
+            // 현재 시간 저장
+            savedTime = cropGrowthManager.currentTime
         };
 
         // JSON 직렬화
@@ -244,6 +281,7 @@ public class NewSaveData : MonoBehaviour
 
                 if (cropScript != null)
                 {
+                    // 작물의 초기화 및 성장 상태 반영
                     cropScript.Initialize(objectsdatabase.objectsData[selectedCropIndex].GrowthTimes);
 
                     // 초기화 이후 씨앗을 심어 상태를 설정
@@ -251,6 +289,13 @@ public class NewSaveData : MonoBehaviour
 
                     // CropGrowthManager에 등록
                     CropGrowthManager.Instance.RegisterCrop(cropScript, objData.objPosition);
+
+                    // 저장된 cropState, currentStage, growthStartTime 적용
+                    cropScript.cropState = objData.cropData.cropStateData;
+                    cropScript.currentStage = objData.cropData.currentStageData;
+                    cropScript.growthStartTime = objData.cropData.growthStartTime;
+
+                    cropScript.UpdateCropVisual();
                 }
 
                 foreach (var pos in positionToOccupy)
@@ -286,7 +331,7 @@ public class NewSaveData : MonoBehaviour
         }
 
         // JSON 데이터를 AIData 객체로 디시리얼라이즈
-        AIData aiData = JsonUtility.FromJson<AIData>(json);
+        MainData aiData = JsonUtility.FromJson<MainData>(json);
 
         if (aiData == null)
         {
@@ -298,6 +343,8 @@ public class NewSaveData : MonoBehaviour
         playerPos.position = aiData.playerPosition; // 플레이어 위치 복원
         aIStateManager.harvestedCrops = new List<int>(aiData.harvestedCropByID); // 수확된 작물 ID 리스트 복원
         aIStateManager.currentWaterAmount = aiData.waterAmount; // 물의 양 복원
+        cropGrowthManager.loadTime = aiData.savedTime;
+        cropGrowthManager.currentTime = aiData.savedTime;
 
         Debug.Log("로드 완료: AI 데이터");
     }

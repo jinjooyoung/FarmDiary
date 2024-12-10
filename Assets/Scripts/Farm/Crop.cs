@@ -168,7 +168,7 @@ public class Crop : MonoBehaviour
     {
         growthTimes = cropGrowthTimes;
         growthStartTime = Time.time;  // 성장이 시작된 시간을 저장
-        currentStage = 0;             // 초기 성장 단계 설정
+        //currentStage = 0;             // 초기 성장 단계 설정
 
         //UpdateSortingLayer();          // 초기 소팅 레이어 업데이트
         UpdateCropVisual();            // 초기 상태 업데이트

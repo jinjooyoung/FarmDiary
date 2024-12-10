@@ -11,6 +11,9 @@ public class CropGrowthManager : MonoBehaviour
     //public List<Vector3Int> cropsPos = new List<Vector3Int>();
     public HashSet<Vector3Int> cropsPos = new HashSet<Vector3Int>();
 
+    public float currentTime;
+    public float loadTime;
+
     private void Awake()
     {
         if (Instance == null)
@@ -43,7 +46,7 @@ public class CropGrowthManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1f); // 1초 간격으로 체크
 
-            float currentTime = Time.time;
+            currentTime = Time.time + loadTime;
             foreach (var crop in crops)
             {
                 if (crop == null)
