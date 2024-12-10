@@ -212,9 +212,9 @@ public class Crop : MonoBehaviour
             //Debug.Log($"현재 성장 단계: {currentStage}");
 
             // 마지막 단계일 경우 ReadyToHarvest로 설정
-            if (currentStage >= growthTimes.Length - 1)
+            if (currentStage >= growthTimes.Length)
             {
-                currentStage = growthTimes.Length - 1; // 안전하게 마지막 단계로 고정
+                currentStage = growthTimes.Length; // 안전하게 마지막 단계로 고정
                 cropState = CropState.ReadyToHarvest;
                 //Debug.Log("작물이 다 자라서 수확할 준비가 되었습니다.");
             }
