@@ -58,20 +58,14 @@ public class IdleState : AIState
 {
     public IdleState(AIStateMachine stateMachine) : base(stateMachine) { }
 
-    public override void Enter()
-    {
-        Debug.Log("Idle 상태로 진입");
-    }
+    public override void Enter() { }
 
     public override void Update()
     {
         CheckTransitions();
     }
 
-    public override void Exit()
-    {
-        Debug.Log("Idle 상태 종료");
-    }
+    public override void Exit() { }
 }
 
 // CheckSeedState : 플레이어가 밭에 씨앗이 있는지 확인하는 상태
@@ -79,10 +73,7 @@ public class CheckSeedState : AIState
 {
     public CheckSeedState(AIStateMachine stateMachine) : base(stateMachine) { }
 
-    public override void Enter()
-    {
-        Debug.Log("CheckSeed 상태로 진입");
-    }
+    public override void Enter() { }
 
     public override void Update()
     {
@@ -90,10 +81,7 @@ public class CheckSeedState : AIState
         CheckTransitions();
     }
 
-    public override void Exit()
-    {
-        Debug.Log("CheckSeed 상태 종료");
-    }
+    public override void Exit() { }
 }
 
 // GoToWaterState : 플레이어가 물을 채우러 가는 상태
@@ -101,10 +89,7 @@ public class GoToWaterState : AIState
 {
     public GoToWaterState(AIStateMachine stateMachine) : base(stateMachine) { }
 
-    public override void Enter()
-    {
-        Debug.Log("GoToWater 상태로 진입");
-    }
+    public override void Enter() { }
 
     public override void Update()
     {
@@ -116,10 +101,7 @@ public class GoToWaterState : AIState
         }
     }
 
-    public override void Exit()
-    {
-        Debug.Log("GoToWater 상태 종료");
-    }
+    public override void Exit() { }
 }
 
 // WateringState : 플레이어가 밭에 물을 주는 상태
@@ -127,10 +109,7 @@ public class WateringState : AIState
 {
     public WateringState(AIStateMachine stateMachine) : base(stateMachine) { }
 
-    public override void Enter()
-    {
-        Debug.Log("Watering 상태로 진입");
-    }
+    public override void Enter() { }
 
     public override void Update()
     {
@@ -145,7 +124,6 @@ public class WateringState : AIState
             if (aiStateManager.MoveToPosition(aiStateManager.currentCrop.transform))
             {
                 aiStateManager.WaterCrop(); // 물 주기
-                Debug.Log("작물에 물을 주었습니다.");
 
                 // 물을 다 준 후에 상태 전환 확인
                 if (!aiStateManager.currentCrop.NeedsWater())
@@ -160,10 +138,7 @@ public class WateringState : AIState
         }
     }
 
-    public override void Exit()
-    {
-        Debug.Log("Watering 상태 종료");
-    }
+    public override void Exit() { }
 }
 
 // HarvestingState : 플레이어가 다 자란 작물을 재배하는 상태
@@ -171,10 +146,7 @@ public class HarvestingState : AIState
 {
     public HarvestingState(AIStateMachine stateMachine) : base(stateMachine) { }
 
-    public override void Enter()
-    {
-        Debug.Log("Harvesting 상태로 진입");
-    }
+    public override void Enter() { }
 
     public override void Update()
     {
@@ -194,10 +166,7 @@ public class HarvestingState : AIState
         }
     }
 
-    public override void Exit()
-    {
-        Debug.Log("Harvesting 상태 종료");
-    }
+    public override void Exit() { }
 }
 
 // GoingHomeState : 플레이어가 집(창고)로 돌아가는 상태
@@ -205,10 +174,7 @@ public class GoingHomeState : AIState
 {
     public GoingHomeState(AIStateMachine aiStateMachine) : base(aiStateMachine) { }
 
-    public override void Enter()
-    {
-        Debug.Log("GoingHome 상태로 진입");
-    }
+    public override void Enter() { }
 
     public override void Update()
     {
@@ -220,8 +186,5 @@ public class GoingHomeState : AIState
         }
     }
 
-    public override void Exit()
-    {
-        Debug.Log("GoingHome 상태 종료");
-    }
+    public override void Exit() { }
 }

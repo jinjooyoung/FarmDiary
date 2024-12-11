@@ -30,8 +30,6 @@ public class KeyboardHookManager : MonoBehaviour
     public int keyPressCount = 0;               // 업적 진행도를 파악하기 위한 키 입력 횟수 저장
     public bool achievementAllClear = false;    // 업적이 모두 완료되면 더이상 카운트 하지 않기 위해 bool값
 
-
-
     private const int WH_KEYBOARD_LL = 13; // 전역 키보드 훅
     private const int WM_KEYDOWN = 0x0100; // 키가 눌린 이벤트
     private const int WM_KEYUP = 0x0101;   // 키가 떼어진 이벤트
