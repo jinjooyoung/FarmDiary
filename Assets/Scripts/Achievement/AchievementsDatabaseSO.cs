@@ -155,6 +155,9 @@ public static class AchievementsDatabase
             UnlockAchievement(i);
             UnlockAchievement(-i);
         }
+        UnlockAchievement(6);
+        UnlockAchievement(7);
+        UnlockAchievement(8);
         UnlockAchievement(9);
         UnlockAchievement(10);
         UnlockAchievement(11);
@@ -278,6 +281,7 @@ public static class AchievementsDatabase
         AddProgressToAchievement(3, 1);
         AddProgressToAchievement(4, 1);
         AddProgressToAchievement(5, 1);
+        AddProgressToAchievement(62, 1);
         AddProgressToAchievement(-4, 1);
         AddProgressToAchievement(-5, 1);
     }

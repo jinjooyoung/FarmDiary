@@ -28,6 +28,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] public Image[] StorageImages;      // 창고 식물 이미지 배열
     [SerializeField] public Button soundToggleButton;
 
+    [Header("리셋 패널")]
+    public GameObject ResetSurePanel;
+    public GameObject tutorialSkipPanel;
+    public GameObject GameQuitPanel;
+
     [Header("Field Price Text")]
     public Text one;
     public Text two;
@@ -157,6 +162,40 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void GameResetSurePanel()
+    {
+        PlacementSystem.Instance.StopPlacement();
+        ResetSurePanel.SetActive(true);
+
+        StorageButton.interactable = false;
+        seedButton.interactable = false;
+        FieldButton.interactable = false;
+        AchievementsButton.interactable = false;
+        PotionButton.interactable = false;
+        DecoButton.interactable = false;
+        settingButton.interactable = false;
+    }
+
+    public void GameResetSure(bool yes)
+    {
+        ResetSurePanel.SetActive(false);
+
+        if (yes)
+        {
+            tutorialSkipPanel.SetActive(true);
+        }
+        else
+        {
+            StorageButton.interactable = true;
+            seedButton.interactable = true;
+            FieldButton.interactable = true;
+            AchievementsButton.interactable = true;
+            PotionButton.interactable = true;
+            DecoButton.interactable = true;
+            settingButton.interactable = true;
+        }
+    }
+
     // 모든 씨앗 버튼의 이미지를 설정하는 메서드
     public void ButtonSetting()
     {
@@ -228,11 +267,16 @@ public class UIManager : MonoBehaviour
                     Debug.LogWarning("==========해금처리 진행됨==========");
                     // 해금 처리
                     PlayerPrefs.SetInt(cropKey, 1); // 해당 작물 해금 상태 저장
-                    unlockedIndex++; // 해금된 작물 인덱스 증가
-                    PlayerPrefs.SetInt("UnlockPlant", unlockedIndex); // 전체 해금 인덱스 저장
+                    
                     AchievementsDatabase.UnlockAchievement(id + 1);
                     AchievementManager.Instance.SafeUpdateAchievementProgress(id);
                     AchievementManager.Instance.SafeUpdateAchievementProgress(id + 1);
+
+                    if (id > 10)
+                    {
+                        unlockedIndex++; // 해금된 작물 인덱스 증가
+                        PlayerPrefs.SetInt("UnlockPlant", unlockedIndex); // 전체 해금 인덱스 저장
+                    }
 
                     if (id >=47)    // 마법작물 심기 가능
                     {

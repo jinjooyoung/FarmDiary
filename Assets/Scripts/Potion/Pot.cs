@@ -95,6 +95,11 @@ public class Pot : MonoBehaviour
     {
         if (!isInitialized) return;     // 설치하자마자 패널 열리는 것 방지
 
+        if (UIManager.instance.ResetSurePanel.activeSelf || UIManager.instance.tutorialSkipPanel.activeSelf || UIManager.instance.GameQuitPanel.activeSelf)
+        {
+            return;
+        }
+
         if (PlacementSystem.Instance.IsDeleteModeActive()) return;
 
         if (PotionManager.instance != null && UIManager.instance != null)

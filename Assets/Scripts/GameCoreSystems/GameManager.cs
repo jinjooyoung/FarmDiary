@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float autoSaveInterval = 300f; // 자동 저장 간격 (초)
     private float autoSaveTimer; // 자동 저장 타이머
+
+    [SerializeField] private AchievementsDatabaseSO achievementsDatabase; // 업적 데이터베이스
 
     private void Awake()
     {
@@ -118,6 +121,32 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save(); // 변경사항 저장
     }
 
+    public void ResetGame(bool tutorialSkip)
+    {
+        Time.timeScale = 0;
+
+        InitializePlayerPrefs();
+        SaveSystem.DeleteSaveFolder();
+        PlayerPrefs.SetInt(CoinKey, 150160);
+
+        if (tutorialSkip)
+        {
+            PlayerPrefs.SetInt("TutorialDone", 1);
+            PlayerPrefs.SetInt("TutorialKeyboard", 1);
+
+            ObjectsDatabase.InitializeTutorialGrowthTimes(9);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(10);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(11);
+            ObjectsDatabase.InitializeTutorialGrowthTimes(48);
+            PotionDatabase.TutorialEndCraftingTime(48);
+
+            AchievementsDatabase.Initialize(achievementsDatabase);
+            AchievementsDatabase.TutorialAchievement();
+        }
+        UIManager.instance.tutorialSkipPanel.SetActive(false);
+        UIManager.instance.GameQuitPanel.SetActive(true);
+    }
+
     public void QuitGame()
     {
         // 플레이어 프리퍼런스를 저장하고 게임 종료
@@ -135,6 +164,11 @@ public class GameManager : MonoBehaviour
     // 게임 종료 시 호출되는 메서드
     void OnApplicationQuit()
     {
+        if (UIManager.instance.ResetSurePanel.activeSelf || UIManager.instance.tutorialSkipPanel.activeSelf || UIManager.instance.GameQuitPanel.activeSelf)
+        {
+            return;
+        }
+
         SaveGameDatasAsync();
     }
 

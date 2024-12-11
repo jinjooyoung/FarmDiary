@@ -15,6 +15,16 @@ public static class SaveSystem
         }
     }
 
+    public static void DeleteSaveFolder()
+    {
+        // 폴더가 존재하면
+        if (Directory.Exists(SAVE_FOLDER))
+        {
+            Directory.Delete(SAVE_FOLDER, true); // 하위 파일 및 폴더 삭제
+            Debug.Log("세이브 폴더 삭제 완료!");
+        }
+    }
+
     public static void Save(string saveString, string fileName)
     {
         string savePath = SAVE_FOLDER + fileName + "." + SAVE_EXTENSION;
