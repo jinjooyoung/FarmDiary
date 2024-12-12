@@ -67,6 +67,7 @@ public class TutorialUI : MonoBehaviour
         }
         else
         {
+            tutorialCanvas.SetActive(false);
             ObjectsDatabase.InitializeTutorialGrowthTimes(9);
             ObjectsDatabase.InitializeTutorialGrowthTimes(10);
             ObjectsDatabase.InitializeTutorialGrowthTimes(11);

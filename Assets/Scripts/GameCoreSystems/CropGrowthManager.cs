@@ -10,6 +10,7 @@ public class CropGrowthManager : MonoBehaviour
     public List<Crop> crops = new List<Crop>();    // 심어진 작물들을 저장할 리스트
     //public List<Vector3Int> cropsPos = new List<Vector3Int>();
     public HashSet<Vector3Int> cropsPos = new HashSet<Vector3Int>();
+    public bool CheatOn = false;
 
     public float currentTime;
     public float loadTime;

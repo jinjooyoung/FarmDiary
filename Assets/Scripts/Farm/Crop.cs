@@ -221,6 +221,50 @@ public class Crop : MonoBehaviour
         }
     }
 
+    public void CheckGrowthCheat(float currentTime)
+    {
+        if (currentStage >= growthTimes.Length)     // growthTimes 할당 안 되어 있다면
+        {
+            growthTimes = ObjectsDatabase.GetCropGrowthTimes(ID);
+            return; // 배열 범위를 벗어나면 함수 종료
+        }
+
+        // 수확된 경우에는 아무 작업도 하지 않음
+        if (cropState == CropState.ReadyToHarvest)      // 수확 대기상태
+        {
+            return;
+        }
+
+        if (cropState == CropState.Harvested)           // 수확됨 상태
+        {
+            return;
+        }
+
+        // 성장 단계가 0이고 `Watered` 상태가 아닐 경우 성장을 멈추도록 설정
+        if (currentStage == 0 && cropState != CropState.Watered)
+        {
+            //Debug.Log("0단계에서 물이 필요합니다. 물을 줄 때까지 성장을 멈춥니다.");
+            return; // 물을 줄 때까지 성장 멈춤
+        }
+
+        // 물을 준 이후 성장 단계가 1 이상으로 진행되도록 설정
+        if (currentStage < growthTimes.Length)
+        {
+            currentStage++;
+            UpdateCropVisual();
+
+            //Debug.Log($"현재 성장 단계: {currentStage}");
+
+            // 마지막 단계일 경우 ReadyToHarvest로 설정
+            if (currentStage >= growthTimes.Length)
+            {
+                currentStage = growthTimes.Length; // 안전하게 마지막 단계로 고정
+                cropState = CropState.ReadyToHarvest;
+                //Debug.Log("작물이 다 자라서 수확할 준비가 되었습니다.");
+            }
+        }
+    }
+
     private void OnDestroy()    // 수확하여 파괴되면 호출
     {
         CropGrowthManager.Instance.crops.Remove(this);

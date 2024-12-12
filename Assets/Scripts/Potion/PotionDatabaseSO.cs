@@ -34,6 +34,18 @@ public class PotionData
             craftingTime = 30;
         }
     }
+
+    public void InitializecraftingTimeCheat(int i)
+    {
+        if (i == 0)
+        {
+            craftingTime = 3;
+        }
+        else
+        {
+            craftingTime = 30;
+        }
+    }
 }
 
 public static class PotionDatabase
@@ -78,6 +90,13 @@ public static class PotionDatabase
     {
         PotionData potion = GetPotionID(id);
         potion.InitializecraftingTime(0);
+    }
+
+    // 포션 제작 시간 짧게
+    public static void CheatCraftingTime(int id)
+    {
+        PotionData potion = GetPotionID(id);
+        potion.InitializecraftingTimeCheat(0);
     }
 
     // 포션 제작 시간 다시 길게
