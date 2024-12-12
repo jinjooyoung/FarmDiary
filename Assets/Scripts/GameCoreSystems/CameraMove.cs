@@ -33,14 +33,14 @@ public class CameraMove : MonoBehaviour
     // 카메라 이동 및 드래그 기능을 처리하는 함수
     public void CursorClick()
     {
-        // 마우스 오른쪽 버튼(1) 또는 휠 버튼(2)이 클릭되면 드래그 시작
-        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        // 휠 버튼(2)이 클릭되면 드래그 시작
+        if (Input.GetMouseButtonDown(2))
         {
             SetInitialDragAnchor();  // 드래그의 시작 위치를 설정합니다.
         }
         
-        // 마우스 오른쪽 버튼(1) 또는 휠 버튼(2)이 눌리고 있을 때 드래그 처리
-        if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
+        // 휠 버튼(2)이 눌리고 있을 때 드래그 처리
+        if (Input.GetMouseButton(2))
         {
             DragCamera();  
         }

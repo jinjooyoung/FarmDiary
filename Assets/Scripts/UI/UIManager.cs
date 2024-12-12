@@ -33,6 +33,11 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialSkipPanel;
     public GameObject GameQuitPanel;
 
+    [Header("작물 성장도 보여주는 패널")]
+    public GameObject GrowthCheckPanel; // 패널 오브젝트
+    public Text GrowthDegree;
+    public Crop hitCrop = null;
+
     [Header("Field Price Text")]
     public Text one;
     public Text two;
@@ -115,6 +120,76 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         UpdateStoragePanel();
+
+        if (Input.GetMouseButtonDown(1))  // 마우스 오른쪽 클릭
+        {
+            GrowthCheckPanel.SetActive(true);  // 패널 활성화
+
+            // 레이 캐스트로 충돌한 오브젝트 확인
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            if (hit.collider != null)  // 레이캐스트에 충돌한 오브젝트가 있으면
+            {
+                hitCrop = hit.collider.GetComponent<Crop>();  // Crop 스크립트 찾기
+
+                if (hitCrop != null)  // Crop 스크립트가 존재하면
+                {
+                    // 패널 위치를 레이 충돌 위치로 설정
+                    GrowthCheckPanel.transform.position = new Vector2(hit.point.x + 0.8f, hit.point.y+0.3f);
+
+                    if (hitCrop.cropState == Crop.CropState.NeedsWater)
+                    {
+                        GrowthDegree.text = $"0 / {hitCrop.growthTimes[3]}";
+                    }
+                    else if (hitCrop.cropState == Crop.CropState.ReadyToHarvest || hitCrop.cropState == Crop.CropState.Harvested)
+                    {
+                        GrowthDegree.text = $"{hitCrop.growthTimes[3]} / {hitCrop.growthTimes[3]}";
+                    }
+                    else
+                    {
+                        GrowthDegree.text = $"{(int)(CropGrowthManager.Instance.currentTime - hitCrop.growthStartTime)} / {hitCrop.growthTimes[3]}";
+                    }
+
+                    // 패널 활성화
+                    GrowthCheckPanel.SetActive(true);
+                }
+                else
+                {
+                    // Crop 스크립트가 없으면 패널 비활성화
+                    GrowthCheckPanel.SetActive(false);
+                }
+            }
+            else
+            {
+                // 충돌한 오브젝트가 없으면 패널 비활성화
+                GrowthCheckPanel.SetActive(false);
+            }
+        }
+
+        if (GrowthCheckPanel.activeSelf)
+        {
+            if (hitCrop != null)
+            {
+                if (hitCrop.cropState == Crop.CropState.NeedsWater)
+                {
+                    GrowthDegree.text = $"0 / {hitCrop.growthTimes[3]}";
+                }
+                else if (hitCrop.cropState == Crop.CropState.ReadyToHarvest || hitCrop.cropState == Crop.CropState.Harvested)
+                {
+                    GrowthDegree.text = $"{hitCrop.growthTimes[3]} / {hitCrop.growthTimes[3]}";
+                }
+                else
+                {
+                    GrowthDegree.text = $"{(int)(CropGrowthManager.Instance.currentTime - hitCrop.growthStartTime)} / {hitCrop.growthTimes[3]}";
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(1))  // 마우스 오른쪽 클릭 떼기
+        {
+            GrowthCheckPanel.SetActive(false);  // 패널 비활성화
+            hitCrop = null;
+        }
     }
 
     // 패널의 활성화 상태를 토글하는 메서드
