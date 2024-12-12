@@ -352,6 +352,11 @@ public class UIManager : MonoBehaviour
         foreach (var cropStorage in storage.storedCropsByID)
         {
             int id = cropStorage.cropID;
+
+            if (id == 62)
+            {
+                return;
+            }
             // 해당 작물의 업적 Goal 을 충족 시켰는가 = 클리어했는가
             if (AchievementsDatabase.GetCleared(id))
             {

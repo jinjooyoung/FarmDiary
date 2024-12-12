@@ -15,6 +15,7 @@ public class Cheat : MonoBehaviour
         {
             PlayerPrefs.SetInt("CropUnlocked_" + id, 1);
             AchievementsDatabase.AddProgressToAchievement(id, 10);
+            AchievementManager.Instance.SafeUpdateAchievementProgress(id);
         }
     }
 
