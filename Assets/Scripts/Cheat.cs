@@ -48,7 +48,7 @@ public class Cheat : MonoBehaviour
 
             if (id != 62)
             {
-                AchievementsDatabase.AddProgressToAchievement(id, 10);
+                AchievementsDatabase.AddProgressToAchievement(id, 100);
                 AchievementManager.Instance.SafeUpdateAchievementProgress(id);
             }
         }
@@ -65,6 +65,7 @@ public class Cheat : MonoBehaviour
     public void GrowthTimeOne()
     {
         CropGrowthManager.Instance.CheatOn = true;
+        Time.timeScale = 5f;
     }
 
     public void AllUnlockAchievement()

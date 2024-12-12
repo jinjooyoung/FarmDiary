@@ -56,7 +56,14 @@ public class CropGrowthManager : MonoBehaviour
                 }
                 else
                 {
-                    crop.CheckGrowth(currentTime); // 己厘 咯何 眉农
+                    if (CheatOn)
+                    {
+                        crop.CheckGrowthCheat(currentTime); // 己厘 咯何 眉农
+                    }
+                    else
+                    {
+                        crop.CheckGrowth(currentTime); // 己厘 咯何 眉农
+                    }
                 }
             }
 
