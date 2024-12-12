@@ -55,16 +55,83 @@ public class ObjectData
 
     public void Twice(int price, int i)
     {
-        if (ID < 9)
+        // ID에 맞게 가격을 설정할 때, 가격을 증가시키는 로직 추가
+        // 예시: ID별로 가격 증가에 대한 비율을 다르게 적용
+        switch (ID)
         {
-            if (i == 2)
-            {
-                BuyPrice = price * 2;
-            }
-            else if (i == -2)
-            {
-                BuyPrice = price / 2;
-            }
+            case 0: // 1x1 땅 (ID == 0)
+                    // 설치할 때 가격 증가 로직 (e.g., 1.13배)
+                if (i == 2)
+                {
+                    BuyPrice = (int)(price * 1.13f);
+                }
+                // 삭제할 때 가격 감소 로직 (e.g., 1/1.13배)
+                else if (i == -2)
+                {
+                    BuyPrice = (int)(price / 1.13f);
+                }
+                break;
+
+            case 1: // 2x2 땅 (ID == 1)
+                    // 설치할 때 가격 증가 로직 (e.g., 1.15배)
+                if (i == 2)
+                {
+                    BuyPrice = (int)(price * 1.15f);
+                }
+                // 삭제할 때 가격 감소 로직 (e.g., 1/1.15배)
+                else if (i == -2)
+                {
+                    BuyPrice = (int)(price / 1.15f);
+                }
+                break;
+
+            case 2: // 3x3 땅 (ID == 2)
+                    // 설치할 때 가격 증가 로직 (e.g., 1.18배)
+                if (i == 2)
+                {
+                    BuyPrice = (int)(price * 1.18f);
+                }
+                // 삭제할 때 가격 감소 로직 (e.g., 1/1.18배)
+                else if (i == -2)
+                {
+                    BuyPrice = (int)(price / 1.18f);
+                }
+                break;
+
+            case 3: // 4x4 땅 (ID == 3)
+                    // 설치할 때 가격 증가 로직 (e.g., 1.2배)
+                if (i == 2)
+                {
+                    BuyPrice = (int)(price * 1.2f);
+                }
+                // 삭제할 때 가격 감소 로직 (e.g., 1/1.2배)
+                else if (i == -2)
+                {
+                    BuyPrice = (int)(price / 1.2f);
+                }
+                break;
+            case 4: // 솥 (ID == 4)
+                    // 설치할 때 가격 증가 로직 (e.g., 1.63배)
+                if (i == 2)
+                {
+                    BuyPrice = (int)(price * 1.63f);
+                }
+                // 삭제할 때 가격 감소 로직 (e.g., 1/1.2배)
+                else if (i == -2)
+                {
+                    BuyPrice = (int)(price / 1.63f);
+                }
+                break;
+
+            default:
+                // 추가적인 땅 크기에 대한 로직이 필요하면 여기서 처리
+                break;
+        }
+
+        // 최댓값을 2억으로 제한
+        if (BuyPrice > 200000000)
+        {
+            BuyPrice = 200000000;
         }
     }
 
