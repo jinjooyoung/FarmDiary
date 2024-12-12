@@ -72,6 +72,30 @@ public class ObjectData
     {
         BuyPrice = amount;
     }
+
+    public void ResetPrice(int i)
+    {
+        if (i == 0)
+        {
+            BuyPrice = 200;
+        }
+        else if (i == 1)
+        {
+            BuyPrice = 600;
+        }
+        else if (i == 2)
+        {
+            BuyPrice = 1000;
+        }
+        else if (i == 3)
+        {
+            BuyPrice = 2000;
+        }
+        else if (i == 4)
+        {
+            BuyPrice = 50000;
+        }
+    }
 }
 
 public static class ObjectsDatabase
@@ -86,6 +110,15 @@ public static class ObjectsDatabase
     public static ObjectData GetObjectByID(int id)
     {
         return database.objectsData.Find(obj => obj.ID == id);
+    }
+
+    public static void ResetPrice()
+    {
+        for (int i = 0; i <= 4; i++)
+        {
+            ObjectData objectData = GetObjectByID(i);      // 해당 ID의 오브젝트 데이터를 얻어옴
+            objectData.ResetPrice(i);
+        }
     }
 
     // 가격을 증가시키는 메서드

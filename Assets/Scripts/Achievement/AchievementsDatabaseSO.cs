@@ -78,8 +78,7 @@ public class AchievementData
                         AchievementManager.Instance.achievementUIs[ID + 4].Initialize(ID);
                     }
 
-                    // 업적 ID를 스낵바 리스트에 추가
-                    AchievementSnackBar.Instance.achievementIDs.Add(ID);
+                    AchievementSnackBar.Instance.ShowSnackbar(ID);
                 }
             }
         }
@@ -119,6 +118,26 @@ public class AchievementData
                 if (Progress >= Goal)  // 목표에 도달하면 클리어 처리
                 {
                     Clear = true;
+                    AchievementSnackBar.Instance.ShowSnackbar(ID);
+                }
+            }
+        }
+    }
+
+    public void SetProgressBySave(int amount)
+    {
+        if (Clear)
+        {
+            return;
+        }
+        else
+        {
+            if (IsUnlocked)  // 잠금 해제된 경우에만 진행도 설정
+            {
+                Progress = Mathf.Min(amount, Goal);  // 진행도가 목표를 초과하지 않도록 설정
+                if (Progress >= Goal)  // 목표에 도달하면 클리어 처리
+                {
+                    Clear = true;
                 }
             }
         }
@@ -141,6 +160,13 @@ public class AchievementData
             IsUnlocked = true;
         }
     }
+
+    public void LockAndClearReset()
+    {
+        IsUnlocked = false;
+        Clear = false;
+        Progress = 0;
+    }
 }
 
 public static class AchievementsDatabase
@@ -151,7 +177,10 @@ public static class AchievementsDatabase
     public static void Initialize(AchievementsDatabaseSO db)
     {
         database = db;
+    }
 
+    public static void UnlockFirst()
+    {
         for (int i = 1; i <= 5; i++)    // 초기에 진행할 수 있는 (잠금해제(클리어와 다름)되어있는) 업적
         {
             UnlockAchievement(i);
@@ -165,6 +194,21 @@ public static class AchievementsDatabase
         UnlockAchievement(11);
         UnlockAchievement(48);
         UnlockAchievement(62);
+    }
+
+    public static void ResetAllAchievements()
+    {
+        for (int i = 1; i <= 76; i++)
+        {
+            AchievementData achievement = GetAchievementByID(i);
+            achievement.LockAndClearReset();
+        }
+
+        for (int a = 1; a <=5; a++)
+        {
+            AchievementData achievement = GetAchievementByID(-a);
+            achievement.LockAndClearReset();
+        }
     }
 
     // ID로 업적 가져오기

@@ -163,19 +163,21 @@ public class TutorialUI : MonoBehaviour
                 // 최근에 설치한 오브젝트의 이름이 저거라면
                 if (OBJPlacer.placedGameObjects.Count > 0 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "1(Clone)")     // 밭 설치
                 {
-                    NextPanel();
                     FieldButton2.interactable = false;
                     placementSystem.StopPlacement();
+                    AchievementsDatabase.AddProgressToAchievement(1, 1);
+                    NextPanel();
                 }
             }
             else if (index == 10)
             {
                 if (OBJPlacer.placedGameObjects.Count > 1 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "9(Clone)")     // 아마란스 설치
                 {
-                    NextPanel();
                     placementSystem.StopPlacement();
                     OBJPlacer.placedObjectIndex = 0;
                     created = 0;
+                    AchievementsDatabase.AddProgressToAchievement(2, 1);
+                    NextPanel();
                 }
             }
             else if (index == 12)
@@ -239,9 +241,8 @@ public class TutorialUI : MonoBehaviour
                     UIManager.instance.SeedButtons[2].interactable = false;
                     UIManager.instance.SeedButtons[39].interactable = false;
                     created = 3;
-
-                    NextPanel();
                     placementSystem.StopPlacement();
+                    NextPanel();
                 }
             }
             else if (index == 13)
@@ -251,7 +252,6 @@ public class TutorialUI : MonoBehaviour
                     if (Mathf.Abs(mainCamera.transform.position.x) > 5.5f)
                     {
                         NextPanel();
-                        mainCamera.transform.position = new Vector3(0, 0, -10);
                     }
                 }
             }
@@ -266,8 +266,9 @@ public class TutorialUI : MonoBehaviour
             {
                 if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "4(Clone)")     // 솥 설치
                 {
-                    NextPanel();
                     placementSystem.StopPlacement();
+                    AchievementsDatabase.AddProgressToAchievement(-4, 1);
+                    NextPanel();
                 }
             }
             else if (index == 20)
@@ -311,6 +312,7 @@ public class TutorialUI : MonoBehaviour
                 // 포션 제작 완료 상태가 되면
                 if (potionUIManager.currentPot.currentState == PotState.Completed)
                 {
+                    AchievementsDatabase.AddProgressToAchievement(-5, 1);
                     NextPanel();
                 }
             }
@@ -319,6 +321,7 @@ public class TutorialUI : MonoBehaviour
                 // 포션 판매 눌러서 솥 상태가 Emtpy가 되면
                 if (potionUIManager.currentPot.currentState == PotState.Empty)
                 {
+                    AchievementsDatabase.AddProgressToAchievement(5, 1);
                     NextPanel();
                 }
             }

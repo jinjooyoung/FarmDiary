@@ -90,8 +90,8 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("TutorialDone", 0) == 0 || !Directory.Exists(Application.dataPath + "/Saves/")) // 첫 실행이면 = 세이브 데이터가 없으면
         {
-            currentCoin = DefaultCoin;
-            InitializePlayerPrefs();
+            ResetGame(false);
+            AchievementsDatabase.UnlockFirst();
             SaveGameDatasAsync();
         }
         else
@@ -123,11 +123,20 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame(bool tutorialSkip)
     {
-        Time.timeScale = 0;
+        if (UIManager.instance.tutorialSkipPanel.activeSelf)
+        {
+            Time.timeScale = 0;
+            UIManager.instance.tutorialSkipPanel.SetActive(false);
+            UIManager.instance.GameQuitPanel.SetActive(true);
+        }
 
         InitializePlayerPrefs();
         SaveSystem.DeleteSaveFolder();
+        SaveSystem.Init();
         PlayerPrefs.SetInt(CoinKey, 150160);
+        AchievementsDatabase.Initialize(achievementsDatabase);
+        AchievementsDatabase.ResetAllAchievements();
+        ObjectsDatabase.ResetPrice();
 
         if (tutorialSkip)
         {
@@ -140,11 +149,14 @@ public class GameManager : MonoBehaviour
             ObjectsDatabase.InitializeTutorialGrowthTimes(48);
             PotionDatabase.TutorialEndCraftingTime(48);
 
-            AchievementsDatabase.Initialize(achievementsDatabase);
+            ObjectsDatabase.PriceIncrease(1);
+            UIManager.instance.two.text = "1,200";
+            ObjectsDatabase.PriceIncrease(4);
+            UIManager.instance.Pot.text = "100,000";
+
             AchievementsDatabase.TutorialAchievement();
         }
-        UIManager.instance.tutorialSkipPanel.SetActive(false);
-        UIManager.instance.GameQuitPanel.SetActive(true);
+        AchievementManager.Instance.InitializeAchievementUIs();
     }
 
     public void QuitGame()

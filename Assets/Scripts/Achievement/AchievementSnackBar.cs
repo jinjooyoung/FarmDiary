@@ -7,23 +7,14 @@ public class AchievementSnackBar : MonoBehaviour
 {
     public static AchievementSnackBar Instance;
 
-    [Header("업적 스낵바 부모 오브젝트")]
-    public GameObject snackbarUI;       // 업적 스낵바 게임오브젝트
+    [SerializeField] private GameObject snackbarUI;  // 스낵바 UI 오브젝트
+    [SerializeField] private Text DesText; // 설명 텍스트
+    [SerializeField] private Image achievementIcon; // 아이콘 이미지
 
-    [Header("업적 스낵바 구성 요소")]
-    public Image achievementIcon;       // 클리어된 업적 아이콘
-    public Text DesText;                // 설명 텍스트
-
-    public float moveSpeed = 2f;        // 스낵바 이동 속도
-    public float popUpHeight = 100f;    // 스낵바 보여질 위치의 높이
-    public float waitTime = 3f;         // 스낵바가 떠오르고 멈춰있는 시간
-
-    // 스낵바가 표시될 업적 ID를 관리할 리스트
-    public List<int> achievementIDs = new List<int>();
-    // 업적의 진행 상태 추적 (중복 표시 방지)
-    public Dictionary<int, bool> snackDoneDict = new Dictionary<int, bool>();
-
-    private int ID;
+    // 큐는 선입선출 리스트 같은 것으로 데이터를 큐에 추가하고 꺼낼 수 있음
+    // 꺼낼때는 무조건 처음 넣은 데이터부터 꺼냄, foreach 중에는 배열의 원소가 변경되면 오류가 생기지만 큐는 생기지 않음
+    private Queue<int> achievementQueue = new Queue<int>(); // 업적 ID를 저장할 큐
+    private bool isDisplaying = false; // 현재 스낵바를 표시 중인지 여부
 
     private void Awake()
     {
@@ -38,69 +29,70 @@ public class AchievementSnackBar : MonoBehaviour
         }
     }
 
-    public void SnackBarInitialize(int id)
+    public void ShowSnackbar(int id)
     {
-        ID = id;
+        // 큐에 업적 ID 추가
+        achievementQueue.Enqueue(id);
 
-        string name = AchievementsDatabase.GetName(ID);                 // 업적 이름
-        achievementIcon.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{ID}");
-
-        DesText.text = "업적 [" + name + "] 달성!";
+        // 스낵바를 표시 중이 아니라면 처리 시작
+        if (!isDisplaying)
+        {
+            StartCoroutine(DisplaySnackbarCoroutine());
+        }
     }
 
-    // 스낵바 애니메이션 코루틴
-    public IEnumerator SnackbarAnimation()
+    private IEnumerator DisplaySnackbarCoroutine()
     {
-        // achievementIDs 리스트에서 순차적으로 하나씩 업적을 처리
-        while (achievementIDs.Count > 0)
+        isDisplaying = true;
+
+        while (achievementQueue.Count > 0)
         {
-            int currentID = achievementIDs[0];  // 첫 번째 업적 ID를 가져옴
+            int id = achievementQueue.Dequeue();
 
-            if (snackDoneDict.ContainsKey(currentID) && !snackDoneDict[currentID])
+            // 초기화
+            SnackBarInitialize(id);
+
+            // 스낵바 표시 애니메이션 (위로 올라오기)
+            float startY = -3.43f;
+            float targetY = -2.66f;
+            float duration = 0.5f;
+            float elapsed = 0f;
+
+            snackbarUI.transform.localPosition = new Vector3(snackbarUI.transform.localPosition.x, startY, snackbarUI.transform.localPosition.z);
+
+            while (elapsed < duration)
             {
-                // 업적 스낵바 초기화
-                SnackBarInitialize(currentID);
-
-                // 초기 위치 저장
-                Vector3 initialPosition = snackbarUI.transform.position;
-
-                // 스낵바를 위로 이동 (3초 대기 전)
-                float elapsedTime = 0f;
-                while (elapsedTime < 1f)
-                {
-                    snackbarUI.transform.position = Vector3.Lerp(initialPosition, initialPosition + Vector3.up * popUpHeight, elapsedTime);
-                    elapsedTime += Time.deltaTime * moveSpeed;
-                    yield return null;
-                }
-                snackbarUI.transform.position = initialPosition + Vector3.up * popUpHeight;
-
-                // 3초 대기
-                yield return new WaitForSeconds(waitTime);
-
-                // 스낵바를 아래로 천천히 이동
-                elapsedTime = 0f;
-                Vector3 targetPosition = initialPosition;
-                while (elapsedTime < 1f)
-                {
-                    snackbarUI.transform.position = Vector3.Lerp(snackbarUI.transform.position, targetPosition, elapsedTime);
-                    elapsedTime += Time.deltaTime * moveSpeed;
-                    yield return null;
-                }
-                snackbarUI.transform.position = targetPosition;
-
-                // 해당 업적에 대한 표시 완료 처리
-                snackDoneDict[currentID] = true;
-
-                // 업적 ID를 리스트에서 제거
-                achievementIDs.RemoveAt(0);
-            }
-            else
-            {
-                // 이미 표시된 업적은 건너뛰고 리스트에서 제거
-                achievementIDs.RemoveAt(0);
+                float newY = Mathf.Lerp(startY, targetY, elapsed / duration);
+                snackbarUI.transform.localPosition = new Vector3(snackbarUI.transform.localPosition.x, newY, snackbarUI.transform.localPosition.z);
+                elapsed += Time.deltaTime;
+                yield return null;
             }
 
-            yield return null;
+            snackbarUI.transform.localPosition = new Vector3(snackbarUI.transform.localPosition.x, targetY, snackbarUI.transform.localPosition.z);
+
+            // 3초 대기
+            yield return new WaitForSeconds(3f);
+
+            // 스낵바 숨기기 애니메이션 (아래로 내려가기)
+            elapsed = 0f;
+            while (elapsed < duration)
+            {
+                float newY = Mathf.Lerp(targetY, startY, elapsed / duration);
+                snackbarUI.transform.localPosition = new Vector3(snackbarUI.transform.localPosition.x, newY, snackbarUI.transform.localPosition.z);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            snackbarUI.transform.localPosition = new Vector3(snackbarUI.transform.localPosition.x, startY, snackbarUI.transform.localPosition.z);
         }
+
+        isDisplaying = false; // 모든 업적 처리 완료
+    }
+
+    private void SnackBarInitialize(int id)
+    {
+        string name = AchievementsDatabase.GetName(id); // 업적 이름 가져오기
+        achievementIcon.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{id}");
+        DesText.text = $"업적 [{name}] 달성!";
     }
 }

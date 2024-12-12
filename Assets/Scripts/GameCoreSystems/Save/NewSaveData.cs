@@ -557,7 +557,7 @@ public class NewSaveData : MonoBehaviour
             AchievementsSOData savedAchievementData = achievementWrapper.DataList[i];
             AchievementData achievement = achievementsDatabaseSO.achievementsData[i];
 
-            achievement.SetProgress(savedAchievementData.progressData);
+            achievement.SetProgressBySave(savedAchievementData.progressData);
 
             if (savedAchievementData.IsUnlockedData)
             {

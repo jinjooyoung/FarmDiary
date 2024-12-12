@@ -27,8 +27,6 @@ public class AchievementManager : MonoBehaviour
     private void Start()
     {
         AchievementsDatabase.Initialize(achievementsDatabase);
-
-        // 각 업적 UI를 초기화
         InitializeAchievementUIs();
     }
 

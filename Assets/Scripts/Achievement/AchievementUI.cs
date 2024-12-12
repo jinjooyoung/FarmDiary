@@ -15,7 +15,6 @@ public class AchievementUI : MonoBehaviour
     [SerializeField] private Image clearIcon;           // 클리어 아이콘
 
     private int ID; // 해당 UI가 관리하는 업적 ID
-    private bool snackDone = false;
 
     // UI 초기화
     public void Initialize(int id)
@@ -76,16 +75,6 @@ public class AchievementUI : MonoBehaviour
             progressText.color = Color.white;
             clearIcon.color = Color.white;
             rewardIcon.color = Color.white;
-
-            if (snackDone == false)
-            {
-                // 스낵바가 아직 표시되지 않았다면 애니메이션 실행
-                if (!AchievementSnackBar.Instance.snackDoneDict.ContainsKey(ID) || !AchievementSnackBar.Instance.snackDoneDict[ID])
-                {
-                    StartCoroutine(AchievementSnackBar.Instance.SnackbarAnimation());
-                    snackDone = true;
-                }
-            }
         }
 
         // 업적 아이콘 설정
