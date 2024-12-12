@@ -144,6 +144,10 @@ public class TutorialUI : MonoBehaviour
                 // ¼³Ä¡ ÅÇ on
                 if (DecoPanel.activeSelf)
                 {
+                    if (index == 3)
+                    {
+                        FieldButton2.interactable = true;
+                    }
                     NextPanel();
                 }
             }
@@ -152,6 +156,7 @@ public class TutorialUI : MonoBehaviour
                 // ¾¾¾Ñ ÅÇ on
                 if (SeedPanel.activeSelf)
                 {
+                    UIManager.instance.SeedButtons[0].interactable = true;
                     UIManager.instance.SeedButtons[1].interactable = false;
                     UIManager.instance.SeedButtons[2].interactable = false;
                     UIManager.instance.SeedButtons[39].interactable = false;
@@ -173,6 +178,7 @@ public class TutorialUI : MonoBehaviour
             {
                 if (OBJPlacer.placedGameObjects.Count > 1 && OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "9(Clone)")     // ¾Æ¸¶¶õ½º ¼³Ä¡
                 {
+                    UIManager.instance.SeedButtons[0].interactable = false;
                     placementSystem.StopPlacement();
                     OBJPlacer.placedObjectIndex = 0;
                     created = 0;
@@ -221,6 +227,7 @@ public class TutorialUI : MonoBehaviour
                 if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "10(Clone)")
                 {
                     Debug.LogWarning("¾Æ½ºÆÄ¶ó°Å½º ¼³Ä¡µÊ");
+                    placementSystem.StopPlacement();
                     OBJPlacer.placedObjectIndex = 0;
                     created = 1;
                 }
@@ -228,6 +235,7 @@ public class TutorialUI : MonoBehaviour
                 if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "11(Clone)")
                 {
                     Debug.LogWarning("µµ¶óÁö ¼³Ä¡µÊ");
+                    placementSystem.StopPlacement();
                     OBJPlacer.placedObjectIndex = 0;
                     created = 2;
                 }
@@ -235,6 +243,7 @@ public class TutorialUI : MonoBehaviour
                 if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "48(Clone)")
                 {
                     Debug.LogWarning("¸Çµå·¹ÀÌÅ© ¼³Ä¡µÊ");
+                    placementSystem.StopPlacement();
                     OBJPlacer.placedObjectIndex = 0;
                     UIManager.instance.SeedButtons[0].interactable = false;
                     UIManager.instance.SeedButtons[1].interactable = false;
@@ -266,6 +275,7 @@ public class TutorialUI : MonoBehaviour
             {
                 if (OBJPlacer.placedGameObjects[OBJPlacer.placedObjectIndex].name == "4(Clone)")     // ¼Ü ¼³Ä¡
                 {
+                    Button4.interactable = false;
                     placementSystem.StopPlacement();
                     AchievementsDatabase.AddProgressToAchievement(-4, 1);
                     NextPanel();
@@ -341,7 +351,7 @@ public class TutorialUI : MonoBehaviour
         PotionDatabase.TutorialCraftingTime(48);
 
         FieldButton1.interactable = false;
-        FieldButton2.interactable = true;
+        FieldButton2.interactable = false;
         FieldButton3.interactable = false;
         FieldButton4.interactable = false;
         Button1.interactable = false;

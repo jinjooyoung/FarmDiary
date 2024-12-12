@@ -78,6 +78,14 @@ public class UIManager : MonoBehaviour
     {
         UpdateButtons();
 
+        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
+        {
+            SeedButtons[0].interactable = false;
+            SeedButtons[1].interactable = false;
+            SeedButtons[2].interactable = false;
+            SeedButtons[39].interactable = false;
+        }
+
         // 사운드 토글 버튼 클릭 이벤트 추가
         soundToggleButton.onClick.AddListener(() => SoundManager.instance.ToggleSound());
 
@@ -195,16 +203,29 @@ public class UIManager : MonoBehaviour
     // 패널의 활성화 상태를 토글하는 메서드
     public void TogglePanel(GameObject panel)
     {
-        // 모든 패널을 먼저 닫기
-        CloseAllPanels();
-
         if (panel == PotionPanel)
         {
             PotionUIManager.instance.InitializePotionUI();
         }
 
+        if (panel == DecoPanel && PlayerPrefs.GetInt("TutorialDone", 0) == 0)     // 튜토리얼을 끝내지 않았다면
+        {
+            Debug.LogWarning("튜토리얼 데코패널 리턴됨");
+            return;
+        }
+
+        if (panel == settingPanel && PlayerPrefs.GetInt("TutorialDone", 0) == 0)     // 튜토리얼을 끝내지 않았다면
+        {
+            Debug.LogWarning("튜토리얼 설정패널 리턴됨");
+            return;
+        }
+
+        // 모든 패널을 먼저 닫기
+        CloseAllPanels();
         // 클릭된 패널만 현재 상태의 반대로 설정
         panel.SetActive(!panel.activeSelf);
+
+
     }
 
     public void TogglePanelWithSound(GameObject panel)

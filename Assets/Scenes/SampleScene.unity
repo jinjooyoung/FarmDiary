@@ -10299,7 +10299,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1675917832}
   m_HandleRect: {fileID: 1675917831}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1
   m_Size: 0.3523136
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -36580,6 +36580,7 @@ MonoBehaviour:
   material3: {fileID: 1847348949}
   startButton: {fileID: 925136807}
   endButton: {fileID: 1784505067}
+  ResetButton: {fileID: 1661789113}
   storage: {fileID: 1642072208}
   currentButton: 0
 --- !u!1 &854978668

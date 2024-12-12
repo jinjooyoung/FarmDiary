@@ -42,6 +42,7 @@ public class PotionUIManager : MonoBehaviour
     [Header("시작 & 종료 버튼")]
     public Button startButton;      // 시작 버튼
     public Button endButton;        // 종료 버튼
+    public Button ResetButton;      
 
     [Header("참조")]
     public Storage storage;
@@ -232,6 +233,7 @@ public class PotionUIManager : MonoBehaviour
         material1.interactable = true;
         material2.interactable = true;
         material3.interactable = true;
+        ResetButton.interactable = true;
 
         // 제작 시간 UI 초기화
         craftingTime.text = null;
@@ -264,6 +266,7 @@ public class PotionUIManager : MonoBehaviour
         SubtractCrop(currentPot.basicMaterial[2]);
 
         currentPot.ChangeState(PotState.Crafting);
+        ResetButton.interactable = false;
         currentPot.animator.SetBool("IsCrafting", true);
         currentPot.check = true;
     }
@@ -298,7 +301,7 @@ public class PotionUIManager : MonoBehaviour
         material1.interactable = true;
         material2.interactable = true;
         material3.interactable = true;
-
+        ResetButton.interactable = true;
         startButton.interactable = false;
         endButton.interactable = false;
         currentButton = -1;
@@ -345,6 +348,7 @@ public class PotionUIManager : MonoBehaviour
         }
 
         startButton.interactable = false;
+        ResetButton.interactable = true;
         endButton.interactable = false;
         currentButton = -1;
     }
@@ -356,6 +360,7 @@ public class PotionUIManager : MonoBehaviour
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
         magicCircleImage.color = Color.yellow;
 
+        ResetButton.interactable = true;
         magic.interactable = true;
         material1.interactable = true;
         material2.interactable = true;
@@ -411,6 +416,7 @@ public class PotionUIManager : MonoBehaviour
         material3.interactable = false;
         startButton.interactable = false;
         endButton.interactable = false;
+        ResetButton.interactable = false;
         currentButton = -1;
     }
 
@@ -452,6 +458,7 @@ public class PotionUIManager : MonoBehaviour
         material3.interactable = false;
         startButton.interactable = false;
         endButton.interactable = true;
+        ResetButton.interactable = false;
         currentButton = -1;
     }
 

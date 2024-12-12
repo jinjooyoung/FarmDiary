@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         // 타이머 업데이트
         autoSaveTimer -= Time.deltaTime;
 
-        if (autoSaveTimer <= 0)
+        if (autoSaveTimer <= 0 && PlayerPrefs.GetInt("TutorialDone", 0) != 0)
         {
             SaveGameDatasAsync();
             Debug.Log("자동 저장 완료!");
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
     // 게임 종료 시 호출되는 메서드
     void OnApplicationQuit()
     {
-        if (UIManager.instance.ResetSurePanel.activeSelf || UIManager.instance.tutorialSkipPanel.activeSelf || UIManager.instance.GameQuitPanel.activeSelf)
+        if (UIManager.instance.ResetSurePanel.activeSelf || UIManager.instance.tutorialSkipPanel.activeSelf || UIManager.instance.GameQuitPanel.activeSelf || PlayerPrefs.GetInt("TutorialDone", 0) == 0)
         {
             return;
         }
