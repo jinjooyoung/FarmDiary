@@ -26,7 +26,7 @@ MonoBehaviour:
     - 0
   - <Name>k__BackingField: 2x2_Field
     <ID>k__BackingField: 1
-    <BuyPrice>k__BackingField: 2400
+    <BuyPrice>k__BackingField: 9600
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 7663952579977179112, guid: 502c9924be1b55e4887880762919941f, type: 3}
     <IsCrop>k__BackingField: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
     - 0
   - <Name>k__BackingField: Pot
     <ID>k__BackingField: 4
-    <BuyPrice>k__BackingField: 100000
+    <BuyPrice>k__BackingField: 40000
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 5030730579419075711, guid: abbdce9b1f434eb429e1ad4dbc7d32b2, type: 3}
     <IsCrop>k__BackingField: 0

@@ -77,7 +77,9 @@ public class AchievementData
                     {
                         AchievementManager.Instance.achievementUIs[ID + 4].Initialize(ID);
                     }
-                    
+
+                    // 업적 ID를 스낵바 리스트에 추가
+                    AchievementSnackBar.Instance.achievementIDs.Add(ID);
                 }
             }
         }
