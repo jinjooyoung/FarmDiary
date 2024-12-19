@@ -308,9 +308,9 @@ public static class AchievementsDatabase
 
     public static void KeyboardProgress()
     {
-        AddProgressToAchievement(6, 1);
-        AddProgressToAchievement(7, 1);
-        AddProgressToAchievement(8, 1);
+        AddProgressToAchievement(6, 2);
+        AddProgressToAchievement(7, 2);
+        AddProgressToAchievement(8, 2);
     }
 
     public static void CoinProgress(int coin)

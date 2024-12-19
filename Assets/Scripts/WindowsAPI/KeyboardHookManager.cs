@@ -79,7 +79,7 @@ public class KeyboardHookManager : MonoBehaviour
                         keyPressCount++; // 키 입력 횟수 증가
 
                         // 키보드 관련 업적 1씩 증가 & 클리어
-                        AchievementsDatabase.AddProgressToAchievement(3, 1);
+                        AchievementsDatabase.AddProgressToAchievement(3, 2);
 
                         // 키보드 업적 해금
                         if (AchievementsDatabase.GetCleared(3))
@@ -91,7 +91,7 @@ public class KeyboardHookManager : MonoBehaviour
                             PlayerPrefs.SetInt("KeyboardAllClear", 1);      // 키보드 관련 업적을 다 클리어 해서 1로 변경.
                         }
                     }
-                    GameManager.AddCoins(1);
+                    GameManager.AddCoins(2);
                 }
                 keyStates[vkCode] = true; // 키 상태를 '눌림'으로 설정
                 //UpdateUIText();
