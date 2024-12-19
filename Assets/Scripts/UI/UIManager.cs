@@ -296,6 +296,7 @@ public class UIManager : MonoBehaviour
     public void ButtonSetting()
     {
         int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 기본값은 2 (세 번째 작물까지 해금)
+        int unlockedMagicIndex = PlayerPrefs.GetInt("UnlockMagicPlant", 39);       // 현재 해금된 인덱스 불러오기
 
         for (int i = 0; i < SeedButtons.Length; i++)
         {
@@ -305,39 +306,56 @@ public class UIManager : MonoBehaviour
             {
                 Image iconImage = childTransform.GetComponent<Image>();     // 해당 버튼 작물의 이미지 오브젝트의 이미지 컴포넌트
 
-                if (unlockedIndex >= i)     // 해금되었을 때
+                if (i < 39)
                 {
-                    iconImage.color = new Color(255, 255, 255, 255);
-                    StorageImages[i].color = new Color(255, 255, 255, 255);
+                    if (unlockedIndex >= i)     // 해금되었을 때
+                    {
+                        iconImage.color = new Color(255, 255, 255, 255);
+                        StorageImages[i].color = new Color(255, 255, 255, 255);
+                    }
+                    else                        // 해금되지 않았을 때
+                    {
+                        iconImage.color = new Color(0, 0, 0, 0.5f);
+                        StorageImages[i].color = new Color(0, 0, 0, 0.5f);
+                    }
                 }
-                else                        // 해금되지 않았을 때
+                else
                 {
-                    iconImage.color = new Color(0, 0, 0, 0.5f);
-                    StorageImages[i].color = new Color(0, 0, 0, 0.5f);
+                    if (unlockedMagicIndex >= i)     // 해금되었을 때
+                    {
+                        iconImage.color = new Color(255, 255, 255, 255);
+                        StorageImages[i].color = new Color(255, 255, 255, 255);
+                    }
+                    else                        // 해금되지 않았을 때
+                    {
+                        iconImage.color = new Color(0, 0, 0, 0.5f);
+                        StorageImages[i].color = new Color(0, 0, 0, 0.5f);
+                    }
                 }
             }
         }
 
-        Transform magic = SeedButtons[39].transform.GetChild(0);        // 마법 작물 첫 번째
+        /*Transform magic = SeedButtons[39].transform.GetChild(0);        // 마법 작물 첫 번째
         Image magicImage = magic.GetComponent<Image>();
         magicImage.color = new Color(255, 255, 255, 255);
-        StorageImages[39].color = new Color(255, 255, 255, 255);
+        StorageImages[39].color = new Color(255, 255, 255, 255);*/
     }
 
     // 모든 씨앗 버튼의 상태를 업데이트하는 메서드
     public void UpdateButtons()
     {
         int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 기본값은 2 (세 번째 작물까지 해금)
+        int unlockedMagicIndex = PlayerPrefs.GetInt("UnlockMagicPlant", 39);       // 현재 해금된 인덱스 불러오기
 
         for (int i = 0; i < SeedButtons.Length; i++)
         {
-            if (i == 39)    // 맨드레이크는 항사 true
+            if (i < 39)
             {
-                SeedButtons[i].interactable = true;
+                SeedButtons[i].interactable = (i <= unlockedIndex);         // 해금된 인덱스 이하의 버튼만 활성화
             }
             else
             {
-                SeedButtons[i].interactable = (i <= unlockedIndex);         // 해금된 인덱스 이하의 버튼만 활성화
+                SeedButtons[i].interactable = (i <= unlockedMagicIndex);         // 해금된 인덱스 이하의 버튼만 활성화
             }
         }
 
@@ -347,7 +365,8 @@ public class UIManager : MonoBehaviour
     // 작물이 수확되거나 갯수가 변경될 때 호출되는 메서드
     public void CheckAndUnlockCrops()
     {
-        int unlockedIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 현재 해금된 인덱스 불러오기
+        int unlockedBasicIndex = PlayerPrefs.GetInt("UnlockPlant", 2);       // 현재 해금된 인덱스 불러오기
+        int unlockedMagicIndex = PlayerPrefs.GetInt("UnlockMagicPlant", 39);       // 현재 해금된 인덱스 불러오기
 
         foreach (var cropStorage in storage.storedCropsByID)
         {
@@ -373,20 +392,22 @@ public class UIManager : MonoBehaviour
                     AchievementManager.Instance.SafeUpdateAchievementProgress(id);
                     AchievementManager.Instance.SafeUpdateAchievementProgress(id + 1);
 
-                    if (id > 10)
+                    if (id > 10 && id < 47)
                     {
-                        unlockedIndex++; // 해금된 작물 인덱스 증가
-                        PlayerPrefs.SetInt("UnlockPlant", unlockedIndex); // 전체 해금 인덱스 저장
+                        unlockedBasicIndex++; // 해금된 작물 인덱스 증가
+                        PlayerPrefs.SetInt("UnlockPlant", unlockedBasicIndex); // 전체 해금 인덱스 저장
+                        SeedButtons[unlockedBasicIndex].interactable = true; // 해당 버튼 활성화
                     }
-
-                    if (id >=47)    // 마법작물 심기 가능
+                    else if (id > 47)
                     {
+                        unlockedMagicIndex++; // 해금된 마법 작물 인덱스 증가
+                        PlayerPrefs.SetInt("UnlockMagicPlant", unlockedMagicIndex); // 마법 해금 인덱스 저장
                         AchievementsDatabase.UnlockAchievement(id + 15);        // 해당 작물 포션 업적 해금
                         AchievementManager.Instance.SafeUpdateAchievementProgress(id + 15);     // 해당 업적 UI 업데이트
+                        SeedButtons[unlockedMagicIndex].interactable = true; // 해당 버튼 활성화
                     }
 
                     ButtonSetting();
-                    SeedButtons[unlockedIndex].interactable = true; // 해당 버튼 활성화
                     // 나중에 위의 문장 삭제하고 새 씨앗 버튼 해금 버튼으로 수정한 다음 그거 누르면 UpdateButtons 호출되도록.
                 }
             }

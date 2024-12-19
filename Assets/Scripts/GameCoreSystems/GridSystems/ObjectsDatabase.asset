@@ -811,7 +811,7 @@ MonoBehaviour:
     <ID>k__BackingField: 117
     <BuyPrice>k__BackingField: 1000
     <Size>k__BackingField: {x: 1, y: 2}
-    <Prefab>k__BackingField: {fileID: 5660030049725805273, guid: db64b204f7f8ac1428d43bc6e6fb30ab, type: 3}
+    <Prefab>k__BackingField: {fileID: 3205552260438483798, guid: a5c5a7cd44fcc5a4a906bbdee07840e6, type: 3}
     <IsCrop>k__BackingField: 0
     <GrowthTimes>k__BackingField: []
   - <Name>k__BackingField: Scarecrow_2x2

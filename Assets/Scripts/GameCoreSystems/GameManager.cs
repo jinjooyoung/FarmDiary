@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
 
         // 전체 해금 인덱스도 초기화 (Optional)
         PlayerPrefs.SetInt("UnlockPlant", 2); // UnlockPlant도 초기화
+        PlayerPrefs.SetInt("UnlockMagicPlant", 39); // UnlockMagicPlant 초기화
         PlayerPrefs.Save(); // 변경사항 저장
     }
 
@@ -130,6 +131,7 @@ public class GameManager : MonoBehaviour
             UIManager.instance.GameQuitPanel.SetActive(true);
         }
 
+        PlayerPrefs.SetInt("CheatedKey", 0);
         InitializePlayerPrefs();
         SaveSystem.DeleteSaveFolder();
         SaveSystem.Init();
