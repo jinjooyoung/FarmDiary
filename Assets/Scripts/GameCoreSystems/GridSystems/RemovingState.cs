@@ -41,10 +41,31 @@ public class RemovingState : IBuildingState
         else
         {
             gameObjectIndex = selectedData.GetRepresentationIndex(gridPosition);    // 그 위치의 오브젝트의 인덱스를 가져옴
+
             if (gameObjectIndex == -1)      // 삭제할 오브젝트가 존재하지 않을 때
             {
                 return;
             }
+
+            if (placedOBJData.placedFields.TryGetValue(gridPosition, out var valueFields))    // 필드 딕셔너리에 값이 존재한다면 = 삭제한 오브젝트가 밭이라면
+            {
+                int returnPrice;
+                returnPrice = ObjectsDatabase.CurrentPrice(valueFields.ID) / 3;
+                GameManager.AddCoins(returnPrice);
+            }
+            else if (placedOBJData.placedDecos.TryGetValue(gridPosition, out var valueDecos))
+            {
+                int returnPrice;
+                returnPrice = ObjectsDatabase.CurrentPrice(valueDecos.ID) / 2;
+                GameManager.AddCoins(returnPrice);
+            }
+            else if (placedOBJData.placedFacilities.TryGetValue(gridPosition, out var valueFacilities))
+            {
+                int returnPrice;
+                returnPrice = ObjectsDatabase.CurrentPrice(valueFacilities.ID) / 3;
+                GameManager.AddCoins(returnPrice);
+            }
+
             selectedData.RemoveObjectAt(gridPosition);      // 오브젝트의 정보 삭제
             objectPlacer.RemoveObjectAt(gameObjectIndex);   // 오브젝트 자체를 파괴
             selectedData.currentDictionary = -1;

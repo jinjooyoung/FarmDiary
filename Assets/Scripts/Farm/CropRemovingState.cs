@@ -46,6 +46,14 @@ public class CropRemovingState : IBuildingState
         {
             return;
         }
+
+        if (placedCropData.placedCrops.TryGetValue(gridPosition, out var valueCrops))    // 작물 딕셔너리에 값이 존재한다면
+        {
+            int returnPrice;
+            returnPrice = ObjectsDatabase.CurrentPrice(valueCrops.ID) / 2;
+            GameManager.AddCoins(returnPrice);
+        }
+
         placedCropData.RemoveCropAt(gridPosition);
         cropPlacer.RemoveObjectAt(gameObjectIndex); // 수정 필요
         previewSystem.UpdatePreviewOBJPos(grid.CellToWorld(gridPosition), false);
