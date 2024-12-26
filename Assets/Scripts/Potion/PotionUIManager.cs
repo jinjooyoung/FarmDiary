@@ -274,12 +274,77 @@ public class PotionUIManager : MonoBehaviour
     // 종료=수확 버튼에 붙이는 함수
     public void HarvestingPotion()
     {
-        GameManager.AddCoins(PotionDatabase.GetPotionPrice(currentPot.magicID));
+        int potionPrice = PotionDatabase.GetPotionPrice(currentPot.magicID);
+
+        int selectedCropIDs = currentPot.basicMaterial[0] + currentPot.basicMaterial[1] + currentPot.basicMaterial[2];
+
+        if (selectedCropIDs < 39)
+        {
+            GameManager.AddCoins(potionPrice + 100);
+        }
+        else if (selectedCropIDs >= 39 && selectedCropIDs < 48)
+        {
+            GameManager.AddCoins(potionPrice + 800);
+        }
+        else if (selectedCropIDs >= 48 && selectedCropIDs < 57)
+        {
+            GameManager.AddCoins(potionPrice + 2500);
+        }
+        else if (selectedCropIDs >= 57 && selectedCropIDs < 66)
+        {
+            GameManager.AddCoins(potionPrice + 7000);
+        }
+        else if (selectedCropIDs >= 66 && selectedCropIDs < 75)
+        {
+            GameManager.AddCoins(potionPrice + 16000);
+        }
+        else if (selectedCropIDs >= 75 && selectedCropIDs < 84)
+        {
+            GameManager.AddCoins(potionPrice + 30000);
+        }
+        else if (selectedCropIDs >= 84 && selectedCropIDs < 93)
+        {
+            GameManager.AddCoins(potionPrice + 42000);
+        }
+        else if (selectedCropIDs >= 93 && selectedCropIDs < 102)
+        {
+            GameManager.AddCoins(potionPrice + 59000);
+        }
+        else if (selectedCropIDs >= 102 && selectedCropIDs < 111)
+        {
+            GameManager.AddCoins(potionPrice + 76000);
+        }
+        else if (selectedCropIDs >= 111 && selectedCropIDs < 120)
+        {
+            GameManager.AddCoins(potionPrice + 100000);
+        }
+        else if (selectedCropIDs >= 120 && selectedCropIDs < 129)
+        {
+            GameManager.AddCoins(potionPrice + 130000);
+        }
+        else if (selectedCropIDs >= 129 && selectedCropIDs < 138)
+        {
+            GameManager.AddCoins(potionPrice + 180000);
+        }
+        else if (selectedCropIDs == 138)
+        {
+            GameManager.AddCoins(potionPrice + 250000);
+        }
+
         AchievementsDatabase.AddProgressToAchievement(currentPot.magicID + 14, 1);
         AchievementsDatabase.UnlockAchievement(currentPot.magicID + 15);
         
         ClearSelectMaterial();
         Debug.Log("포션 제작 수확완료");
+    }
+
+    // 자동 재료 넣기 버튼
+    public void AutoSelecting()
+    {
+        foreach(var cropStorage in storage.storedCropsByID)
+        {
+
+        }
     }
 
     //====================State 별 초기화 메서드==========
