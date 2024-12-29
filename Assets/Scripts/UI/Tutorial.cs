@@ -115,6 +115,7 @@ public class TutorialUI : MonoBehaviour
                         potionUIManager.material1.interactable = true;
                         potionUIManager.material2.interactable = true;
                         potionUIManager.material3.interactable = true;
+                        potionUIManager.AutoButton.interactable = false;
                     }
                     else if (index == 30)
                     {
@@ -287,6 +288,7 @@ public class TutorialUI : MonoBehaviour
                 if (PotionPanel.activeSelf)
                 {
                     // 다음 패널의 설명 보기 전까지는 인터렉션 불가능 상태
+                    potionUIManager.AutoButton.interactable = false;
                     potionUIManager.magic.interactable = false;
                     potionUIManager.material1.interactable = false;
                     potionUIManager.material2.interactable = false;
@@ -409,6 +411,7 @@ public class TutorialUI : MonoBehaviour
             Button2.interactable = false;
             Button3.interactable = false;
             Button4.interactable = true;
+            potionUIManager.AutoButton.interactable = true;
 
             UIManager.instance.SeedButtons[0].interactable = true;
             UIManager.instance.SeedButtons[1].interactable = true;

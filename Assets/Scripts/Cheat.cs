@@ -16,6 +16,16 @@ public class Cheat : MonoBehaviour
         {
             CheatPanel.SetActive(true);
         }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Time.timeScale = 100f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Time.timeScale = 1f;
+        }
     }
 
     public void ShowMeTheMoney()

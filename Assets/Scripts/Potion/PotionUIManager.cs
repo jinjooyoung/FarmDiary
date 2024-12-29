@@ -31,6 +31,7 @@ public class PotionUIManager : MonoBehaviour
     public GameObject potionPanel;  // 포션 패널
     public GameObject materialListPanel;    // 일반 재료 패널
     public GameObject magicPanel;   // 마법 재료 패널
+    public GameObject PotionAutoPanel;  // 자동 제작 포션 선택 패널
     public Image magicCircleImage;  // 마법진 이미지
     public Image potionImage;       // 포션 이미지
     public Text craftingTime;       // 제작하는데 걸리는 시간 or 남은 시간 or 현재 상태
@@ -39,6 +40,7 @@ public class PotionUIManager : MonoBehaviour
     public Button material1;        // 일반 재료 첫번째 (상)
     public Button material2;        // 일반 재료 두번째 (좌)
     public Button material3;        // 일반 재료 세번째 (우)
+    public Button AutoButton;
     [Header("시작 & 종료 버튼")]
     public Button startButton;      // 시작 버튼
     public Button endButton;        // 종료 버튼
@@ -103,6 +105,7 @@ public class PotionUIManager : MonoBehaviour
 
         currentButton = ID;
         materialListPanel.SetActive(true);
+        PotionAutoPanel.SetActive(false);
         magicPanel.SetActive(false);
 
         // 패널을 열때 이미 선택되었다면 false로 아니라면 창고에 존재하는 것만 true로
@@ -127,6 +130,7 @@ public class PotionUIManager : MonoBehaviour
         currentButton = 0;
         magicPanel.SetActive(true);
         materialListPanel.SetActive(false);
+        PotionAutoPanel.SetActive(false);
 
         // 패널을 열때 이미 선택되었다면 false로 아니라면 창고에 존재하는 것만 true로
         if (currentPot.magicID != -1)
@@ -234,6 +238,7 @@ public class PotionUIManager : MonoBehaviour
         material2.interactable = true;
         material3.interactable = true;
         ResetButton.interactable = true;
+        AutoButton.interactable = true;
 
         // 제작 시간 UI 초기화
         craftingTime.text = null;
@@ -259,6 +264,7 @@ public class PotionUIManager : MonoBehaviour
         material1.interactable = false;
         material2.interactable = false;
         material3.interactable = false;
+        AutoButton.interactable = false;
 
         SubtractCrop(currentPot.magicID);
         SubtractCrop(currentPot.basicMaterial[0]);
@@ -338,19 +344,103 @@ public class PotionUIManager : MonoBehaviour
         Debug.Log("포션 제작 수확완료");
     }
 
-    // 자동 재료 넣기 버튼
-    public void AutoSelecting()
+    // 자동 제작 패널 여는 버튼
+    public void OpenAutoSelectPanel()
     {
-        foreach(var cropStorage in storage.storedCropsByID)
+        if (currentPot == null)
         {
-
+            return;
         }
+
+        PotionAutoPanel.SetActive(true);
+        magicPanel.SetActive(false);
+        materialListPanel.SetActive(false);
+
+        ButtonInteractPotion();
+    }
+
+    // 자동으로 일반 재료 넣고 제작 시작하는 버튼
+    public void AutoSelectAndCrafting(int magicID)
+    {
+        currentPot.magicID = magicID;   // 솥에 정보 이동
+
+        // 솥 UI 패널에 업데이트
+        magic.image.sprite = Resources.Load<Sprite>($"Achievements/Rewards/Reward_{currentPot.magicID - 1}");
+        magic.image.color = Color.white;
+
+        // 제작시간 UI
+        currentPot.totalCraftingTime = PotionDatabase.GetCraftingTime(currentPot.magicID);
+
+        // 포션 이미지 UI
+        potionImage.sprite = Resources.Load<Sprite>($"Achievements/Icons/Achievement_{currentPot.magicID + 14}");
+
+
+
+        if (AchievementsDatabase.GetCleared(currentPot.magicID + 14))
+        {
+            potionImage.color = Color.white;
+        }
+        else
+        {
+            potionImage.color = new Color(1f, 1f, 1f, 0f);
+        }
+
+        // 일반 작물 자동 선택
+        int selectCount = 0;
+
+        // 창고를 뒤에서부터 돌면서 비싼 작물부터 자동 할당
+        for(int i = storage.storedCropsByID.Count - 1; i >= 0; i--)
+        {
+            if (storage.storedCropsByID[i].cropCount > 0 && storage.storedCropsByID[i].cropID < 48)
+            {
+                if (selectCount == 0)
+                {
+                    currentPot.basicMaterial[0] = storage.storedCropsByID[i].cropID;
+                    material1.image.sprite = LoadIcon(storage.storedCropsByID[i].cropID);
+                    material1.image.color = Color.white;
+                    selectCount++;
+                }
+                else if (selectCount == 1)
+                {
+                    currentPot.basicMaterial[1] = storage.storedCropsByID[i].cropID;
+                    material2.image.sprite = LoadIcon(storage.storedCropsByID[i].cropID);
+                    material2.image.color = Color.white;
+                    selectCount++;
+                }
+                else if (selectCount == 2)
+                {
+                    currentPot.basicMaterial[2] = storage.storedCropsByID[i].cropID;
+                    material3.image.sprite = LoadIcon(storage.storedCropsByID[i].cropID);
+                    material3.image.color = Color.white;
+                    selectCount++;
+                }
+                else if (selectCount >= 3)
+                {
+                    continue;
+                }
+            }
+        }
+
+        if (NotSelectedMaterial())  // 다 선택되었다면
+        {
+            // 바로 제작 시작
+            StartCrafting();
+        }
+        else
+        {
+            currentPot.ChangeState(PotState.Selecting);
+            magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_1");
+            startButton.interactable = false;
+        }
+
+        PotionAutoPanel.SetActive(false);
     }
 
     //====================State 별 초기화 메서드==========
 
     public void HandleEmpty()
     {
+        PotionAutoPanel.SetActive(false);
         materialListPanel.SetActive(false);
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_0");
@@ -366,6 +456,7 @@ public class PotionUIManager : MonoBehaviour
         material1.interactable = true;
         material2.interactable = true;
         material3.interactable = true;
+        AutoButton.interactable = true;
         ResetButton.interactable = true;
         startButton.interactable = false;
         endButton.interactable = false;
@@ -374,6 +465,7 @@ public class PotionUIManager : MonoBehaviour
 
     public void HandleSelecting()
     {
+        PotionAutoPanel.SetActive(false);
         materialListPanel.SetActive(false);
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_1");
@@ -383,6 +475,7 @@ public class PotionUIManager : MonoBehaviour
         material1.interactable = true;
         material2.interactable = true;
         material3.interactable = true;
+        AutoButton.interactable = true;
 
         SelectedMagic();
 
@@ -420,11 +513,13 @@ public class PotionUIManager : MonoBehaviour
 
     public void HandleReadyToStart()
     {
+        PotionAutoPanel.SetActive(false);
         materialListPanel.SetActive(false);
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
         magicCircleImage.color = Color.yellow;
 
+        AutoButton.interactable = true;
         ResetButton.interactable = true;
         magic.interactable = true;
         material1.interactable = true;
@@ -448,6 +543,7 @@ public class PotionUIManager : MonoBehaviour
 
     public void HandleCrafting()
     {
+        PotionAutoPanel.SetActive(false);
         materialListPanel.SetActive(false);
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
@@ -475,6 +571,7 @@ public class PotionUIManager : MonoBehaviour
         material2.image.color = Color.white;
         material3.image.color = Color.white;
 
+        AutoButton.interactable = false;
         magic.interactable = false;
         material1.interactable = false;
         material2.interactable = false;
@@ -487,6 +584,7 @@ public class PotionUIManager : MonoBehaviour
 
     public void HandleCompleted()
     {
+        PotionAutoPanel.SetActive(false);
         materialListPanel.SetActive(false);
         magicPanel.SetActive(false);
         magicCircleImage.sprite = Resources.Load<Sprite>($"Potions/MagicCircle_2");
@@ -521,6 +619,7 @@ public class PotionUIManager : MonoBehaviour
         material1.interactable = false;
         material2.interactable = false;
         material3.interactable = false;
+        AutoButton.interactable = false;
         startButton.interactable = false;
         endButton.interactable = true;
         ResetButton.interactable = false;
@@ -599,7 +698,7 @@ public class PotionUIManager : MonoBehaviour
         // 부모 오브젝트의 모든 자식들을 가져오기
         Button[] buttons = magicPanel.GetComponentsInChildren<Button>();
 
-        // 각 버튼에 대해 상호작용을 false로 설정
+        // 각 버튼에 대해 상호작용을 일단 다 false로 설정
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].interactable = a;
@@ -607,6 +706,63 @@ public class PotionUIManager : MonoBehaviour
             if (i == buttons.Length - 1)
             {
                 buttons[i].interactable = true;
+            }
+        }
+    }
+
+    public void ButtonInteractPotion()
+    {
+        // 부모 오브젝트의 모든 자식들을 가져오기
+        Button[] buttons = PotionAutoPanel.GetComponentsInChildren<Button>();
+
+        // 각 버튼에 대해 상호작용을 false로 설정
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = false;
+
+            Transform button = PotionAutoPanel.transform.GetChild(i);
+            Transform ImageOBJ = button.transform.GetChild(0);
+
+            // 자식 오브젝트의 하위에 있는 Image 컴포넌트를 가져오기
+            Image image = ImageOBJ.GetComponent<Image>();
+
+            if (image != null)
+            {
+                if (AchievementsDatabase.GetCleared(i + 62))
+                {
+                    image.color = Color.white;
+                }
+                else
+                {
+                    image.color = new Color(0f, 0f, 0f, 0.5f);
+                }
+            }
+            else
+            {
+                Debug.Log($"버튼 {i}에는 이미지가 없습니다.");
+            }
+        }
+
+        foreach (var cropStorage in storage.storedCropsByID)
+        {
+            int cropID = cropStorage.cropID;
+
+            // 마법작물이
+            if (cropID >= 48 && cropID <= 62)
+            {
+                // 1개 이상 있다면
+                if (cropStorage.cropCount > 0)
+                {
+                    // 해당 버튼 인덱스 계산 (0번째 버튼이 48에 매칭됨)
+                    int buttonIndex = cropID - 48;
+
+                    // 유효한 버튼 인덱스인지 확인
+                    if (buttonIndex >= 0 && buttonIndex < buttons.Length)
+                    {
+                        // 해당 버튼을 상호작용 가능하게 설정
+                        buttons[buttonIndex].interactable = true;
+                    }
+                }
             }
         }
     }
